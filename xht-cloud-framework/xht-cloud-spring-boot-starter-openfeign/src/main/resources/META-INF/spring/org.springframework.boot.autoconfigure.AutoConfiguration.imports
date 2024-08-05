@@ -1,0 +1,3 @@
+com.xht.cloud.framework.openfeign.OpenFeignConfiguration
+com.xht.cloud.framework.openfeign.ApiSignatureOpenFeignAutoConfig
+

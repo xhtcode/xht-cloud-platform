@@ -1,0 +1,4 @@
+com.xht.cloud.framework.mybatis.MybatisAutoConfiguration
+com.xht.cloud.framework.mybatis.ApiSignatureDatabaseAutoConfig
+com.xht.cloud.framework.mybatis.handler.DataScopeSqlFactory
+com.xht.cloud.framework.mybatis.handler.SqlExceptionHandler

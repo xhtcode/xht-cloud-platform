@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xht.cloud.generate.module.type.mapper.GenColumnTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xht.cloud.generate.module.type.domain.dataobject.GenColumnTypeDO">
+        <result column="id" property="id" />
+        <result column="db_label" property="dbLabel" />
+        <result column="db_value" property="dbValue" />
+        <result column="label" property="label" />
+        <result column="value" property="value" />
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        id,
+        db_label,
+        db_value,
+        label,
+        value
+    </sql>
+
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xht.cloud.admin.module.area.mapper.SysAreaInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xht.cloud.admin.module.area.domain.dataobject.SysAreaInfoDO">
+        <result column="id" property="id" />
+        <result column="parent_id" property="parentId" />
+        <result column="name" property="name" />
+        <result column="level" property="level" />
+        <result column="area_no" property="areaNo" />
+        <result column="category" property="category" />
+        <result column="msg" property="msg" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="leaf" property="leaf"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        id,
+        parent_id,
+        name,
+        level,
+        area_no,
+        category,
+        msg,
+        create_by,
+        update_by,
+        create_time,
+        update_time
+    </sql>
+    <select id="selectListByRequest" resultMap="BaseResultMap" parameterType="com.xht.cloud.admin.module.area.domain.request.SysAreaInfoQueryRequest">
+        SELECT
+        <include refid="BaseColumnList"></include>
+        , ( select count(1) from sys_area_info t1 where t1.parent_id = sys_area_info.id ) as leaf
+        FROM sys_area_info
+        WHERE del_flag=1
+        <if test=" query.parentId != null and query.parentId != '' ">
+            and parent_id = #{query.parentId}
+        </if>
+        <if test=" query.name != null and query.name != '' ">
+            and name like concat('%', #{query.name} ,'%')
+        </if>
+        <if test=" query.areaNo != null and query.areaNo != '' ">
+            and area_no like concat('%', #{query.areaNo} ,'%')
+        </if>
+    </select>
+
+</mapper>

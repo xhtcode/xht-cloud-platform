@@ -1,0 +1,34 @@
+server:
+  port: 7000
+spring:
+  application:
+    name: xht-cloud-admin-service
+  profiles:
+    active: @profiles.active@
+  cloud:
+    nacos:
+      discovery:
+        server-addr: @nacos.discovery.address@
+        username: @nacos.username@
+        password: @nacos.password@
+        namespace: @nacos.namespace@
+        group: @nacos.group@
+      config:
+        server-addr: @nacos.config.address@
+        username: @nacos.username@
+        password: @nacos.password@
+        namespace: @nacos.namespace@
+        group: @nacos.group@
+        file-extension: yml
+        prefix: ${spring.application.name} # 默认配置
+knife4j:
+  basic:
+    enable: true
+    username: admin
+    password: admin
+  setting:
+    language: zh-CN
+    enable-open-api: false
+  enable: true
+springdoc:
+  default-flat-param-object: true

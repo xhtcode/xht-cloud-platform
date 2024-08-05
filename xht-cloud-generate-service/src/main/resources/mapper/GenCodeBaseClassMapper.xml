@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xht.cloud.generate.module.entity.mapper.GenCodeBaseClassMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xht.cloud.generate.module.entity.domain.dataobject.GenCodeBaseClassDO">
+        <result column="id" property="id" />
+        <result column="class_name" property="className" />
+        <result column="package_name" property="packageName" />
+        <result column="ignore_field" property="ignoreField" />
+        <result column="class_sort" property="classSort" />
+        <result column="del_flag" property="delFlag" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        id,
+        class_name,
+        package_name,
+        ignore_field,
+        class_sort,
+        del_flag,
+        create_by,
+        update_by,
+        create_time,
+        update_time
+    </sql>
+
+</mapper>

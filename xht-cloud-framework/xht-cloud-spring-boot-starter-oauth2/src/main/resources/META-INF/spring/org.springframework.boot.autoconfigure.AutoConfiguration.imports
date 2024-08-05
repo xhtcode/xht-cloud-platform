@@ -1,0 +1,3 @@
+com.xht.cloud.framework.security.DefaultOAuth2AuthorizationConfig
+com.xht.cloud.framework.security.core.PermitAllUrlProperties
+com.xht.cloud.framework.security.handler.SecurityExceptionHandler

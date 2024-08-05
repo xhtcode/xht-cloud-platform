@@ -1,0 +1,5 @@
+com.xht.cloud.framework.web.xss.XSSAutoConfiguration
+com.xht.cloud.framework.web.jackson.JacksonConfiguration
+com.xht.cloud.framework.web.signature.ApiSignatureAutoConfiguration
+com.xht.cloud.framework.web.WebAutoConfiguration
+com.xht.cloud.framework.web.CorsAutoConfig

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xht.cloud.admin.module.user.mapper.SysUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xht.cloud.admin.module.user.domain.dataobject.SysUserDO">
+        <result column="id" property="id" />
+        <result column="user_name" property="userName" />
+        <result column="user_account" property="userAccount" />
+        <result column="pass_word" property="passWord" />
+        <result column="pass_word_salt" property="passWordSalt" />
+        <result column="pass_word_old" property="passWordOld" />
+        <result column="pass_word_salt_old" property="passWordSaltOld" />
+        <result column="dept_id" property="deptId" />
+        <result column="user_avatar" property="userAvatar" />
+        <result column="user_type" property="userType" />
+        <result column="qq_openid" property="qqOpenid" />
+        <result column="wx_openid" property="wxOpenid" />
+        <result column="wx_unionid" property="wxUnionid" />
+        <result column="user_status" property="userStatus" />
+        <result column="admin_status" property="adminStatus" />
+        <result column="registered_time" property="registeredTime" />
+        <result column="last_login_time" property="lastLoginTime" />
+        <result column="del_flag" property="delFlag" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+    </resultMap>
+
+</mapper>

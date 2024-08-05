@@ -1,0 +1,28 @@
+server:
+  port: 10000
+spring:
+  application:
+    name: xht-cloud-generate
+  profiles:
+    active: @profiles.active@
+  cloud:
+    nacos:
+      discovery:
+        server-addr: @nacos.discovery.address@
+        username: @nacos.username@
+        password: @nacos.password@
+        namespace: @nacos.namespace@
+        group: @nacos.group@
+      config:
+        server-addr: @nacos.config.address@
+        username: @nacos.username@
+        password: @nacos.password@
+        namespace: @nacos.namespace@
+        group: @nacos.group@
+        file-extension: yml
+        prefix: ${spring.application.name} # 默认配置
+        shared-configs:
+          - data-id: xht-cloud-common-oauth2.yaml
+            group: @nacos.group@
+            refresh: true
+

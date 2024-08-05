@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.xht.cloud.framework</groupId>
+        <artifactId>xht-cloud-framework</artifactId>
+        <version>0.0.1</version>
+    </parent>
+
+    <artifactId>xht-cloud-spring-boot-starter</artifactId>
+    <packaging>jar</packaging>
+    <description>公共模块-自定义启动类</description>
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.xht.cloud.framework</groupId>
+            <artifactId>xht-cloud-framework-exception</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xht.cloud.framework</groupId>
+            <artifactId>xht-cloud-framework-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xht.cloud.framework</groupId>
+            <artifactId>xht-cloud-framework-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+        <!-- Spring Boot Starter -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

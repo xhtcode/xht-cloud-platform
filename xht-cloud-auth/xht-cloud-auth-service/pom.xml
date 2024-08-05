@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.xht.cloud</groupId>
+        <artifactId>xht-cloud-auth</artifactId>
+        <version>0.0.1</version>
+    </parent>
+
+    <artifactId>xht-cloud-auth-service</artifactId>
+    <packaging>jar</packaging>
+    <description>微服务-系统安全业务模块</description>
+
+    <properties>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.xht.cloud.framework</groupId>
+            <artifactId>xht-cloud-spring-boot-starter-swagger</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xht.cloud.framework</groupId>
+            <artifactId>xht-cloud-framework-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xht.cloud.framework</groupId>
+            <artifactId>xht-cloud-spring-boot-starter-openfeign</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-fileupload</groupId>
+                    <artifactId>commons-fileupload</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.xht.cloud.framework</groupId>
+            <artifactId>xht-cloud-spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xht.cloud.framework</groupId>
+            <artifactId>xht-cloud-spring-boot-starter-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xht.cloud.framework</groupId>
+            <artifactId>xht-cloud-spring-boot-starter-oauth2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xht.cloud.framework</groupId>
+            <artifactId>xht-cloud-spring-boot-starter-log</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xht.cloud.framework</groupId>
+            <artifactId>xht-cloud-spring-boot-starter-mybatis</artifactId>
+        </dependency>
+        <!-- nacos 服务发现-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <skip>false</skip>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

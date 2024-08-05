@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xht.cloud.admin.module.dept.mapper.SysDeptMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xht.cloud.admin.module.dept.domain.dataobject.SysDeptDO">
+        <result column="id" property="id" />
+        <result column="parent_id" property="parentId" />
+        <result column="director_id" property="directorId" />
+        <result column="dept_name" property="deptName" />
+        <result column="dept_code" property="deptCode" />
+        <result column="dept_leader" property="deptLeader" />
+        <result column="dept_tel" property="deptTel" />
+        <result column="dept_sort" property="deptSort" />
+        <result column="dept_status" property="deptStatus" />
+        <result column="description" property="description" />
+        <result column="del_flag" property="delFlag" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        id,
+        parent_id,
+        director_id,
+        dept_name,
+        dept_code,
+        dept_type,
+        dept_leader,
+        dept_tel,
+        dept_sort,
+        dept_status,
+        description,
+        del_flag,
+        create_by,
+        update_by,
+        create_time,
+        update_time
+    </sql>
+
+    <select id="selectDeptByRoleId" resultMap="BaseResultMap">
+        select t2.*
+        from sys_role_dept t1
+                 left join sys_dept t2 on t1.dept_id = t2.id
+        where t1.role_id = #{roleId}
+    </select>
+
+
+    <select id="selectChildByDeptId" resultMap="BaseResultMap">
+        WITH RECURSIVE custom_sys_dept (
+                                        id,
+                                        parent_id,
+                                        director_id,
+                                        dept_name,
+                                        dept_code,
+                                        dept_type,
+                                        dept_leader,
+                                        dept_tel,
+                                        dept_sort,
+                                        dept_status,
+                                        description,
+                                        del_flag,
+                                        create_by,
+                                        update_by,
+                                        create_time,
+                                        update_time
+            ) AS (SELECT t1.id,
+                         t1.parent_id,
+                         t1.director_id,
+                         t1.dept_name,
+                         t1.dept_code,
+                         t1.dept_type,
+                         t1.dept_leader,
+                         t1.dept_tel,
+                         t1.dept_sort,
+                         t1.dept_status,
+                         t1.description,
+                         t1.del_flag,
+                         t1.create_by,
+                         t1.update_by,
+                         t1.create_time,
+                         t1.update_time
+                  FROM sys_dept t1
+                  WHERE t1.id = #{deptId}
+                  UNION ALL
+                  SELECT t2.id,
+                         t2.parent_id,
+                         t2.director_id,
+                         t2.dept_name,
+                         t2.dept_code,
+                         t2.dept_type,
+                         t2.dept_leader,
+                         t2.dept_tel,
+                         t2.dept_sort,
+                         t2.dept_status,
+                         t2.description,
+                         t2.del_flag,
+                         t2.create_by,
+                         t2.update_by,
+                         t2.create_time,
+                         t2.update_time
+                  FROM sys_dept t2,
+                       custom_sys_dept t3
+                  WHERE t2.parent_id = t3.id)
+        SELECT t.*
+        FROM custom_sys_dept t
+    </select>
+
+    <!--根据部门id 查询该部门以及该部门以上部门节点-->
+
+    <select id="selectParentByDeptId" resultMap="BaseResultMap">
+        WITH RECURSIVE custom_sys_dept (
+                                        id,
+                                        parent_id,
+                                        director_id,
+                                        dept_name,
+                                        dept_code,
+                                        dept_type,
+                                        dept_leader,
+                                        dept_tel,
+                                        dept_sort,
+                                        dept_status,
+                                        description,
+                                        del_flag,
+                                        create_by,
+                                        update_by,
+                                        create_time,
+                                        update_time
+            ) AS (SELECT t1.id,
+                         t1.parent_id,
+                         t1.director_id,
+                         t1.dept_name,
+                         t1.dept_code,
+                         t1.dept_type,
+                         t1.dept_leader,
+                         t1.dept_tel,
+                         t1.dept_sort,
+                         t1.dept_status,
+                         t1.description,
+                         t1.del_flag,
+                         t1.create_by,
+                         t1.update_by,
+                         t1.create_time,
+                         t1.update_time
+                  FROM sys_dept t1
+                  WHERE t1.id = #{deptId}
+                  UNION ALL
+                  SELECT t2.id,
+                         t2.parent_id,
+                         t2.director_id,
+                         t2.dept_name,
+                         t2.dept_code,
+                         t2.dept_type,
+                         t2.dept_leader,
+                         t2.dept_tel,
+                         t2.dept_sort,
+                         t2.dept_status,
+                         t2.description,
+                         t2.del_flag,
+                         t2.create_by,
+                         t2.update_by,
+                         t2.create_time,
+                         t2.update_time
+                  FROM sys_dept t2,
+                       custom_sys_dept t3
+                  WHERE t2.id = t3.parent_id)
+        SELECT t.*
+        FROM custom_sys_dept t;
+    </select>
+
+</mapper>

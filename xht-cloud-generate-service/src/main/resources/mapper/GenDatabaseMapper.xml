@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xht.cloud.generate.module.database.mapper.GenDatabaseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xht.cloud.generate.module.database.domain.dataobject.GenDatabaseDO">
+        <result column="id" property="id" />
+        <result column="conn_name" property="connName" />
+        <result column="db_url" property="dbUrl" />
+        <result column="db_type" property="dbType" />
+        <result column="db_name" property="dbName" />
+        <result column="db_describe" property="dbDescribe" />
+        <result column="host" property="host" />
+        <result column="port" property="port" />
+        <result column="user_name" property="userName" />
+        <result column="pass_word" property="passWord" />
+        <result column="status" property="status" />
+        <result column="sort" property="sort" />
+        <result column="del_flag" property="delFlag" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        id,
+        conn_name,
+        db_url,
+        db_type,
+        db_name,
+        db_describe,
+        host,
+        port,
+        user_name,
+        pass_word,
+        status,
+        sort,
+        del_flag,
+        create_by,
+        update_by,
+        create_time,
+        update_time
+    </sql>
+
+</mapper>

@@ -1,0 +1,59 @@
+# gateway路由配置
+spring:
+  cloud:
+    gateway:
+      discovery: #网关发现机制配置
+        locator: #处理机制
+          enabled: true # 开启网关自动映射处理逻辑，只要请求地址符合规则: http://gatewayPort/微服务名/微服务请求地址
+          lower-case-service-id: true #全部服务名称全部小写
+      routes:
+        - id: xht-cloud-admin-service
+          uri: lb://xht-cloud-admin-service #此处需要使用lb协议
+          predicates:
+            - Path=/admin/**
+          filters:
+            - StripPrefix=1
+        - id: xht-cloud-auth-service
+          uri: lb://xht-cloud-auth-service  #此处需要使用lb协议
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+        - id: xht-cloud-generate
+          uri: lb://xht-cloud-generate  #此处需要使用lb协议
+          predicates:
+            - Path=/generate/**
+          filters:
+            - StripPrefix=1
+        - id: xht-cloud-file-service
+          uri: lb://xht-cloud-file-service  #此处需要使用lb协议
+          predicates:
+            - Path=/file/**
+          filters:
+            - StripPrefix=1
+# spring doc 网关聚合配置
+knife4j:
+  gateway:
+    enabled: true
+    strategy: discover
+    discover:
+      version: openapi3
+      excluded-services:
+        - xht-cloud-gateway
+      service-config:
+        xht-cloud-system:
+          group-name: xht-cloud-system
+          context-path: admin
+          order: 1
+    routes:
+      - service-name: xht-cloud-system
+        name: xht-cloud-system(系统管理)
+        url: /admin/v3/api-docs/系统管理
+        context-path: /admin
+        order: 1
+      - service-name: xht-cloud-system
+        name: xht-cloud-system(oauth2)
+        url: /admin/v3/api-docs/oauth2
+        context-path: /admin
+        order: 2
+

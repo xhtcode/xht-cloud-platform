@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xht.cloud.admin.module.oauth2.mapper.Oauth2RegisteredClientMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xht.cloud.admin.module.oauth2.domain.dataobject.Oauth2RegisteredClientDO">
+        <result column="id" property="id" />
+        <result column="client_id" property="clientId" />
+        <result column="client_id_issued_at" property="clientIdIssuedAt" />
+        <result column="client_secret" property="clientSecret" />
+        <result column="client_secret_expires_at" property="clientSecretExpiresAt" />
+        <result column="auto_approve" property="autoApprove" />
+        <result column="client_name" property="clientName" />
+        <result column="client_authentication_methods" property="clientAuthenticationMethods" />
+        <result column="authorization_grant_types" property="authorizationGrantTypes" />
+        <result column="redirect_uris" property="redirectUris" />
+        <result column="post_logout_redirect_uris" property="postLogoutRedirectUris" />
+        <result column="scopes" property="scopes" />
+        <result column="access_token_validity" property="accessTokenValidity" />
+        <result column="refresh_token_validity" property="refreshTokenValidity" />
+        <result column="del_flag" property="delFlag" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        id,
+        client_id,
+        client_id_issued_at,
+        client_secret,
+        client_secret_expires_at,
+        auto_approve,
+        client_name,
+        client_authentication_methods,
+        authorization_grant_types,
+        redirect_uris,
+        post_logout_redirect_uris,
+        scopes,
+        access_token_validity,
+        refresh_token_validity,
+        del_flag,
+        create_by,
+        create_time,
+        update_by,
+        update_time
+    </sql>
+
+</mapper>

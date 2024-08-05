@@ -1,0 +1,16 @@
+server:
+  port: 9527
+spring:
+  application:
+    name: xht-cloud-auth-service
+  profiles:
+    active: @profiles.active@
+  cloud:
+    nacos:
+      discovery:
+        server-addr: @nacos.discovery.address@
+        username: @nacos.username@
+        password: @nacos.password@
+        namespace: @nacos.namespace@
+        group: @nacos.group@
+

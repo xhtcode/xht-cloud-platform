@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xht.cloud.admin.module.permissions.mapper.SysMenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xht.cloud.admin.module.permissions.domain.dataobject.SysMenuDO">
+        <result column="id" property="id" />
+        <result column="parent_id" property="parentId" />
+        <result column="menu_type" property="menuType" />
+        <result column="menu_name" property="menuName" />
+        <result column="menu_path" property="menuPath" />
+        <result column="menu_view_name" property="menuViewName" />
+        <result column="menu_view_path" property="menuViewPath" />
+        <result column="menu_icon" property="menuIcon" />
+        <result column="menu_redirect" property="menuRedirect" />
+        <result column="menu_active" property="menuActive" />
+        <result column="menu_authority" property="menuAuthority" />
+        <result column="menu_hidden" property="menuHidden" />
+        <result column="menu_status" property="menuStatus" />
+        <result column="menu_link" property="menuLink" />
+        <result column="menu_cache" property="menuCache" />
+        <result column="menu_affix" property="menuAffix" />
+        <result column="menu_sort" property="menuSort" />
+        <result column="del_flag" property="delFlag" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+    </sql>
+    <select id="findChildByMenuIdAndMenuStatus" resultMap="BaseResultMap">
+        WITH RECURSIVE custom_sys_menu(
+            id, parent_id, menu_type, menu_name, menu_path, menu_view_name, menu_view_path, menu_icon, menu_redirect, menu_active, menu_authority, menu_hidden, menu_status, menu_link, menu_cache, menu_full, menu_affix, menu_sort, del_flag, create_by, update_by, create_time, update_time
+        ) AS(SELECT
+                t1.id,t1.parent_id,t1.menu_type,t1.menu_name,t1.menu_path,t1.menu_view_name,t1.menu_view_path,t1.menu_icon,t1.menu_redirect,t1.menu_active,t1.menu_authority,t1.menu_hidden,t1.menu_status,t1.menu_link,t1.menu_cache,t1.menu_full,t1.menu_affix,t1.menu_sort,t1.del_flag,t1.create_by,t1.update_by,t1.create_time,t1.update_time
+                 from sys_menu t1 where t1.id = #{menuId}
+        UNION ALL
+        SELECT
+                t2. id,t2. parent_id,t2. menu_type,t2. menu_name,t2. menu_path,t2. menu_view_name,t2. menu_view_path,t2. menu_icon,t2. menu_redirect,t2. menu_active,t2. menu_authority,t2. menu_hidden,t2. menu_status,t2. menu_link,t2. menu_cache,t2. menu_full,t2. menu_affix,t2. menu_sort,t2. del_flag,t2. create_by,t2. update_by,t2. create_time,t2. update_time
+        from sys_menu t2,
+        custom_sys_menu t3 WHERE t2.parent_id = t3.id)
+        SELECT t.*
+        FROM custom_sys_menu t where t.del_flag = '0'
+        <if test="menuStatus != null and menuStatus != ''">
+            and t.menu_status = #{menuStatus}
+        </if>
+    </select>
+    <select id="selectByUserIdAndMenuType" resultMap="BaseResultMap">
+        SELECT t1.id,
+        t1.parent_id,
+        t1.menu_type,
+        t1.menu_name,
+        t1.menu_path,
+        t1.menu_view_name,
+        t1.menu_view_path,
+        t1.menu_icon,
+        t1.menu_redirect,
+        t1.menu_active,
+        t1.menu_authority,
+        t1.menu_hidden,
+        t1.menu_status,
+        t1.menu_link,
+        t1.menu_cache,
+        t1.menu_full,
+        t1.menu_affix,
+        t1.menu_sort,
+        t1.del_flag,
+        t1.create_by,
+        t1.update_by,
+        t1.create_time,
+        t1.update_time
+        FROM sys_menu t1
+        LEFT JOIN sys_role_menu t2 on t1.id = t2.menu_id
+        LEFT JOIN sys_user_role t3 ON t3.role_id = t2.role_id
+        WHERE t3.user_id = #{userId}
+        <!-- 传递List，List中是pojo -->
+        <if test="menuTypes !=null and menuTypes.size > 0 ">
+            <foreach collection="menuTypes" item="item" open="and t1.menu_type in(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+
+    </select>
+</mapper>

@@ -1,0 +1,2 @@
+com.xht.cloud.framework.log.aspect.MethodTimeLogAspect
+com.xht.cloud.framework.log.LogAutoConfiguration

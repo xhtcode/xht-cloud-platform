@@ -1,0 +1,4 @@
+com.xht.cloud.framework.redis.RedisAutoConfiguration
+com.xht.cloud.framework.redis.ApiSignatureRedisAutoConfig
+com.xht.cloud.framework.redis.limit.RequestLimitAutoConfiguration
+com.xht.cloud.framework.redis.idempotent.IdempotentAutoConfiguration

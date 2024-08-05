@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xht.cloud.admin.module.log.mapper.SysOperationLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xht.cloud.admin.module.log.domain.dataobject.SysOperationLogDO">
+        <result column="id" property="id" />
+        <result column="server_name" property="serverName" />
+        <result column="bus_name" property="busName" />
+        <result column="bus_desc" property="busDesc" />
+        <result column="operate_method" property="operateMethod" />
+        <result column="operate_type" property="operateType" />
+        <result column="operate_name" property="operateName" />
+        <result column="request_url" property="requestUrl" />
+        <result column="operate_ip" property="operateIp" />
+        <result column="operate_param" property="operateParam" />
+        <result column="status" property="status" />
+        <result column="error_msg" property="errorMsg" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        id,
+        server_name,
+        bus_name,
+        bus_desc,
+        operate_method,
+        operate_type,
+        operate_name,
+        request_url,
+        operate_ip,
+        operate_location,
+        operate_param,
+        result,
+        status,
+        error_msg,
+        create_time
+    </sql>
+
+</mapper>
