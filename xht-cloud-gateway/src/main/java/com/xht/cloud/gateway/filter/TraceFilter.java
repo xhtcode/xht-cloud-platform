@@ -28,9 +28,9 @@ public class TraceFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
-        String userId = ServerHttpRequestUtils.getParamValue(request, USER_ID);
-        String userAccount = ServerHttpRequestUtils.getParamValue(request, USER_ACCOUNT);
-        String traceId = ServerHttpRequestUtils.getParamValue(request, TRACE_ID);
+        String userId = ServerHttpRequestUtils.getParamValue(request, REQUEST_USER_ID);
+        String userAccount = ServerHttpRequestUtils.getParamValue(request, REQUEST_USER_ACCOUNT);
+        String traceId = ServerHttpRequestUtils.getParamValue(request, REQUEST_TRACE_ID);
         if (StringUtils.isEmpty(traceId)) {
             traceId = TraceIdUtils.generateTraceId();
         }
@@ -40,9 +40,9 @@ public class TraceFilter implements GlobalFilter, Ordered {
                 userAccount,traceId);
         return chain.filter(exchange.mutate()
                 .request(request.mutate()
-                        .header(USER_ACCOUNT, userAccount)
-                        .header(USER_ID, userId)
-                        .header(TRACE_ID, traceId)
+                        .header(REQUEST_USER_ACCOUNT, userAccount)
+                        .header(REQUEST_USER_ID, userId)
+                        .header(REQUEST_TRACE_ID, traceId)
                         .build())
                 .build());
     }

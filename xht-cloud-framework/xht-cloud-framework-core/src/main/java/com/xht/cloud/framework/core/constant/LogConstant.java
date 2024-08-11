@@ -10,22 +10,19 @@ public interface LogConstant {
     /**
      * 分布式链路ID
      */
-    String TRACE_ID = "Trace-Id";
+    String REQUEST_TRACE_ID = "Trace-Id";
+
+    String TRACE_ID = "traceId";
 
     /**
      * 用户账号
      */
-    String USER_ACCOUNT = "User-Account";
+    String REQUEST_USER_ACCOUNT = "User-Account";
 
     /**
      * 用户ID
      */
-    String USER_ID = "User-Id";
+    String REQUEST_USER_ID = "User-Id";
 
-
-    /**
-     * 域名
-     */
-    String DOMAIN_NAME = "domain-name";
 
 }

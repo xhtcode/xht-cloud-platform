@@ -37,9 +37,9 @@ public class LogHttpFilter extends HttpFilter implements Ordered {
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         String authorization = request.getHeader(RpcConstants.AUTHORIZATION);
-        String traceId = request.getHeader(LogConstant.TRACE_ID);
-        String userId = request.getHeader(LogConstant.USER_ID);
-        String username = request.getHeader(LogConstant.USER_ACCOUNT);
+        String traceId = request.getHeader(LogConstant.REQUEST_TRACE_ID);
+        String userId = request.getHeader(LogConstant.REQUEST_USER_ID);
+        String username = request.getHeader(LogConstant.REQUEST_USER_ACCOUNT);
         if (StringUtils.isEmpty(traceId)) {
             traceId = TraceIdUtils.generateTraceId();
         }

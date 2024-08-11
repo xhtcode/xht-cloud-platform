@@ -90,7 +90,7 @@ public class OperationLogAspect {
                 } else {
                     operationLogDTO.setOperateParam(JsonUtils.toJsonString(getOperateParam(((CodeSignature) joinPoint.getSignature()).getParameterNames(), joinPoint.getArgs())));
                 }
-                operationLogDTO.setTraceId(HttpServletUtils.getHeader(request, LogConstant.TRACE_ID));
+                operationLogDTO.setTraceId(HttpServletUtils.getHeader(request, LogConstant.REQUEST_TRACE_ID));
                 Long endTime = System.currentTimeMillis();
                 operationLogDTO.setOperateTime(endTime - startTime);
                 operationLogClient.saveOperationLog(operationLogDTO);

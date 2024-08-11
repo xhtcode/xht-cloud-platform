@@ -109,9 +109,31 @@
         <finalName>${project.name}</finalName>
         <!-- profile对资源的操作 -->
         <resources>
+            <!-- 打包的时候先去掉所有的配置文件 -->
             <resource>
                 <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>application*.yml</exclude>
+                    <exclude>bootstrap*.yml</exclude>
+                    <exclude>*.json</exclude>
+                    <exclude>*.properties</exclude>
+                </excludes>
+            </resource>
+            <!-- 添加需要包含的文件 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <!-- 是否替换yml或者properties里@xx@表示的maven properties属性值 -->
                 <filtering>true</filtering>
+                <!-- 在打包的时候，根据-P参数，加上需要的yml配置文件 -->
+                <includes>
+                    <include>application.yml</include>
+                    <include>application-${profiles.active}.yml</include>
+                    <include>bootstrap.yml</include>
+                    <include>bootstrap-${profiles.active}.yml</include>
+                    <include>logback-spring.xml</include>
+                    <include>init_router.json</include>
+                    <include>spy.properties</include>
+                </includes>
             </resource>
         </resources>
         <plugins>
@@ -153,6 +175,7 @@
                     </compilerArgs>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 </project>

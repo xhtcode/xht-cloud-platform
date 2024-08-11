@@ -33,15 +33,15 @@ public class FeignRequestInterceptor implements RequestInterceptor {
         HttpServletRequest request = HttpServletUtils.getRequest();
         if (Objects.isNull(request)) return;
         String authorization = request.getHeader(RpcConstants.AUTHORIZATION);
-        String traceId = request.getHeader(LogConstant.TRACE_ID);
-        String userId = request.getHeader(LogConstant.USER_ID);
-        String username = request.getHeader(LogConstant.USER_ACCOUNT);
+        String traceId = request.getHeader(LogConstant.REQUEST_TRACE_ID);
+        String userId = request.getHeader(LogConstant.REQUEST_USER_ID);
+        String username = request.getHeader(LogConstant.REQUEST_USER_ACCOUNT);
         if (StringUtils.hasText(authorization)) {
             template.header(RpcConstants.AUTHORIZATION, authorization);
         }
-        template.header(LogConstant.TRACE_ID, StringUtils.emptyToDefault(traceId, TraceIdUtils.getTraceId()));
-        template.header(LogConstant.USER_ID, userId);
-        template.header(LogConstant.USER_ACCOUNT, username);
+        template.header(LogConstant.REQUEST_TRACE_ID, StringUtils.emptyToDefault(traceId, TraceIdUtils.getTraceId()));
+        template.header(LogConstant.REQUEST_USER_ID, userId);
+        template.header(LogConstant.REQUEST_USER_ACCOUNT, username);
         log.info("OpenFeign分布式调用，链路ID：{}，用户ID：{}，用户账号：{}，令牌：{}", traceId,
                 userId, username,
                 authorization);
