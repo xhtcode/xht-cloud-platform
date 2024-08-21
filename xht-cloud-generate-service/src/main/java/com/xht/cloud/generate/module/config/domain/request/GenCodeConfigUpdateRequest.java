@@ -46,13 +46,6 @@ public class GenCodeConfigUpdateRequest extends UpdateRequest<String> {
     private Integer configSort;
 
     /**
-     * 配置详情
-     */
-    @Schema(description = "配置详情")
-    @NotEmpty(message = "配置详情", groups = {Update.class, Create.class})
-    private String configInfo;
-
-    /**
      * 获取主键
      */
     @Override

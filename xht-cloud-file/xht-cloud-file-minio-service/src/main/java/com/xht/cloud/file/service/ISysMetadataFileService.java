@@ -36,7 +36,7 @@ public interface ISysMetadataFileService {
     SysMetadataFileResponse findById(String id);
 
     /**
-     * 分页查询文件信息
+     * 查询文件列表信息
      *
      * @param queryRequest {@link SysMetadataFileQueryRequest}
      * @return {@link PageResponse<SysMetadataFileResponse>} 分页详情

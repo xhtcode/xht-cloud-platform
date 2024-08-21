@@ -13,4 +13,15 @@ import lombok.Data;
 @Schema(name = "GenColumnTypeRequest(代码生成器-字段类型对应-查询请求信息)", description = "代码生成器-字段类型对应-查询请求信息")
 public class GenColumnTypeQueryRequest extends PageQueryRequest {
 
+    /**
+     * 数据库类型
+     */
+    @Schema(description = "数据库类型")
+    private String dbLabel;
+
+    /**
+     * 数据库字段类型
+     */
+    @Schema(description = "数据库字段类型")
+    private String dbValue;
 }

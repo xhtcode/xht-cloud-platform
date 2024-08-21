@@ -38,10 +38,4 @@ public class GenCodeConfigResponse extends Response {
     private Integer configSort;
 
 
-    /**
-     * 配置详情
-     */
-    @Schema(description = "配置详情")
-    private String configInfo;
-
 }

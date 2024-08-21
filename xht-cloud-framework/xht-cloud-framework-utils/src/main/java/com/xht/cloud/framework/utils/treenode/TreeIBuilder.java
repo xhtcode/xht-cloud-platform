@@ -91,7 +91,7 @@ public class TreeIBuilder<E> implements IBuilder<INode<E>> {
     }
 
     private void formatter() {
-        Map<E, INode<E>> nodeEmp = MapUtil.sortByValue(this.nodeList, false);
+        Map<E, INode<E>> nodeEmp = MapUtil.sortByValue(this.nodeList, true);
         for (INode<E> node : nodeEmp.values()) {
             if (null == node) {
                 continue;

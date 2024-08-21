@@ -7,6 +7,9 @@ package com.xht.cloud.generate.constant;
  **/
 public interface GenerateConstant {
 
+    String PATH_SEPARATOR = "/";
+    String POINT = ".";
+
     String SUCCESS_STATUS = "1";
 
     String ERROR_STATUS = "0";

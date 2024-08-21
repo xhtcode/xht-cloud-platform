@@ -71,6 +71,6 @@ public class GenCodeTemplateResponse extends Response {
      * 排序
      */
     @Schema(description = "排序")
-    private String telSort;
+    private Integer telSort;
 
 }

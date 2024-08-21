@@ -62,7 +62,7 @@ public class GenDatabaseDO extends AbstractDO {
      * 端口
      */
     @TableField(value = "port")
-    private String port;
+    private Integer port;
 
     /**
      * 用户名
@@ -75,12 +75,6 @@ public class GenDatabaseDO extends AbstractDO {
      */
     @TableField(value = "pass_word")
     private String passWord;
-
-    /**
-     * 连接状态0失败1成功
-     */
-    @TableField(value = "status")
-    private String status;
 
     /**
      * 排序

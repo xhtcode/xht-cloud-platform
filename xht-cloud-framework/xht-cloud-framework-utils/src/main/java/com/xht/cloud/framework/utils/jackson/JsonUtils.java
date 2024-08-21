@@ -1,6 +1,7 @@
 package com.xht.cloud.framework.utils.jackson;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xht.cloud.framework.exception.SysException;
 import com.xht.cloud.framework.utils.support.StringUtils;
@@ -19,6 +20,7 @@ public final class JsonUtils {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     static {
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.registerModules(new CustomJacksonModule());
     }
 
@@ -45,7 +47,7 @@ public final class JsonUtils {
                 }
                 return (T) objectMapper.readValue(json, clazz);
             } catch (Exception e) {
-                throw new SysException("系统异常 json 序列化有问题!");
+                throw new SysException("系统异常 json 序列化有问题!", e);
             }
         }
         return null;

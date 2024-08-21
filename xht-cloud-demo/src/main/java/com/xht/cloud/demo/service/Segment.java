@@ -11,18 +11,15 @@ import java.util.concurrent.atomic.AtomicLong;
  **/
 @Data
 public class Segment {
-
-    private AtomicLong value = new AtomicLong(0);
+private AtomicLong value = new AtomicLong(0);
 
     /**
      * 最大值
-     */
-    private volatile long max;
+     */private volatile long max;
 
     /**
      * 步值
-     */
-    private volatile long step;
+     */private volatile long step;
 
 
     public Segment() {

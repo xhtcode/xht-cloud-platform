@@ -10,8 +10,7 @@ import org.springframework.context.ApplicationEvent;
  **/
 @Getter
 public class TestEvent extends ApplicationEvent {
-
-    private final String name;
+private final String name;
 
     public TestEvent(String source) {
         super(source);

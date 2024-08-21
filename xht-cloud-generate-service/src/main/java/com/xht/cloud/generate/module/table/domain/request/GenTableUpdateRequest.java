@@ -58,33 +58,22 @@ public class GenTableUpdateRequest implements IUpdateRequestFun<String> {
     private String tableName;
 
     /**
+     * 模块名称
+     */
+    @Schema(description = "模块名称")
+    private String moduleName;
+
+    /**
      * 业务名称
      */
     @Schema(description = "业务名称")
-    @NotBlank(message = "业务名称 `moduleLabel` 校验不通过")
-    private String moduleLabel;
-
+    private String serviceName;
 
     /**
      * 业务描述
      */
     @Schema(description = "业务描述")
-    @NotBlank(message = "业务描述 `moduleValue` 校验不通过")
-    private String moduleValue;
-
-    /**
-     * 业务模块名称
-     */
-    @Schema(description = "业务模块名称")
-    @NotBlank(message = "业务模块名称 `moduleName` 校验不通过")
-    private String moduleName;
-
-    /**
-     * 业务模块描述
-     */
-    @NotBlank(message = "业务模块描述 `moduleDesc` 校验不通过")
-    @Schema(description = "业务模块描述")
-    private String moduleDesc;
+    private String serviceDesc;
 
     /**
      * 权限前缀
@@ -105,66 +94,6 @@ public class GenTableUpdateRequest implements IUpdateRequestFun<String> {
     @Schema(description = "代码名称")
     @NotBlank(message = "代码名称 `codeName` 校验不通过")
     private String codeName;
-
-    /**
-     * 生成类型
-     */
-    @Schema(description = "生成类型")
-    @NotBlank(message = "生成类型 `genType` 校验不通过")
-    private String genType;
-
-    /**
-     * 菜单id
-     */
-    @Schema(description = "菜单id")
-    private String menuId;
-
-    /**
-     * 是否支持 1支持
-     */
-    @Schema(description = "lombok")
-    @NotBlank(message = "lombok `lombok` 校验不通过")
-    private String lombok;
-
-    /**
-     * 是否支持 1支持
-     */
-    @Schema(description = "swagger")
-    @NotBlank(message = "swagger `swagger` 校验不通过")
-    private String swagger;
-
-    /**
-     * 是否支持 1支持
-     */
-    @Schema(description = "jsr303")
-    @NotBlank(message = "生成类型 `jsr303` 校验不通过")
-    private String jsr303;
-
-    /**
-     * 是否支持权限 1支持
-     */
-    @Schema(description = "权限")
-    @NotBlank(message = "权限校验不通过")
-    private String authorization;
-
-    /**
-     * 生成的方式 0单表 1树表
-     */
-    @Schema(description = "生成的方式")
-    @NotBlank(message = "生成的方式 `templateType` 校验不通过")
-    private String templateType;
-
-    /**
-     * 树表的上级id
-     */
-    @Schema(description = "树表的上级id")
-    private String parentId;
-
-    /**
-     * 树表的名字
-     */
-    @Schema(description = "树表的名字")
-    private String parentName;
 
     /**
      * 表创建时间

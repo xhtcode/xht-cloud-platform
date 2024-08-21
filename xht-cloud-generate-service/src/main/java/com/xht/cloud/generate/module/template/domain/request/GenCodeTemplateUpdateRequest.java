@@ -79,7 +79,7 @@ public class GenCodeTemplateUpdateRequest extends UpdateRequest<String> {
      * 排序
      */
     @Schema(description = "排序")
-    private String telSort;
+    private Integer telSort;
 
     /**
      * 获取主键

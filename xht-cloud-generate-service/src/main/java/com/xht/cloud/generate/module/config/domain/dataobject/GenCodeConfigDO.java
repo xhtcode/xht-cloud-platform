@@ -44,10 +44,6 @@ public class GenCodeConfigDO extends AbstractDO {
      */
     @TableField(value = "config_default")
     private String configDefault;
-    /**
-     * 配置详情
-     */
-    @TableField(value = "config_info")
-    private String configInfo;
+
 
 }

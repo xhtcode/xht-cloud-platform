@@ -1,16 +1,16 @@
 package com.xht.cloud.generate.module.type.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.framework.core.domain.response.PageResponse;
-import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
+import com.xht.cloud.framework.utils.support.StringUtils;
 import com.xht.cloud.generate.module.type.convert.GenColumnTypeConvert;
 import com.xht.cloud.generate.module.type.domain.dataobject.GenColumnTypeDO;
 import com.xht.cloud.generate.module.type.domain.request.GenColumnTypeCreateRequest;
 import com.xht.cloud.generate.module.type.domain.request.GenColumnTypeQueryRequest;
 import com.xht.cloud.generate.module.type.domain.request.GenColumnTypeUpdateRequest;
 import com.xht.cloud.generate.module.type.domain.response.GenColumnTypeResponse;
-import com.xht.cloud.generate.module.type.domain.wrapper.GenColumnTypeWrapper;
 import com.xht.cloud.generate.module.type.mapper.GenColumnTypeMapper;
 import com.xht.cloud.generate.module.type.service.IGenColumnTypeService;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +33,6 @@ public class GenColumnTypeServiceImpl implements IGenColumnTypeService {
     private final GenColumnTypeMapper genColumnTypeMapper;
 
     private final GenColumnTypeConvert genColumnTypeConvert;
-
-    private final static GenColumnTypeWrapper GEN_COLUMN_TYPE_WRAPPER = new GenColumnTypeWrapper();
 
     /**
      * 创建
@@ -91,7 +89,10 @@ public class GenColumnTypeServiceImpl implements IGenColumnTypeService {
      */
     @Override
     public PageResponse<GenColumnTypeResponse> findPage(GenColumnTypeQueryRequest queryRequest) {
-        IPage<GenColumnTypeDO> genColumnTypeIPage = genColumnTypeMapper.selectPage(PageTool.getPage(queryRequest), GEN_COLUMN_TYPE_WRAPPER.lambdaQuery(genColumnTypeConvert.toDO(queryRequest)));
+        LambdaQueryWrapper<GenColumnTypeDO> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(StringUtils.hasText(queryRequest.getDbLabel()), GenColumnTypeDO::getDbLabel, queryRequest.getDbLabel())
+                .eq(StringUtils.hasText(queryRequest.getDbValue()), GenColumnTypeDO::getDbValue, queryRequest.getDbValue());
+        IPage<GenColumnTypeDO> genColumnTypeIPage = genColumnTypeMapper.selectPage(PageTool.getPage(queryRequest), lambdaQueryWrapper);
         return genColumnTypeConvert.toPageResponse(genColumnTypeIPage);
     }
 

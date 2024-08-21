@@ -25,13 +25,11 @@ public class WebSocket {
 
     /**
      * 线程安全的无序的集合
-     */
-    private static final CopyOnWriteArraySet<Session> SESSIONS = new CopyOnWriteArraySet<>();
+     */private static final CopyOnWriteArraySet<Session> SESSIONS = new CopyOnWriteArraySet<>();
 
     /**
      * 存储在线连接数
-     */
-    private static final Map<String, Session> SESSION_POOL = new HashMap<>();
+     */private static final Map<String, Session> SESSION_POOL = new HashMap<>();
 
     @OnOpen
     public void onOpen(Session session, @PathParam(value = "userId") String userId) {

@@ -16,25 +16,23 @@ public class SegmentBuffer {
      */
     @Getter
     @Setter
-    private boolean initStatus;
+private boolean initStatus;
 
     /**
      * 号段key
      */
     @Getter
     @Setter
-    private String segmentKey;
-
-    private final Segment[] segments;
-
-    private int currentSegmentIndex;
+private String segmentKey;
+private final Segment[] segments;
+private int currentSegmentIndex;
 
     /**
      * 下一个segment是否处于可切换状态
      */
     @Getter
     @Setter
-    private boolean nextReady;
+private boolean nextReady;
 
 
     public SegmentBuffer() {

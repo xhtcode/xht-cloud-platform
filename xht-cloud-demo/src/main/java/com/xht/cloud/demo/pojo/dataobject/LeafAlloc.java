@@ -9,13 +9,9 @@ import lombok.Data;
 @TableName(value = "leaf_alloc")
 public class LeafAlloc {
 
-    @TableId(value = "biz_tag")
-    private String key;
-    @TableField(value = "max_id")
-    private long maxId;
-    @TableField(value = "step")
-    private int step;
-    @TableField(value = "update_time")
-    private String updateTime;
+    @TableId(value = "biz_tag")private String key;
+    @TableField(value = "max_id")private long maxId;
+    @TableField(value = "step")private int step;
+    @TableField(value = "update_time")private String updateTime;
 
 }

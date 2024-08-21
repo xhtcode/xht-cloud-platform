@@ -29,18 +29,6 @@ public class GenTableColumnDO extends BaseNoneDeleteDO {
     private String tableId;
 
     /**
-     * 表所在的数据库名称
-     */
-    @TableField(value = "table_schema")
-    private String tableSchema;
-
-    /**
-     * 表名称
-     */
-    @TableField(value = "table_name")
-    private String tableName;
-
-    /**
      * 字段名字
      */
     @TableField(value = "column_name")
@@ -70,23 +58,6 @@ public class GenTableColumnDO extends BaseNoneDeleteDO {
     @TableField(value = "column_db_type")
     private String columnDbType;
 
-    /**
-     * Java字段类型
-     */
-    @TableField(value = "column_java_type")
-    private String columnJavaType;
-
-    /**
-     * Ts字段名称
-     */
-    @TableField(value = "column_ts_type")
-    private String columnTsType;
-
-    /**
-     * 字段值示例
-     */
-    @TableField(value = "column_example")
-    private String columnExample;
 
     /**
      * 是否主键（1是）
@@ -101,16 +72,10 @@ public class GenTableColumnDO extends BaseNoneDeleteDO {
     private String columnList;
 
     /**
-     * 是否增加（1是）
+     * 增加、修改数据（1是）
      */
-    @TableField(value = "column_save")
-    private String columnSave;
-
-    /**
-     * 是否修改（1是）
-     */
-    @TableField(value = "column_update")
-    private String columnUpdate;
+    @TableField(value = "column_operation")
+    private String columnOperation;
 
     /**
      * 是否查询（1是）
@@ -121,33 +86,14 @@ public class GenTableColumnDO extends BaseNoneDeleteDO {
     /**
      * 是否必填（1是）
      */
-    @TableField(value = "column_nullable")
-    private String columnNullable;
-
-    /**
-     * 是否字典（1是）
-     */
-    @TableField(value = "column_dict")
-    private String columnDict;
-
-    /**
-     * 字段显示
-     */
-    @TableField(value = "column_html")
-    private String columnHtml;
+    @TableField(value = "column_required")
+    private String columnRequired;
 
     /**
      * 字段排序
      */
     @TableField(value = "column_sort")
     private Integer columnSort;
-
-    /**
-     * 查询方式
-     */
-    @TableField(value = "column_query_type")
-    private String columnQueryType;
-
 
     /**
      * 字段名称 get
@@ -161,10 +107,10 @@ public class GenTableColumnDO extends BaseNoneDeleteDO {
     @TableField(exist = false)
     private String columnNameSet;
 
-    /**
-     * 字段名称 set
-     */
     @TableField(exist = false)
-    private String convertMethod;
+    private String tsName;
+
+    @TableField(exist = false)
+    private String javaName;
 
 }

@@ -26,14 +26,12 @@ public class GlobalWebsocket extends SecureWebSocket {
     /**
      * key: userKye
      * value: GlobalWebsocket  这里你直接存储 session 也是可以的
-     */
-    private static final Map<String, GlobalWebsocket> CLIENTS = new ConcurrentHashMap<>();
+     */private static final Map<String, GlobalWebsocket> CLIENTS = new ConcurrentHashMap<>();
 
     /**
      * // 如果允许 一个账号 多人登录的话  就 加上  "-" + tokenTime，因为每次登录的token过期时间都是不一样的
      * clientUserInfo.getId() + "-" + clientUserInfo.getAccount() ;
-     */
-    private String userKye;
+     */private String userKye;
 
     @OnOpen
     public void onOpen(Session session, @PathParam("token") String token) {

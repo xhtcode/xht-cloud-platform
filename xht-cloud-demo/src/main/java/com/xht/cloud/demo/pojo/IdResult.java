@@ -14,8 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IdResult {
-
-    private long id;
-
-    private IdStatus status;
+private long id;
+private IdStatus status;
 }

@@ -16,9 +16,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum DelFlagEnum implements IEnum<String> {
 
-    DELETE("0", "已删除"),
+    DELETE("1", "已删除"),
 
-    NORMAL("1", "正常");
+    NORMAL("0", "未删除");
 
     @JsonValue
     @EnumValue

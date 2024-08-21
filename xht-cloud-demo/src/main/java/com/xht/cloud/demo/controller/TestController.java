@@ -26,10 +26,7 @@ import java.util.List;
 @Tag(name = "测试")
 @RestController
 @RequiredArgsConstructor
-public class TestController {
-    private final GlobalWebsocket globalWebsocket;
-    private final WebSocket webSocket;
-    private final IDAllocMapper mapper;
+public class TestController {private final GlobalWebsocket globalWebsocket;private final WebSocket webSocket;private final IDAllocMapper mapper;
 
     @GetMapping("/index")
     public R<String> websocket() {
@@ -66,8 +63,7 @@ public class TestController {
                 .bankCard("62220210001234567890")
                 .build());
     }
-
-    private final SegmentService segmentService;
+private final SegmentService segmentService;
 
     @GetMapping("/id")
     public R<IdResult> id(@RequestParam(value = "key", required = false, defaultValue = "test")String key) {

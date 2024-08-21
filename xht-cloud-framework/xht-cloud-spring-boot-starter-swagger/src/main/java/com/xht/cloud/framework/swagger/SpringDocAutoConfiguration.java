@@ -10,6 +10,7 @@ import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
@@ -25,6 +26,7 @@ import java.util.Map;
 @Slf4j
 @AutoConfiguration
 @EnableConfigurationProperties(SwaggerProperties.class)
+@ConditionalOnProperty(prefix = "springdoc.api-docs", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class SpringDocAutoConfiguration {
     private final SwaggerProperties swaggerProperties;
 

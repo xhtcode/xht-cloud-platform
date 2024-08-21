@@ -50,7 +50,7 @@ public abstract class AbstractDataBaseQuery {
             entity.setTableSchema(resultSet.getString("table_schema"));
             entity.setTableName(resultSet.getString("table_name"));
             entity.setTableEngine(resultSet.getString("table_engine"));
-            entity.setModuleValue(resultSet.getString("table_msg"));
+            entity.setServiceDesc(resultSet.getString("table_msg"));
             entity.setTableCreateTime(Convert.toLocalDateTime(resultSet.getDate("table_create_time")));
             entity.setTableUpdateTime(Convert.toLocalDateTime(resultSet.getDate("table_update_time")));
             return entity;
@@ -61,11 +61,9 @@ public abstract class AbstractDataBaseQuery {
     protected final RowMapper<GenTableColumnDO> rowColumnMapper() {
         return (resultSet, rowNum) -> {
             GenTableColumnDO entity = new GenTableColumnDO();
-            entity.setTableName(resultSet.getString("table_name"));
-            entity.setTableSchema(resultSet.getString("table_schema"));
             entity.setColumnName(resultSet.getString("column_name"));
             entity.setColumnPk(resultSet.getString("is_pk"));
-            entity.setColumnNullable(resultSet.getString("is_required"));
+            entity.setColumnRequired(resultSet.getString("is_required"));
             entity.setColumnSort(resultSet.getInt("sort"));
             entity.setColumnComment(StringUtils.emptyToDefault(resultSet.getString("column_comment"), "暂无"));
             entity.setColumnDbType(resultSet.getString("column_db_type"));

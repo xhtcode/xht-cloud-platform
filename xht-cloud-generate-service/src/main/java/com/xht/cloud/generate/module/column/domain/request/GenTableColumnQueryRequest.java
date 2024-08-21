@@ -23,20 +23,6 @@ public class GenTableColumnQueryRequest extends PageQueryRequest {
     private String tableId;
 
     /**
-     * 表所在的数据库名称
-     */
-    @Schema(description = "表所在的数据库名称")
-    @NotBlank(message = "表所在的数据库名称 `tableSchema` 校验不通过")
-    private String tableSchema;
-
-    /**
-     * 表名称
-     */
-    @Schema(description = "表名称")
-    @NotBlank(message = "表名称 `tableName` 校验不通过")
-    private String tableName;
-
-    /**
      * 字段名字
      */
     @Schema(description = "字段名字")
@@ -72,26 +58,6 @@ public class GenTableColumnQueryRequest extends PageQueryRequest {
     private String columnDbType;
 
     /**
-     * Java字段类型
-     */
-    @Schema(description = "Java字段类型")
-    @NotBlank(message = "Java字段类型 `columnJavaType` 校验不通过")
-    private String columnJavaType;
-
-    /**
-     * Ts字段名称
-     */
-    @Schema(description = "Ts字段名称")
-    @NotBlank(message = "Ts字段名称 `columnTsType` 校验不通过")
-    private String columnTsType;
-
-    /**
-     * 字段值示例
-     */
-    @Schema(description = "字段值示例")
-    private String columnExample;
-
-    /**
      * 是否主键（1是）
      */
     @Schema(description = "是否主键（1是）")
@@ -104,16 +70,11 @@ public class GenTableColumnQueryRequest extends PageQueryRequest {
     private String columnList;
 
     /**
-     * 是否增加（1是）
+     * 增加、修改数据（1是）
      */
-    @Schema(description = "是否增加（1是）")
-    private String columnSave;
+    @Schema(description = "增加、修改数据（1是）")
+    private String columnOperation;
 
-    /**
-     * 是否修改（1是）
-     */
-    @Schema(description = "是否修改（1是）")
-    private String columnUpdate;
 
     /**
      * 是否查询（1是）
@@ -125,19 +86,7 @@ public class GenTableColumnQueryRequest extends PageQueryRequest {
      * 是否必填（1是）
      */
     @Schema(description = "是否必填（1是）")
-    private String columnNullable;
-
-    /**
-     * 是否字典（1是）
-     */
-    @Schema(description = "是否字典（1是）")
-    private String columnDict;
-
-    /**
-     * 字段显示
-     */
-    @Schema(description = "字段显示")
-    private String columnHtml;
+    private String columnRequired;
 
     /**
      * 字段排序
@@ -145,9 +94,4 @@ public class GenTableColumnQueryRequest extends PageQueryRequest {
     @Schema(description = "字段排序")
     private Integer columnSort;
 
-    /**
-     * 查询方式
-     */
-    @Schema(description = "查询方式")
-    private String columnQueryType;
 }

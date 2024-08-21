@@ -61,7 +61,7 @@ public class GenDatabaseUpdateRequest extends UpdateRequest<String> {
      * 端口
      */
     @Schema(description = "端口")
-    private String port;
+    private Integer port;
 
     /**
      * 用户名
@@ -74,12 +74,6 @@ public class GenDatabaseUpdateRequest extends UpdateRequest<String> {
      */
     @Schema(description = "密码")
     private String passWord;
-
-    /**
-     * 连接状态0失败1成功
-     */
-    @Schema(description = "连接状态0失败1成功")
-    private String status;
 
     /**
      * 排序

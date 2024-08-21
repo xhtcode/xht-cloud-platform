@@ -33,8 +33,8 @@ public class MySqlDatabase extends AbstractDataBaseQuery implements IDataBaseQue
      */
     @Override
     @SuppressWarnings("all")
-    public GenTableDO selectTableByTableName(GenDatabaseDO databaseDO, String tableName) {
-        JdbcTemplate jdbcTemplate = JDBCUtils.jdbcTemplate(databaseDO);
+    public GenTableDO selectTableByTableName(JdbcTemplate jdbcTemplate,GenDatabaseDO databaseDO, String tableName) {
+
         try {
             return jdbcTemplate.queryForObject(getTableEqQuery(tableName), rowTableMapper(), tableName);
         } catch (Exception e) {
@@ -57,8 +57,7 @@ public class MySqlDatabase extends AbstractDataBaseQuery implements IDataBaseQue
 
     @Override
     @SuppressWarnings("all")
-    public List<GenTableColumnDO> selectTableColumnsByTableName(GenDatabaseDO databaseDO, String tableName) {
-        JdbcTemplate jdbcTemplate = JDBCUtils.jdbcTemplate(databaseDO);
+    public List<GenTableColumnDO> selectTableColumnsByTableName(JdbcTemplate jdbcTemplate,GenDatabaseDO databaseDO, String tableName) {
         try {
             return jdbcTemplate.query(getColumnQuery(tableName), rowColumnMapper(), tableName);
         } catch (Exception e) {

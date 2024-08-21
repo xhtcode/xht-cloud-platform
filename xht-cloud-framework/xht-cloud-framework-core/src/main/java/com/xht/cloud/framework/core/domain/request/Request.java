@@ -24,4 +24,8 @@ public abstract class Request implements Serializable {
     @JsonProperty("_t")
     private Long t;
 
+
+    @Schema(name = "keyWord", description = "关键字")
+    private String keyWord;
+
 }

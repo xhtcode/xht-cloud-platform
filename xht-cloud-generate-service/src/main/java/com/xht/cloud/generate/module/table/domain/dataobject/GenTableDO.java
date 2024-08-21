@@ -55,33 +55,29 @@ public class GenTableDO extends BaseNoneDeleteDO {
     private String tableName;
 
     /**
+     * 模块名称
+     */
+    @TableField(value = "module_name")
+    private String moduleName;
+
+    /**
      * 业务名称
      */
-    @TableField(value = "module_label")
-    private String moduleLabel;
+    @TableField(value = "service_name")
+    private String serviceName;
 
     /**
      * 业务描述
      */
-    @TableField(value = "module_value")
-    private String moduleValue;
-
-    /**
-     * 业务模块名称
-     */
-    @TableField(value = "module_name")
-    private String moduleName;
-    /**
-     * 业务模块描述
-     */
-    @TableField(value = "module_desc")
-    private String moduleDesc;
+    @TableField(value = "service_desc")
+    private String serviceDesc;
 
     /**
      * 权限前缀
      */
     @TableField(value = "authorization_prefix")
     private String authorizationPrefix;
+
     /**
      * controller地址前缀
      */
@@ -93,61 +89,6 @@ public class GenTableDO extends BaseNoneDeleteDO {
      */
     @TableField(value = "code_name")
     private String codeName;
-
-    /**
-     * 生成类型
-     */
-    @TableField(value = "gen_type")
-    private String genType;
-
-    /**
-     * 菜单id
-     */
-    @TableField(value = "menu_id")
-    private String menuId;
-
-    /**
-     * 是否支持 1支持
-     */
-    @TableField(value = "lombok")
-    private String lombok;
-
-    /**
-     * 是否支持 1支持
-     */
-    @TableField(value = "swagger")
-    private String swagger;
-
-    /**
-     * 是否支持 1支持
-     */
-    @TableField(value = "jsr303")
-    private String jsr303;
-
-    /**
-     * 是否支持 1支持
-     */
-    @TableField(value = "authorization")
-    private String authorization;
-
-    /**
-     * 生成的方式 0单表 1树表
-     */
-    @TableField(value = "template_type")
-    private String templateType;
-
-    /**
-     * 树表的上级id
-     */
-    @TableField(value = "parent_id")
-    private String parentId;
-
-    /**
-     * 树表的名字
-     */
-    @TableField(value = "parent_name")
-    private String parentName;
-
 
     /**
      * 表创建时间

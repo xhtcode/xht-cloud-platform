@@ -16,8 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class InitSegment {
-
-    private final IDAllocMapper idAllocMapper;
+private final IDAllocMapper idAllocMapper;
 
     /**
      * 初始化号段

@@ -22,15 +22,11 @@ import java.util.concurrent.atomic.AtomicLong;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class SegmentIDGenerate implements IDGenerate {
-    private final IDAllocMapper idAllocMapper;
-    private final InitSegment initSegment;
-
-    private final Map<String, SegmentBuffer> cache = new ConcurrentHashMap<>();
+public class SegmentIDGenerate implements IDGenerate {private final IDAllocMapper idAllocMapper;private final InitSegment initSegment;
+private final Map<String, SegmentBuffer> cache = new ConcurrentHashMap<>();
     /**
      * 是否已经进行初始化
-     */
-    private volatile boolean initOK = false;
+     */private volatile boolean initOK = false;
 
     @Override
     public void init() {

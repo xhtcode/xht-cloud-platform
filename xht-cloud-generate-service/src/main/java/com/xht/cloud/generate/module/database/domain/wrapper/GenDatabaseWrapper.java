@@ -2,12 +2,12 @@ package com.xht.cloud.generate.module.database.domain.wrapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.xht.cloud.framework.utils.support.StringUtils;
 import com.xht.cloud.framework.mybatis.wrapper.EntityWrapper;
+import com.xht.cloud.framework.utils.support.StringUtils;
 import com.xht.cloud.generate.module.database.domain.dataobject.GenDatabaseDO;
-import java.util.Objects;
-
 import org.springframework.util.ObjectUtils;
+
+import java.util.Objects;
 
 /**
  * 描述 ：代码生成器-数据源管理
@@ -67,10 +67,9 @@ public final class GenDatabaseWrapper implements EntityWrapper<GenDatabaseDO> {
                 .eq(StringUtils.hasText(entity.getDbName()), GenDatabaseDO::getDbName, entity.getDbName())
                 .eq(StringUtils.hasText(entity.getDbDescribe()), GenDatabaseDO::getDbDescribe, entity.getDbDescribe())
                 .eq(StringUtils.hasText(entity.getHost()), GenDatabaseDO::getHost, entity.getHost())
-                .eq(StringUtils.hasText(entity.getPort()), GenDatabaseDO::getPort, entity.getPort())
+                .eq(Objects.nonNull(entity.getPort()), GenDatabaseDO::getPort, entity.getPort())
                 .eq(StringUtils.hasText(entity.getUserName()), GenDatabaseDO::getUserName, entity.getUserName())
                 .eq(StringUtils.hasText(entity.getPassWord()), GenDatabaseDO::getPassWord, entity.getPassWord())
-                .eq(StringUtils.hasText(entity.getStatus()), GenDatabaseDO::getStatus, entity.getStatus())
                 .eq(!ObjectUtils.isEmpty(entity.getSort()), GenDatabaseDO::getSort, entity.getSort())
         ;
     }
@@ -97,7 +96,6 @@ public final class GenDatabaseWrapper implements EntityWrapper<GenDatabaseDO> {
                 .set(GenDatabaseDO::getPort, entity.getPort())
                 .set(GenDatabaseDO::getUserName, entity.getUserName())
                 .set(GenDatabaseDO::getPassWord, entity.getPassWord())
-                .set(GenDatabaseDO::getStatus, entity.getStatus())
                 .set(GenDatabaseDO::getSort, entity.getSort())
         ;
     }

@@ -52,27 +52,23 @@ public class GenTableResponse extends Response {
     private String tableName;
 
     /**
+     * 模块名称
+     */
+    @Schema(description = "模块名称")
+    private String moduleName;
+
+    /**
      * 业务名称
      */
     @Schema(description = "业务名称")
-    private String moduleLabel;
+    private String serviceName;
 
     /**
      * 业务描述
      */
     @Schema(description = "业务描述")
-    private String moduleValue;
-    /**
-     * 业务模块名称
-     */
-    @Schema(description = "业务模块名称")
-    private String moduleName;
+    private String serviceDesc;
 
-    /**
-     * 业务模块描述
-     */
-    @Schema(description = "业务模块描述")
-    private String moduleDesc;
     /**
      * 权限前缀
      */
@@ -89,61 +85,6 @@ public class GenTableResponse extends Response {
      */
     @Schema(description = "代码名称")
     private String codeName;
-
-    /**
-     * 生成类型
-     */
-    @Schema(description = "生成类型")
-    private String genType;
-
-    /**
-     * 菜单id
-     */
-    @Schema(description = "菜单id")
-    private String menuId;
-
-
-    /**
-     * 是否支持 1支持
-     */
-    @Schema(description = "lombok")
-    private String lombok;
-
-    /**
-     * 是否支持 1支持
-     */
-    @Schema(description = "swagger")
-    private String swagger;
-
-    /**
-     * 是否支持 1支持
-     */
-    @Schema(description = "jsr303")
-    private String jsr303;
-
-    /**
-     * 是否支持权限 1支持
-     */
-    @Schema(description = "权限")
-    private String authorization;
-
-    /**
-     * 生成的方式 0单表 1树表
-     */
-    @Schema(description = "生成的方式")
-    private String templateType;
-
-    /**
-     * 树表的上级id
-     */
-    @Schema(description = "树表的上级id")
-    private String parentId;
-
-    /**
-     * 树表的名字
-     */
-    @Schema(description = "树表的名字")
-    private String parentName;
 
     /**
      * 表创建时间

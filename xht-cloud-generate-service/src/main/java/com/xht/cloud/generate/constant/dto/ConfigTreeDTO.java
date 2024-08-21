@@ -1,9 +1,14 @@
 package com.xht.cloud.generate.constant.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xht.cloud.generate.module.template.domain.dataobject.GenCodeTemplateDO;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,12 +16,12 @@ import java.util.List;
  *
  * @author 小糊涂
  **/
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ConfigTreeDTO {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ConfigTreeDTO implements Serializable {
 
     private String id;
 
@@ -34,13 +39,4 @@ public class ConfigTreeDTO {
     @JsonIgnore
     private GenCodeTemplateDO genCodeTemplateDO;
 
-    @Override
-    public String toString() {
-        return "ConfigTreeDTO{" +
-                "id='" + id + '\'' +
-                ", label='" + label + '\'' +
-                ", fileType='" + fileType + '\'' +
-                ", templateId='" + templateId + '\'' +
-                '}';
-    }
 }

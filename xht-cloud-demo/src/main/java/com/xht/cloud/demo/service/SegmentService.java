@@ -12,8 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class SegmentService {
-
-    private final IDGenerate idGenerate;
+private final IDGenerate idGenerate;
 
     public SegmentService(IDGenerate idGenerate) {
         this.idGenerate = idGenerate;

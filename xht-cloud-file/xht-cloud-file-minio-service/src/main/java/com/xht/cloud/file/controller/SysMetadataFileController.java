@@ -66,12 +66,12 @@ public class SysMetadataFileController {
     }
 
     /**
-     * 分页查询文件信息
+     * 查询文件列表信息
      *
      * @param queryRequest {@link SysMetadataFileQueryRequest}
      * @return {@link PageResponse<SysMetadataFileResponse>} 分页详情
      */
-    @Operation(summary = "分页查询文件信息")
+    @Operation(summary = "查询文件列表信息")
     @GetMapping
     public R<PageResponse<SysMetadataFileResponse>> findPage(SysMetadataFileQueryRequest queryRequest) {
         return ok(sysMetadataFileService.findPage(queryRequest));

@@ -3,6 +3,7 @@ package com.xht.cloud.generate.support;
 import com.xht.cloud.generate.module.column.domain.dataobject.GenTableColumnDO;
 import com.xht.cloud.generate.module.database.domain.dataobject.GenDatabaseDO;
 import com.xht.cloud.generate.module.table.domain.dataobject.GenTableDO;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public interface IDataBaseQuery {
      * @param tableName  表名
      * @return {@link GenTableDO}
      */
-    GenTableDO selectTableByTableName(GenDatabaseDO databaseDO, String tableName);
+    GenTableDO selectTableByTableName(JdbcTemplate jdbcTemplate,GenDatabaseDO databaseDO, String tableName);
 
     /**
      * 根据表名查询据多表信息
@@ -41,7 +42,7 @@ public interface IDataBaseQuery {
      * @param tableName     业务描述
      * @return 字段信息
      */
-    List<GenTableColumnDO> selectTableColumnsByTableName(GenDatabaseDO GenDatabaseDO, String tableName);
+    List<GenTableColumnDO> selectTableColumnsByTableName(JdbcTemplate jdbcTemplate,GenDatabaseDO GenDatabaseDO, String tableName);
 
 
     /**

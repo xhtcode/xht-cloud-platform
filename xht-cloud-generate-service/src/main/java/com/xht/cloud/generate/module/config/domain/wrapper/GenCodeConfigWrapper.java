@@ -2,12 +2,12 @@ package com.xht.cloud.generate.module.config.domain.wrapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.xht.cloud.framework.utils.support.StringUtils;
 import com.xht.cloud.framework.mybatis.wrapper.EntityWrapper;
+import com.xht.cloud.framework.utils.support.StringUtils;
 import com.xht.cloud.generate.module.config.domain.dataobject.GenCodeConfigDO;
-import java.util.Objects;
-
 import org.springframework.util.ObjectUtils;
+
+import java.util.Objects;
 
 /**
  * 描述 ：代码生成器-配置中心
@@ -64,7 +64,6 @@ public final class GenCodeConfigWrapper implements EntityWrapper<GenCodeConfigDO
                 .eq(StringUtils.hasText(entity.getConfigName()), GenCodeConfigDO::getConfigName, entity.getConfigName())
                 .eq(StringUtils.hasText(entity.getConfigDesc()), GenCodeConfigDO::getConfigDesc, entity.getConfigDesc())
                 .eq(!ObjectUtils.isEmpty(entity.getConfigSort()), GenCodeConfigDO::getConfigSort, entity.getConfigSort())
-                .eq(StringUtils.hasText(entity.getConfigInfo()), GenCodeConfigDO::getConfigInfo, entity.getConfigInfo())
         ;
     }
 
@@ -84,7 +83,6 @@ public final class GenCodeConfigWrapper implements EntityWrapper<GenCodeConfigDO
                 .set(GenCodeConfigDO::getConfigName, entity.getConfigName())
                 .set(GenCodeConfigDO::getConfigDesc, entity.getConfigDesc())
                 .set(GenCodeConfigDO::getConfigSort, entity.getConfigSort())
-                .set(GenCodeConfigDO::getConfigInfo, entity.getConfigInfo())
         ;
     }
 

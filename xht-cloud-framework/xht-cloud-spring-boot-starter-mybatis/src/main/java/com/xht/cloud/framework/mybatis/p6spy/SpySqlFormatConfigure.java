@@ -1,6 +1,7 @@
 package com.xht.cloud.framework.mybatis.p6spy;
 
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
+import com.xht.cloud.framework.core.trace.TraceIdUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -25,6 +26,7 @@ public class SpySqlFormatConfigure implements MessageFormattingStrategy {
         System.err.println("==========================================  Sql Start  ==========================================\n");
         System.err.println("线程名称:\t" + Thread.currentThread().getName());
         System.err.println("执行时间:\t" + now);
+        System.err.println("traceId:\t" + TraceIdUtils.getTraceId());
         System.err.println("执行耗时:\t" + elapsed + " 毫秒");
         return sql;
     }

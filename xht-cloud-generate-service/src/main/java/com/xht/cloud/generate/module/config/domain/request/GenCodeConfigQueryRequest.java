@@ -37,11 +37,5 @@ public class GenCodeConfigQueryRequest extends PageQueryRequest {
     @IntegerInterval(message = "排序 `sort` 字段值在0到999之间")
     private Integer configSort;
 
-    /**
-     * 配置详情
-     */
-    @Schema(description = "配置详情")
-    @NotEmpty(message = "配置详情", groups = {Update.class, Create.class})
-    private String configInfo;
 
 }

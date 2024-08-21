@@ -2,8 +2,8 @@ package com.xht.cloud.generate.module.table.domain.wrapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.xht.cloud.framework.utils.support.StringUtils;
 import com.xht.cloud.framework.mybatis.wrapper.EntityWrapper;
+import com.xht.cloud.framework.utils.support.StringUtils;
 import com.xht.cloud.generate.module.table.domain.dataobject.GenTableDO;
 
 import java.util.Objects;
@@ -31,7 +31,6 @@ public final class GenTableWrapper implements EntityWrapper<GenTableDO> {
                 .eq(StringUtils.hasText(entity.getId()), GenTableDO::getId, entity.getId())
                 .eq(StringUtils.hasText(entity.getConfigId()), GenTableDO::getConfigId, entity.getConfigId())
                 .like(StringUtils.hasText(entity.getTableName()), GenTableDO::getTableName, entity.getTableName())
-                .eq(StringUtils.hasText(entity.getGenType()), GenTableDO::getGenType, entity.getGenType())
         ;
     }
 
@@ -53,22 +52,12 @@ public final class GenTableWrapper implements EntityWrapper<GenTableDO> {
                 .set(GenTableDO::getTableSchema, entity.getTableSchema())
                 .set(GenTableDO::getTableEngine, entity.getTableEngine())
                 .set(GenTableDO::getTableName, entity.getTableName())
-                .set(GenTableDO::getModuleLabel, entity.getModuleLabel())
-                .set(GenTableDO::getModuleValue, entity.getModuleValue())
                 .set(GenTableDO::getModuleName, entity.getModuleName())
-                .set(GenTableDO::getModuleDesc, entity.getModuleDesc())
+                .set(GenTableDO::getServiceDesc, entity.getServiceDesc())
+                .set(GenTableDO::getServiceName, entity.getServiceName())
                 .set(GenTableDO::getAuthorizationPrefix, entity.getAuthorizationPrefix())
                 .set(GenTableDO::getPathUrl, entity.getPathUrl())
                 .set(GenTableDO::getCodeName, entity.getCodeName())
-                .set(GenTableDO::getGenType, entity.getGenType())
-                .set(GenTableDO::getMenuId, entity.getMenuId())
-                .set(GenTableDO::getLombok, entity.getLombok())
-                .set(GenTableDO::getSwagger, entity.getSwagger())
-                .set(GenTableDO::getJsr303, entity.getJsr303())
-                .set(GenTableDO::getAuthorization, entity.getAuthorization())
-                .set(GenTableDO::getParentId, entity.getParentId())
-                .set(GenTableDO::getParentName, entity.getParentName())
-                .set(GenTableDO::getTemplateType, entity.getTemplateType())
                 .set(GenTableDO::getTableCreateTime, entity.getTableCreateTime())
                 .set(GenTableDO::getTableUpdateTime, entity.getTableUpdateTime())
         ;

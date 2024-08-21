@@ -19,7 +19,7 @@ public interface IGenerateCoreService {
      * @param tableId 表id
      * @return 代码文件树的格式
      */
-    List<INode<String>> viewCode(GenCodeRequest genCodeRequest,final String tableId);
+    List<INode<Long>> viewCode(GenCodeRequest genCodeRequest,final String tableId);
 
     /**
      * 代码下载

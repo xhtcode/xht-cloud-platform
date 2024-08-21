@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 描述 ：生成代码请求
@@ -33,5 +34,7 @@ public class GenCodeRequest extends CreateRequest {
     @NotEmpty(message = "表id不能为空", groups = {DownGroups.class})
     @Schema(description = "表id")
     private List<String> tableIds;
+
+    private Map<String, Object> extra;
 
 }

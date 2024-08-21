@@ -1,8 +1,10 @@
 package com.xht.cloud.generate.module.template.domain.dataobject;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.xht.cloud.framework.mybatis.dataobject.AbstractDO;
-import com.xht.cloud.framework.mybatis.enums.DelFlagEnum;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.xht.cloud.framework.mybatis.dataobject.DeleteDO;
 import lombok.Data;
 
 /**
@@ -12,7 +14,7 @@ import lombok.Data;
  **/
 @Data
 @TableName(value = "gen_code_template")
-public class GenCodeTemplateDO extends AbstractDO {
+public class GenCodeTemplateDO extends DeleteDO {
 
     /**
      * id
@@ -74,10 +76,4 @@ public class GenCodeTemplateDO extends AbstractDO {
     @TableField(value = "tel_sort")
     private Integer telSort;
 
-    /**
-     * 是否删除(0未删除1已经删除)
-     */
-    @TableLogic
-    @TableField(value = "del_flag", fill = FieldFill.INSERT)
-    private DelFlagEnum delFlag;
 }

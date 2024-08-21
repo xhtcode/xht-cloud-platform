@@ -13,6 +13,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageVo {
-
-    private String message;
+private String message;
 }
