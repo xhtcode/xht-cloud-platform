@@ -100,7 +100,7 @@ public class Oauth2RegisteredClientController {
      * 分页查询
      *
      * @param queryRequest {@link Oauth2RegisteredClientQueryRequest}
-     * @return {@link PageResponse<Oauth2RegisteredClientResponse>} 分页详情
+     * @return {@link Oauth2RegisteredClientResponse} 分页详情
      */
     @Operation(summary = "分页查询-oauth2 客户端信息")
     @GetMapping

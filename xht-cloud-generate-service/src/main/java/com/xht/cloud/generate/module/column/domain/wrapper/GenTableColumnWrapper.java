@@ -60,8 +60,8 @@ public final class GenTableColumnWrapper implements EntityWrapper<GenTableColumn
         }
         LambdaQueryWrapper<GenTableColumnDO> wrapper = new LambdaQueryWrapper<>();
         return wrapper
-                .eq(StringUtils.hasText(entity.getId()), GenTableColumnDO::getId, entity.getId())
-                .eq(StringUtils.hasText(entity.getTableId()), GenTableColumnDO::getTableId, entity.getTableId())
+                .eq(Objects.nonNull(entity.getId()), GenTableColumnDO::getId, entity.getId())
+                .eq(Objects.nonNull(entity.getTableId()), GenTableColumnDO::getTableId, entity.getTableId())
                 .eq(StringUtils.hasText(entity.getColumnName()), GenTableColumnDO::getColumnName, entity.getColumnName())
                 .eq(!ObjectUtils.isEmpty(entity.getColumnLength()), GenTableColumnDO::getColumnLength, entity.getColumnLength())
                 .eq(StringUtils.hasText(entity.getColumnCodeName()), GenTableColumnDO::getColumnCodeName, entity.getColumnCodeName())

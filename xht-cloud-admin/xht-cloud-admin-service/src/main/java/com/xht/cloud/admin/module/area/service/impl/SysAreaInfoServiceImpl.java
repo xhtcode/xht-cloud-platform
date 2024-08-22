@@ -11,7 +11,6 @@ import com.xht.cloud.admin.module.area.domain.response.SysAreaInfoResponse;
 import com.xht.cloud.admin.module.area.mapper.SysAreaInfoMapper;
 import com.xht.cloud.admin.module.area.service.ISysAreaInfoService;
 import com.xht.cloud.framework.core.constant.TreeConstant;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.utils.support.StringUtils;
 import com.xht.cloud.framework.utils.treenode.INode;
@@ -95,7 +94,7 @@ public class SysAreaInfoServiceImpl implements ISysAreaInfoService {
      * 按条件查询全部
      *
      * @param queryRequest {@link SysAreaInfoQueryRequest}
-     * @return {@link PageResponse<SysAreaInfoResponse>} 详情
+     * @return {@link SysAreaInfoResponse} 详情
      */
     @Override
     public List<SysAreaInfoResponse> list(SysAreaInfoQueryRequest queryRequest) {

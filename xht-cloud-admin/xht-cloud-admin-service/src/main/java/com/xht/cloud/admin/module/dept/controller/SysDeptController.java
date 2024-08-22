@@ -5,9 +5,8 @@ import com.xht.cloud.admin.module.dept.domain.request.SysDeptQueryRequest;
 import com.xht.cloud.admin.module.dept.domain.request.SysDeptUpdateRequest;
 import com.xht.cloud.admin.module.dept.domain.response.SysDeptResponse;
 import com.xht.cloud.admin.module.dept.service.ISysDeptService;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
-import com.xht.cloud.framework.redis.idempotent.annotation.Idempotent;
 import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.redis.idempotent.annotation.Idempotent;
 import com.xht.cloud.framework.utils.treenode.INode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -101,7 +100,7 @@ public class SysDeptController {
      * 查询树
      *
      * @param queryRequest {@link SysDeptQueryRequest}
-     * @return {@link PageResponse<SysDeptResponse>} 分页详情
+     * @return {@link SysDeptResponse} 分页详情
      */
     @Operation(summary = "查询树-部门")
     @GetMapping

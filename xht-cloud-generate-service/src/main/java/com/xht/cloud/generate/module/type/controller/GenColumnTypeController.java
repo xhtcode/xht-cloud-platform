@@ -97,7 +97,7 @@ public class GenColumnTypeController {
      * 分页查询
      *
      * @param queryRequest {@link GenColumnTypeQueryRequest}
-     * @return {@link PageResponse<GenColumnTypeResponse>} 分页详情
+     * @return {@link GenColumnTypeResponse} 分页详情
      */
     @Operation(summary = "分页查询-代码生成器-字段类型对应")
     @GetMapping

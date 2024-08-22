@@ -60,7 +60,7 @@ public final class GenDatabaseWrapper implements EntityWrapper<GenDatabaseDO> {
         }
         LambdaQueryWrapper<GenDatabaseDO> wrapper = new LambdaQueryWrapper<>();
         return wrapper
-                .eq(StringUtils.hasText(entity.getId()), GenDatabaseDO::getId, entity.getId())
+                .eq(Objects.nonNull(entity.getId()), GenDatabaseDO::getId, entity.getId())
                 .eq(StringUtils.hasText(entity.getConnName()), GenDatabaseDO::getConnName, entity.getConnName())
                 .eq(StringUtils.hasText(entity.getDbUrl()), GenDatabaseDO::getDbUrl, entity.getDbUrl())
                 .eq(StringUtils.hasText(entity.getDbType()), GenDatabaseDO::getDbType, entity.getDbType())

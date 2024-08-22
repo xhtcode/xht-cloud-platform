@@ -98,7 +98,7 @@ public class SysUserController {
      * 分页查询
      *
      * @param queryRequest {@link SysUserQueryRequest}
-     * @return {@link PageResponse<SysUserResponse>} 分页详情
+     * @return {@link SysUserResponse} 分页详情
      */
     @Operation(summary = "分页查询-用户")
     @GetMapping

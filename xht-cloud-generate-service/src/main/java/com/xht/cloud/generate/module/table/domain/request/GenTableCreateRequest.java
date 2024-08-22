@@ -21,12 +21,12 @@ public class GenTableCreateRequest extends CreateRequest {
      * config_id
      */
     @Schema(description = "config_id")
-    private String configId;
+    private Long configId;
     /**
      * 数据源id
      */
     @Schema(description = "数据源id")
-    private String genDbId;
+    private Long genDbId;
 
     /**
      * 表所在的数据库名称

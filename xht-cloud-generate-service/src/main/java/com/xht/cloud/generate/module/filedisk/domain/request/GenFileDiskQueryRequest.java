@@ -2,7 +2,7 @@ package com.xht.cloud.generate.module.filedisk.domain.request;
 
 import com.xht.cloud.framework.core.domain.request.PageQueryRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -23,9 +23,9 @@ public class GenFileDiskQueryRequest extends PageQueryRequest {
     /**
      * 配置id
      */
-    @NotEmpty(message = "配置id不能为空")
+    @NotNull(message = "配置id不能为空")
     @Schema(description = "配置id")
-    private String configId;
+    private Long configId;
 
 
     /**

@@ -23,7 +23,7 @@ public interface IGenTableService {
      * @param createRequest {@link GenTableCreateRequest}
      * @return {@link String} 主键
      */
-    String create(GenTableCreateRequest createRequest);
+    Long create(GenTableCreateRequest createRequest);
 
     /**
      * 根据id修改
@@ -51,7 +51,7 @@ public interface IGenTableService {
      * 分页查询
      *
      * @param queryRequest {@link GenTableQueryRequest}
-     * @return {@link PageResponse<GenTableResponse>} 分页详情
+     * @return {@link GenTableResponse} 分页详情
      */
     PageResponse<GenTableResponse> findPage(GenTableQueryRequest queryRequest);
 

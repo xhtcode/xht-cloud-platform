@@ -90,7 +90,7 @@ public class GenDatabaseController {
      * 分页查询
      *
      * @param queryRequest {@link GenDatabaseQueryRequest}
-     * @return {@link PageResponse<GenDatabaseResponse>} 分页详情
+     * @return {@link GenDatabaseResponse} 分页详情
      */
     @Operation(summary = "分页查询-代码生成器-数据源管理")
     @GetMapping
@@ -102,7 +102,7 @@ public class GenDatabaseController {
      * 查询集合
      *
      * @param queryRequest {@link GenDatabaseQueryRequest}
-     * @return {@link PageResponse<GenDatabaseResponse>} 分页详情
+     * @return {@link GenDatabaseResponse} 分页详情
      */
     @Operation(summary = "查询集合-代码生成器-数据源管理")
     @GetMapping("/list/")

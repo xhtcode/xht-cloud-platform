@@ -53,7 +53,7 @@ public interface ISysDictTypeService {
      * 分页查询
      *
      * @param queryRequest {@link SysDictTypeQueryRequest}
-     * @return {@link PageResponse< SysDictTypeResponse >} 分页详情
+     * @return {@link SysDictTypeResponse} 分页详情
      */
     PageResponse<SysDictTypeResponse> findPage(SysDictTypeQueryRequest queryRequest);
 

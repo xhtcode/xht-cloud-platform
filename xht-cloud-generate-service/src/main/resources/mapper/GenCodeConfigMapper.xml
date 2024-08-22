@@ -3,23 +3,4 @@
 
 <mapper namespace="com.xht.cloud.generate.module.config.mapper.GenCodeConfigMapper">
 
-    <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.xht.cloud.generate.module.config.domain.dataobject.GenCodeConfigDO">
-        <result column="id" property="id" />
-        <result column="config_name" property="configName" />
-        <result column="config_desc" property="configDesc" />
-        <result column="config_sort" property="configSort" />
-        <result column="config_info" property="configInfo" />
-    </resultMap>
-
-
-    <!-- 通用查询结果列 -->
-    <sql id="BaseColumnList">
-        id,
-        config_name,
-        config_desc,
-        config_sort,
-        config_info
-    </sql>
-
 </mapper>

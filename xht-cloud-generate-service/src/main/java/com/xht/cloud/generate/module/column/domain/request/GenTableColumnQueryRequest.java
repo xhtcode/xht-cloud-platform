@@ -5,6 +5,7 @@ import com.xht.cloud.framework.core.domain.request.PageQueryRequest;
 import com.xht.cloud.framework.web.validation.IntegerInterval;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -19,8 +20,8 @@ public class GenTableColumnQueryRequest extends PageQueryRequest {
      * 表id
      */
     @Schema(description = "表id")
-    @NotBlank(message = "表id `tableId` 校验不通过")
-    private String tableId;
+    @NotNull(message = "表id `tableId` 校验不通过")
+    private Long tableId;
 
     /**
      * 字段名字

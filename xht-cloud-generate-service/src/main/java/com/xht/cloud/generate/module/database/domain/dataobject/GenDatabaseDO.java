@@ -19,8 +19,8 @@ public class GenDatabaseDO extends AbstractDO {
     /**
      * id
      */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     /**
      * 连接名称

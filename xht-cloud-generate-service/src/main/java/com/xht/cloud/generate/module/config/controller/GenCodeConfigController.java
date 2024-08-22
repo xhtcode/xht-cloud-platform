@@ -88,7 +88,7 @@ public class GenCodeConfigController {
      * 分页查询
      *
      * @param queryRequest {@link GenCodeConfigQueryRequest}
-     * @return {@link PageResponse<GenCodeConfigResponse>} 分页详情
+     * @return {@link GenCodeConfigResponse} 分页详情
      */
     @GetMapping
     public R<PageResponse<GenCodeConfigResponse>> findPage(GenCodeConfigQueryRequest queryRequest) {

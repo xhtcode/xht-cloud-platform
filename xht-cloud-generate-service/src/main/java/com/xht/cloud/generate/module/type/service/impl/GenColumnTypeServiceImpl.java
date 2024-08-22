@@ -42,7 +42,7 @@ public class GenColumnTypeServiceImpl implements IGenColumnTypeService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public String create(GenColumnTypeCreateRequest createRequest) {
+    public Long create(GenColumnTypeCreateRequest createRequest) {
         GenColumnTypeDO entity = genColumnTypeConvert.toDO(createRequest);
         genColumnTypeMapper.insert(entity);
         return entity.getId();
@@ -85,7 +85,7 @@ public class GenColumnTypeServiceImpl implements IGenColumnTypeService {
      * 分页查询
      *
      * @param queryRequest {@link GenColumnTypeQueryRequest}
-     * @return {@link PageResponse<GenColumnTypeResponse>} 分页详情
+     * @return {@link GenColumnTypeResponse} 分页详情
      */
     @Override
     public PageResponse<GenColumnTypeResponse> findPage(GenColumnTypeQueryRequest queryRequest) {

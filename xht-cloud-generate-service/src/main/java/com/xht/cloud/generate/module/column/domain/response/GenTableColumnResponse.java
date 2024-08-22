@@ -18,13 +18,13 @@ public class GenTableColumnResponse extends Response {
      * 字段名字
      */
     @Schema(description = "字段名字")
-    private String id;
+    private Long id;
 
     /**
      * 表id
      */
     @Schema(description = "表id")
-    private String tableId;
+    private Long tableId;
 
     /**
      * 字段名字

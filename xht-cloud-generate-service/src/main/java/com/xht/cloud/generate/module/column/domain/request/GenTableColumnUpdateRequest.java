@@ -5,6 +5,7 @@ import com.xht.cloud.framework.core.domain.request.UpdateRequest;
 import com.xht.cloud.framework.web.validation.IntegerInterval;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -14,20 +15,20 @@ import lombok.Data;
  **/
 @Data
 @Schema(name = "GenTableColumnRequest(代码生成业务字段-修改请求信息)", description = "代码生成业务字段-修改请求信息")
-public class GenTableColumnUpdateRequest extends UpdateRequest<String> {
+public class GenTableColumnUpdateRequest extends UpdateRequest<Long> {
 
     /**
      * 字段名字
      */
     @Schema(description = "字段名字")
-    @NotBlank(message = "字段名字 `id` 校验不通过")
-    private String id;
+    @NotNull(message = "字段名字 `id` 校验不通过")
+    private Long id;
     /**
      * 表id
      */
     @Schema(description = "表id")
-    @NotBlank(message = "表id `tableId` 校验不通过")
-    private String tableId;
+    @NotNull(message = "表id `tableId` 校验不通过")
+    private Long tableId;
 
     /**
      * 字段名字
@@ -104,7 +105,7 @@ public class GenTableColumnUpdateRequest extends UpdateRequest<String> {
      * 获取主键
      */
     @Override
-    public String getPkId() {
+    public Long getPkId() {
         return this.id;
     }
 }

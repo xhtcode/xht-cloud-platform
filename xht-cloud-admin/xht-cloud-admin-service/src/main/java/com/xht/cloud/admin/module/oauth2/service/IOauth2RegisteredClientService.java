@@ -49,7 +49,7 @@ public interface IOauth2RegisteredClientService {
      * 分页查询
      *
      * @param queryRequest {@link Oauth2RegisteredClientQueryRequest}
-     * @return {@link PageResponse<Oauth2RegisteredClientResponse>} 分页详情
+     * @return {@link Oauth2RegisteredClientResponse} 分页详情
      */
     PageResponse<Oauth2RegisteredClientResponse> findPage(Oauth2RegisteredClientQueryRequest queryRequest);
 

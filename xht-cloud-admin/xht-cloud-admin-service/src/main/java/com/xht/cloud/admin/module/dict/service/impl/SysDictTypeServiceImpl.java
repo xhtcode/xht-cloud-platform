@@ -119,7 +119,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
      * 分页查询字典类型
      *
      * @param queryRequest {@link SysDictTypeQueryRequest}
-     * @return {@link PageResponse<SysDictTypeResponse>} 分页详情
+     * @return {@link SysDictTypeResponse} 分页详情
      */
     @Override
     public PageResponse<SysDictTypeResponse> findPage(SysDictTypeQueryRequest queryRequest) {

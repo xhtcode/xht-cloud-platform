@@ -98,7 +98,7 @@ public class SysRoleController {
      * 分页查询
      *
      * @param queryRequest {@link SysRoleQueryRequest}
-     * @return {@link PageResponse<SysRoleResponse>} 分页详情
+     * @return {@link SysRoleResponse} 分页详情
      */
     @Operation(summary = "分页查询-系统角色表")
     @GetMapping

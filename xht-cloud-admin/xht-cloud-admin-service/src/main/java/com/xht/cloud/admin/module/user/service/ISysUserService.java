@@ -52,7 +52,7 @@ public interface ISysUserService {
      * 分页查询
      *
      * @param queryRequest {@link SysUserQueryRequest}
-     * @return {@link PageResponse<SysUserResponse>} 分页详情
+     * @return {@link SysUserResponse} 分页详情
      */
     PageResponse<SysUserResponse> findPage(SysUserQueryRequest queryRequest);
 

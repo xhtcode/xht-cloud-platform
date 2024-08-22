@@ -50,7 +50,7 @@ public interface ISysSequenceService {
      * 分页查询
      *
      * @param queryRequest {@link SysSequenceQueryRequest}
-     * @return {@link PageResponse <SysSequenceResponse>} 分页详情
+     * @return {@link SysSequenceResponse} 分页详情
      */
     PageResponse<SysSequenceResponse> findPage(SysSequenceQueryRequest queryRequest);
 

@@ -18,9 +18,9 @@ public interface IGenDatabaseService{
      * 创建
      *
      * @param createRequest {@link GenDatabaseCreateRequest}
-     * @return {@link String} 主键
+     * @return {@link Long} 主键
      */
-    String create(GenDatabaseCreateRequest createRequest);
+    Long create(GenDatabaseCreateRequest createRequest);
 
     /**
      * 根据id修改
@@ -47,7 +47,7 @@ public interface IGenDatabaseService{
     /**
      * 分页查询
      * @param queryRequest {@link GenDatabaseQueryRequest}
-     * @return {@link PageResponse<GenDatabaseResponse>} 分页详情
+     * @return {@link GenDatabaseResponse} 分页详情
      */
     PageResponse<GenDatabaseResponse> findPage(GenDatabaseQueryRequest queryRequest);
 
@@ -55,7 +55,7 @@ public interface IGenDatabaseService{
      * 查询集合
      *
      * @param queryRequest {@link GenDatabaseQueryRequest}
-     * @return {@link PageResponse<GenDatabaseResponse>} 分页详情
+     * @return {@link GenDatabaseResponse} 分页详情
      */
     List<GenDatabaseResponse> list(GenDatabaseQueryRequest queryRequest);
 }

@@ -5,8 +5,8 @@ import cn.hutool.core.util.IdUtil;
 import com.xht.cloud.framework.core.R;
 import com.xht.cloud.framework.utils.treenode.INode;
 import com.xht.cloud.generate.core.controller.request.GenCodeRequest;
-import com.xht.cloud.generate.core.groups.DownGroups;
 import com.xht.cloud.generate.core.service.IGenerateCoreService;
+import com.xht.cloud.generate.exception.GenerateException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -56,7 +56,7 @@ public class GenerateCoreController {
      */
     @Operation(summary = "代码下载")
     @PostMapping("/code/download")
-    public void downloadCode(HttpServletResponse response, @Validated(DownGroups.class) @RequestBody GenCodeRequest genCodeRequest) {
+    public void downloadCode(HttpServletResponse response, @RequestBody GenCodeRequest genCodeRequest) {
         try {
             byte[] data = generateCoreService.downloadCode(genCodeRequest);
             response.reset();
@@ -66,7 +66,7 @@ public class GenerateCoreController {
             IoUtil.write(response.getOutputStream(), true, data);
         } catch (Exception e) {
             log.info("代码下载异常{}", e.getMessage(), e);
-            throw new RuntimeException("代码下载异常！");
+            throw new GenerateException("代码下载异常！");
         }
     }
 }

@@ -49,7 +49,7 @@ public interface ISysRoleService {
      * 分页查询
      *
      * @param queryRequest {@link SysRoleQueryRequest}
-     * @return {@link PageResponse<SysRoleResponse>} 分页详情
+     * @return {@link SysRoleResponse} 分页详情
      */
     PageResponse<SysRoleResponse> findPage(SysRoleQueryRequest queryRequest);
 

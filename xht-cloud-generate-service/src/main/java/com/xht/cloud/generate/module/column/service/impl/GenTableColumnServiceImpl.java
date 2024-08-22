@@ -2,16 +2,15 @@ package com.xht.cloud.generate.module.column.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.framework.core.domain.response.PageResponse;
-import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
+import com.xht.cloud.generate.module.column.convert.GenTableColumnConvert;
+import com.xht.cloud.generate.module.column.domain.dataobject.GenTableColumnDO;
 import com.xht.cloud.generate.module.column.domain.request.GenTableColumnCreateRequest;
 import com.xht.cloud.generate.module.column.domain.request.GenTableColumnQueryRequest;
 import com.xht.cloud.generate.module.column.domain.request.GenTableColumnUpdateRequest;
 import com.xht.cloud.generate.module.column.domain.response.GenTableColumnResponse;
-import com.xht.cloud.generate.module.column.convert.GenTableColumnConvert;
-import com.xht.cloud.generate.module.column.domain.dataobject.GenTableColumnDO;
-import com.xht.cloud.generate.module.column.mapper.GenTableColumnMapper;
 import com.xht.cloud.generate.module.column.domain.wrapper.GenTableColumnWrapper;
+import com.xht.cloud.generate.module.column.mapper.GenTableColumnMapper;
 import com.xht.cloud.generate.module.column.service.IGenTableColumnService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,11 +37,11 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
      * 创建
      *
      * @param createRequest {@link GenTableColumnCreateRequest}
-     * @return {@link String} 主键
+     * @return {@link Long} 主键
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public String create(GenTableColumnCreateRequest createRequest) {
+    public Long create(GenTableColumnCreateRequest createRequest) {
         GenTableColumnDO entity = genTableColumnConvert.toDO(createRequest);
         genTableColumnMapper.insert(entity);
         return entity.getId();
@@ -85,7 +84,7 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
      * 分页查询
      *
      * @param queryRequest {@link GenTableColumnQueryRequest}
-     * @return {@link PageResponse<GenTableColumnResponse>} 分页详情
+     * @return {@link GenTableColumnResponse} 分页详情
      */
     @Override
     public PageResponse<GenTableColumnResponse> findPage(GenTableColumnQueryRequest queryRequest) {

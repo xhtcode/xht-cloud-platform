@@ -34,7 +34,7 @@ public class GenFileDiskResponse extends Response {
      * 配置id
      */
     @Schema(description = "配置id")
-    private String configId;
+    private Long configId;
 
     /**
      * 文件名称

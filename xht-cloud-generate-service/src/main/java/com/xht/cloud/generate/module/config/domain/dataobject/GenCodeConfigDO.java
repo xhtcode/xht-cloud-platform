@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.xht.cloud.framework.mybatis.dataobject.AbstractDO;
+import com.xht.cloud.framework.mybatis.dataobject.BaseDO;
 import lombok.Data;
 
 /**
@@ -14,13 +14,13 @@ import lombok.Data;
  **/
 @Data
 @TableName(value = "gen_code_config")
-public class GenCodeConfigDO extends AbstractDO {
+public class GenCodeConfigDO extends BaseDO {
 
     /**
      * id
      */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     /**
      * 配置名称
@@ -39,11 +39,6 @@ public class GenCodeConfigDO extends AbstractDO {
      */
     @TableField(value = "config_sort")
     private Integer configSort;
-    /**
-     * 是否默认 1是
-     */
-    @TableField(value = "config_default")
-    private String configDefault;
 
 
 }

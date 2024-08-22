@@ -83,7 +83,7 @@ public class SysPositionServiceImpl implements ISysPositionService {
      * 分页查询
      *
      * @param queryRequest {@link SysPositionQueryRequest}
-     * @return {@link PageResponse<SysPositionResponse>} 分页详情
+     * @return {@link SysPositionResponse} 分页详情
      */
     @Override
     public PageResponse<SysPositionResponse> findPage(SysPositionQueryRequest queryRequest) {

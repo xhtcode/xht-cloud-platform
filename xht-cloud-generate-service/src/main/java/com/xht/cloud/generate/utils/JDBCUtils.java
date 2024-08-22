@@ -3,10 +3,11 @@ package com.xht.cloud.generate.utils;
 import com.xht.cloud.generate.constant.enums.DataBaseType;
 import com.xht.cloud.generate.module.database.domain.dataobject.GenDatabaseDO;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.sql.*;
+import java.util.Objects;
 
 /**
  * 描述 ：JDBC工具类
@@ -18,79 +19,42 @@ import java.sql.*;
 @Slf4j
 public class JDBCUtils {
 
-    private static final int CONNECTION_TIMEOUTS_SECONDS = 6;
+    @Getter
+    private final JdbcTemplate jdbcTemplate;
 
-    /**
-     * 1.私有构造方法
-     */
-    private JDBCUtils() {
+    private final HikariDataSource dataSource;
+
+    public JDBCUtils(JdbcTemplate jdbcTemplate, HikariDataSource dataSource) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.dataSource = dataSource;
     }
 
-    /**
-     * 获得数据库连接
-     */
-    public static Connection getConnection(GenDatabaseDO database) {
-        try {
-            DriverManager.setLoginTimeout(CONNECTION_TIMEOUTS_SECONDS);
-            DataBaseType byDbType = DataBaseType.getByDbType(database.getDbType());
-            Class.forName(byDbType.getDriverClass());
-            Connection connection = DriverManager.getConnection(database.getDbUrl(), database.getUserName(), database.getPassWord());
-            log.info("{} 连接成功 数据库类型:`{}` url:`{}`", database.getConnName(), database.getDbType(), database.getDbUrl());
-            return connection;
-        } catch (Exception e) {
-            log.debug("连接出错了 e={}", e.getMessage(), e);
-            throw new RuntimeException("数据库链接失败");
-        }
-    }
-
-    public static JdbcTemplate jdbcTemplate(GenDatabaseDO database) {
+    public static JDBCUtils jdbcTemplate(GenDatabaseDO database) {
         DataBaseType byDbType = DataBaseType.getByDbType(database.getDbType());
         HikariDataSource datasource = new HikariDataSource();
+        datasource.setConnectionTestQuery("SELECT 1");
+        datasource.setConnectionTimeout(60000);
+        datasource.setMinimumIdle(2);
+        datasource.setMaximumPoolSize(100);
+        datasource.setMaxLifetime(600000);
+        datasource.setValidationTimeout(5000);
+        datasource.setIdleTimeout(300000);
+        datasource.setLeakDetectionThreshold(500000);
         datasource.setJdbcUrl(database.getDbUrl());
         datasource.setUsername(database.getUserName());
         datasource.setPassword(database.getPassWord());
         datasource.setDriverClassName(byDbType.getDriverClass());
-        return new JdbcTemplate(datasource);
+        return new JDBCUtils(new JdbcTemplate(datasource), datasource);
     }
 
-    /**
-     * 5.查询操作时所使用的的释放资源方法
-     *
-     * @param conn Connection
-     * @param st   Statement
-     * @param rs   ResultSet
-     */
-    public static void close(Connection conn, Statement st, ResultSet rs) {
-        close(conn, st);
-        if (rs != null) {
+    public void close() {
+        if (Objects.nonNull(this.dataSource)) {
             try {
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+                this.dataSource.close();
+            } catch (Exception ignored) {
+
             }
         }
     }
 
-    /**
-     * 5.增删改操作时所使用的的释放资源方法
-     *
-     * @param conn Connection
-     * @param st   Statement
-     */
-    public static void close(Connection conn, Statement st) {
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (st != null) {
-            try {
-                st.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

@@ -20,7 +20,6 @@ import com.xht.cloud.admin.module.user.domain.response.MetaVo;
 import com.xht.cloud.admin.module.user.domain.response.RouterVo;
 import com.xht.cloud.admin.tool.ExceptionTool;
 import com.xht.cloud.framework.exception.Assert;
-import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.security.utils.SecurityContextUtil;
 import com.xht.cloud.framework.utils.support.StringUtils;
 import com.xht.cloud.framework.utils.treenode.INode;
@@ -257,7 +256,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
                 result.add(new TreeNode<>(menu.getId(), menu.getParentId(), menu.getMenuSort()).setExtra(BeanUtil.beanToMap(menu)));
             }
         }
-        return TreeUtils.buildList(result);
+        return TreeUtils.buildList(result, Boolean.FALSE);
     }
 
     /**

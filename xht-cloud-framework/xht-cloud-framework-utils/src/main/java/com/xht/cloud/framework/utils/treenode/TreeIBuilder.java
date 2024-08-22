@@ -29,6 +29,7 @@ public class TreeIBuilder<E> implements IBuilder<INode<E>> {
      */
     private final Map<E, INode<E>> nodeList;
     private boolean isBuild;
+    private Boolean desc = false;
 
 
     private TreeIBuilder() {
@@ -82,7 +83,8 @@ public class TreeIBuilder<E> implements IBuilder<INode<E>> {
         return this.root;
     }
 
-    public List<INode<E>> buildList() {
+    public List<INode<E>> buildList(Boolean desc) {
+        this.desc = desc;
         if (isBuild) {
             // 已经构建过了
             return this.root.getChildren();
@@ -91,7 +93,7 @@ public class TreeIBuilder<E> implements IBuilder<INode<E>> {
     }
 
     private void formatter() {
-        Map<E, INode<E>> nodeEmp = MapUtil.sortByValue(this.nodeList, true);
+        Map<E, INode<E>> nodeEmp = MapUtil.sortByValue(this.nodeList, desc);
         for (INode<E> node : nodeEmp.values()) {
             if (null == node) {
                 continue;

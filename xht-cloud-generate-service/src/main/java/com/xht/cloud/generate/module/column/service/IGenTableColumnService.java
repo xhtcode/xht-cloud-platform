@@ -18,9 +18,9 @@ public interface IGenTableColumnService{
      * 创建
      *
      * @param createRequest {@link GenTableColumnCreateRequest}
-     * @return {@link String} 主键
+     * @return {@link Long} 主键
      */
-    String create(GenTableColumnCreateRequest createRequest);
+    Long create(GenTableColumnCreateRequest createRequest);
 
     /**
      * 根据id修改
@@ -47,7 +47,7 @@ public interface IGenTableColumnService{
     /**
      * 分页查询
      * @param queryRequest {@link GenTableColumnQueryRequest}
-     * @return {@link PageResponse<GenTableColumnResponse>} 分页详情
+     * @return {@link GenTableColumnResponse} 分页详情
      */
     PageResponse<GenTableColumnResponse> findPage(GenTableColumnQueryRequest queryRequest);
 

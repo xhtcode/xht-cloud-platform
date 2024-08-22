@@ -5,6 +5,7 @@ import com.xht.cloud.framework.core.domain.request.IUpdateRequestFun;
 import com.xht.cloud.generate.module.column.domain.request.GenTableColumnUpdateRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -17,24 +18,24 @@ import java.util.List;
  **/
 @Data
 @Schema(name = "GenTableRequest(代码生成器-数据库信息-修改请求信息)", description = "代码生成器-数据库信息-修改请求信息")
-public class GenTableUpdateRequest implements IUpdateRequestFun<String> {
+public class GenTableUpdateRequest implements IUpdateRequestFun<Long> {
 
     /**
      * id
      */
     @Schema(description = "id")
-    @NotBlank(message = "id `id` 校验不通过")
-    private String id;
+    @NotNull(message = "id `id` 校验不通过")
+    private Long id;
     /**
      * config_id
      */
     @Schema(description = "config_id")
-    private String configId;
+    private Long configId;
     /**
      * 数据源id
      */
     @Schema(description = "数据源id")
-    private String genDbId;
+    private Long genDbId;
 
     /**
      * 表所在的数据库名称
@@ -113,7 +114,7 @@ public class GenTableUpdateRequest implements IUpdateRequestFun<String> {
      * 获取主键
      */
     @Override
-    public String getPkId() {
+    public Long getPkId() {
         return this.id;
     }
 }

@@ -60,6 +60,11 @@ public final class TreeUtils {
 
     public static <T> List<INode<T>> buildList(List<INode<T>> result) {
         TreeIBuilder<T> of = TreeIBuilder.of();
-        return of.appendList(result).buildList();
+        return of.appendList(result).buildList(Boolean.TRUE);
+    }
+
+    public static <T> List<INode<T>> buildList(List<INode<T>> result, Boolean desc) {
+        TreeIBuilder<T> of = TreeIBuilder.of();
+        return of.appendList(result).buildList(desc);
     }
 }

@@ -102,12 +102,12 @@ public final class GenerateTool {
     }
 
     /**
-     * 获取模块名称
+     * 获取业务命名成
      *
-     * @param tableName 表明
+     * @param tableName 表名称
      * @return String
      */
-    public static String getModuleName(String tableName) {
+    public static String getServiceName(String tableName) {
         int lastIndex = tableName.indexOf("_");
         int nameLength = tableName.length();
         return StrUtil.sub(tableName, 0, lastIndex > 0 ? lastIndex : nameLength);
@@ -135,7 +135,7 @@ public final class GenerateTool {
     }
 
     /**
-     * 获取类名
+     * 获取字段名称
      *
      * @param tableName 表名
      * @return 类 名

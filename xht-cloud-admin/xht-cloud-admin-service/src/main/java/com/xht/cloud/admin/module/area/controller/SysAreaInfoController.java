@@ -99,7 +99,7 @@ public class SysAreaInfoController {
      * 按条件查询全部
      *
      * @param queryRequest {@link SysAreaInfoQueryRequest}
-     * @return {@link PageResponse<SysAreaInfoResponse>} 详情
+     * @return {@link SysAreaInfoResponse} 详情
      */
     @Operation(summary = "查询全部-地区信息")
     @GetMapping

@@ -8,6 +8,7 @@ import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.mybatis.tool.SqlHelper;
 import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.generate.exception.GenerateException;
 import com.xht.cloud.generate.module.config.domain.dataobject.GenCodeConfigDO;
 import com.xht.cloud.generate.module.config.mapper.GenCodeConfigMapper;
 import com.xht.cloud.generate.module.filedisk.convert.GenFileDiskConvert;
@@ -72,7 +73,7 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
     @Transactional(rollbackFor = Exception.class)
     public void create(GenFileDiskCreateRequest createRequest) {
         Assert.notNull(createRequest, "createRequest 文件信息不能为空");
-        String configId = createRequest.getConfigId();
+        Long configId = createRequest.getConfigId();
         if (!SqlHelper.exist(genCodeConfigMapper.selectCount(GenCodeConfigDO::getId, configId))) {
             throw new BizException("配置信息查询不到，文件创建失败");
         }
@@ -116,14 +117,14 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
     public void update(GenFileDiskUpdateRequest updateRequest) {
         Assert.notNull(updateRequest, "updateRequest 文件信息不能为空");
         if (!SqlHelper.exist(genCodeConfigMapper.selectCount(GenCodeConfigDO::getId, updateRequest.getConfigId()))) {
-            throw new RuntimeException("配置信息查询不到，文件创建失败");
+            throw new GenerateException("配置信息查询不到，文件创建失败");
         }
         Long parentId = updateRequest.getParentId();
         GenFileDiskDO parentGenFileDiskDO = findParentId(parentId);
         if (Objects.equals("2", parentGenFileDiskDO.getFileType()) && !Objects.equals("3", updateRequest.getFileType())) {
             updateRequest.setFileType("2");
         }
-        String configId = updateRequest.getConfigId();
+        Long configId = updateRequest.getConfigId();
         String fileName = updateRequest.getFileName();
         String fileDesc = updateRequest.getFileDesc();
         String fileType = updateRequest.getFileType();
@@ -196,7 +197,7 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
     @Override
     public List<GenFileDiskResponse> findList(GenFileDiskQueryRequest queryRequest) {
         Long parentId = queryRequest.getParentId();
-        String configId = queryRequest.getConfigId();
+        Long configId = queryRequest.getConfigId();
         String filePath = queryRequest.getFilePath();
         String notFileType = queryRequest.getNotFileType();
         Assert.notNull(queryRequest, "queryRequest 不能为空！");
@@ -204,7 +205,7 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
         LambdaQueryWrapper<GenFileDiskDO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper
                 .eq(Objects.nonNull(parentId), GenFileDiskDO::getParentId, parentId)
-                .eq(StringUtils.hasText(configId), GenFileDiskDO::getConfigId, configId)
+                .eq(Objects.nonNull(configId), GenFileDiskDO::getConfigId, configId)
                 .ne(StringUtils.hasText(notFileType), GenFileDiskDO::getFileType, notFileType)
                 .eq(StringUtils.hasText(filePath), GenFileDiskDO::getFilePath, filePath)
                 .orderByAsc(GenFileDiskDO::getFileType)
@@ -238,7 +239,7 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void moveFile(String source, String target, String configId) {
+    public void moveFile(String source, String target, Long configId) {
         GenFileDiskDO fileDiskDO = new GenFileDiskDO();
         fileDiskDO.setConfigId(configId);
         if (!Objects.equals("-1", target)) {

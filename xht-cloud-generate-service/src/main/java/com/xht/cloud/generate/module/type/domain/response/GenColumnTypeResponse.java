@@ -17,7 +17,7 @@ public class GenColumnTypeResponse extends Response {
      * id
      */
     @Schema(description = "id")
-    private String id;
+    private Long id;
 
     /**
      * 数据库类型

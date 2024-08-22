@@ -99,7 +99,7 @@ public class SysDictTypeController {
      * 分页查询字典类型
      *
      * @param queryRequest {@link SysDictTypeQueryRequest}
-     * @return {@link PageResponse< SysDictTypeResponse >} 分页详情
+     * @return {@link SysDictTypeResponse} 分页详情
      */
     @Operation(summary = "分页查询-字典类型")
     @GetMapping

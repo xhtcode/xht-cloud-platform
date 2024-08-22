@@ -17,7 +17,7 @@ public class GenDatabaseResponse extends Response {
      * id
      */
     @Schema(description = "id")
-    private String id;
+    private Long id;
 
     /**
      * 连接名称

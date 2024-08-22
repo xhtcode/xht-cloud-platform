@@ -98,7 +98,7 @@ public class SysConfigController {
      * 分页查询
      *
      * @param queryRequest {@link SysConfigQueryRequest}
-     * @return {@link PageResponse<SysConfigResponse>} 分页详情
+     * @return {@link SysConfigResponse} 分页详情
      */
     @Operation(summary = "分页查询-系统配置信息")
     @GetMapping

@@ -17,7 +17,7 @@ public class GenCodeConfigResponse extends Response {
      * id
      */
     @Schema(description = "id")
-    private String id;
+    private Long id;
 
     /**
      * 配置名称

@@ -20,7 +20,7 @@ public interface IGenColumnTypeService{
      * @param createRequest {@link GenColumnTypeCreateRequest}
      * @return {@link String} 主键
      */
-    String create(GenColumnTypeCreateRequest createRequest);
+    Long create(GenColumnTypeCreateRequest createRequest);
 
     /**
      * 根据id修改
@@ -47,7 +47,7 @@ public interface IGenColumnTypeService{
     /**
      * 分页查询
      * @param queryRequest {@link GenColumnTypeQueryRequest}
-     * @return {@link PageResponse<GenColumnTypeResponse>} 分页详情
+     * @return {@link GenColumnTypeResponse} 分页详情
      */
     PageResponse<GenColumnTypeResponse> findPage(GenColumnTypeQueryRequest queryRequest);
 

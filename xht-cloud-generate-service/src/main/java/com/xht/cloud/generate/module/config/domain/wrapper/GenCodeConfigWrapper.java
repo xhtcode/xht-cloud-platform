@@ -60,7 +60,7 @@ public final class GenCodeConfigWrapper implements EntityWrapper<GenCodeConfigDO
         }
         LambdaQueryWrapper<GenCodeConfigDO> wrapper = new LambdaQueryWrapper<>();
         return wrapper
-                .eq(StringUtils.hasText(entity.getId()), GenCodeConfigDO::getId, entity.getId())
+                .eq(Objects.nonNull(entity.getId()), GenCodeConfigDO::getId, entity.getId())
                 .eq(StringUtils.hasText(entity.getConfigName()), GenCodeConfigDO::getConfigName, entity.getConfigName())
                 .eq(StringUtils.hasText(entity.getConfigDesc()), GenCodeConfigDO::getConfigDesc, entity.getConfigDesc())
                 .eq(!ObjectUtils.isEmpty(entity.getConfigSort()), GenCodeConfigDO::getConfigSort, entity.getConfigSort())

@@ -62,7 +62,7 @@ public class GenFileDiskController {
 
     @Operation(summary = "根据id修改-文件")
     @PutMapping("/{source}/{target}/{configId}")
-    public R<Boolean> moveFile(@PathVariable("source") String source, @PathVariable("target") String target, @PathVariable("configId") String configId) {
+    public R<Boolean> moveFile(@PathVariable("source") String source, @PathVariable("target") String target, @PathVariable("configId") Long configId) {
         fileDiskService.moveFile(source, target, configId);
         return ok(Boolean.TRUE);
     }

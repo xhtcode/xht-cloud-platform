@@ -2,16 +2,15 @@ package com.xht.cloud.generate.module.database.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.framework.core.domain.response.PageResponse;
-import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
+import com.xht.cloud.generate.module.database.convert.GenDatabaseConvert;
+import com.xht.cloud.generate.module.database.domain.dataobject.GenDatabaseDO;
 import com.xht.cloud.generate.module.database.domain.request.GenDatabaseCreateRequest;
 import com.xht.cloud.generate.module.database.domain.request.GenDatabaseQueryRequest;
 import com.xht.cloud.generate.module.database.domain.request.GenDatabaseUpdateRequest;
 import com.xht.cloud.generate.module.database.domain.response.GenDatabaseResponse;
-import com.xht.cloud.generate.module.database.convert.GenDatabaseConvert;
-import com.xht.cloud.generate.module.database.domain.dataobject.GenDatabaseDO;
-import com.xht.cloud.generate.module.database.mapper.GenDatabaseMapper;
 import com.xht.cloud.generate.module.database.domain.wrapper.GenDatabaseWrapper;
+import com.xht.cloud.generate.module.database.mapper.GenDatabaseMapper;
 import com.xht.cloud.generate.module.database.service.IGenDatabaseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,11 +37,11 @@ public class GenDatabaseServiceImpl implements IGenDatabaseService {
      * 创建
      *
      * @param createRequest {@link GenDatabaseCreateRequest}
-     * @return {@link String} 主键
+     * @return {@link Long} 主键
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public String create(GenDatabaseCreateRequest createRequest) {
+    public Long create(GenDatabaseCreateRequest createRequest) {
         GenDatabaseDO entity = genDatabaseConvert.toDO(createRequest);
         genDatabaseMapper.insert(entity);
         return entity.getId();
@@ -85,7 +84,7 @@ public class GenDatabaseServiceImpl implements IGenDatabaseService {
      * 分页查询
      *
      * @param queryRequest {@link GenDatabaseQueryRequest}
-     * @return {@link PageResponse<GenDatabaseResponse>} 分页详情
+     * @return {@link GenDatabaseResponse} 分页详情
      */
     @Override
     public PageResponse<GenDatabaseResponse> findPage(GenDatabaseQueryRequest queryRequest) {
@@ -97,7 +96,7 @@ public class GenDatabaseServiceImpl implements IGenDatabaseService {
      * 查询集合
      *
      * @param queryRequest {@link GenDatabaseQueryRequest}
-     * @return {@link PageResponse<GenDatabaseResponse>} 分页详情
+     * @return {@link GenDatabaseResponse} 分页详情
      */
     @Override
     public List<GenDatabaseResponse> list(GenDatabaseQueryRequest queryRequest) {

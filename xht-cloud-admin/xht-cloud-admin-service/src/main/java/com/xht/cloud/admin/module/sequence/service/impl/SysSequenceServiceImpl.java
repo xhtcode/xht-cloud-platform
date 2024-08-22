@@ -13,7 +13,6 @@ import com.xht.cloud.admin.module.sequence.mapper.SysSequenceMapper;
 import com.xht.cloud.admin.module.sequence.service.ISysSequenceService;
 import com.xht.cloud.framework.core.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
-import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 描述 ：序列生成器
@@ -107,7 +105,7 @@ public class SysSequenceServiceImpl implements ISysSequenceService {
      * 分页查询序列
      *
      * @param queryRequest {@link SysSequenceQueryRequest}
-     * @return {@link PageResponse <SysSequenceResponse>} 分页详情
+     * @return {@link SysSequenceResponse} 分页详情
      */
     @Override
     public PageResponse<SysSequenceResponse> findPage(SysSequenceQueryRequest queryRequest) {

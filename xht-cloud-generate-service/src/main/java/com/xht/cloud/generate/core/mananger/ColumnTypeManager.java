@@ -29,15 +29,23 @@ public class ColumnTypeManager {
 
     private static final Map<String, String> TS_TYPE = new ConcurrentHashMap<>();
 
-    public String getJavaType(String name) {
-        if (!StringUtils.hasText(name)) return "String";
-        String item = JAVA_TYPE.get(name.toLowerCase());
+    /**
+     * 获取java类型
+     * @param columnCodeName 字段名称
+     */
+    public String getJavaType(String columnCodeName) {
+        if (!StringUtils.hasText(columnCodeName)) return "String";
+        String item = JAVA_TYPE.get(columnCodeName.toLowerCase());
         return StringUtils.hasText(item) ? item : "String";
     }
 
-    public String getTsType(String name) {
-        if (!StringUtils.hasText(name)) return "any";
-        String item = TS_TYPE.get(name.toLowerCase());
+    /**
+     * 获取ts类型
+     * @param columnCodeName 字段名称
+     */
+    public String getTsType(String columnCodeName) {
+        if (!StringUtils.hasText(columnCodeName)) return "any";
+        String item = TS_TYPE.get(columnCodeName.toLowerCase());
         return StringUtils.hasText(item) ? item : "any";
     }
 

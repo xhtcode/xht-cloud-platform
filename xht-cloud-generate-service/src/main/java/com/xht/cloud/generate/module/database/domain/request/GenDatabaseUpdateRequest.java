@@ -2,7 +2,7 @@ package com.xht.cloud.generate.module.database.domain.request;
 
 import com.xht.cloud.framework.core.domain.request.UpdateRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -12,14 +12,14 @@ import lombok.Data;
  **/
 @Data
 @Schema(name = "GenDatabaseRequest(代码生成器-数据源管理-修改请求信息)", description = "代码生成器-数据源管理-修改请求信息")
-public class GenDatabaseUpdateRequest extends UpdateRequest<String> {
+public class GenDatabaseUpdateRequest extends UpdateRequest<Long> {
 
     /**
      * id
      */
     @Schema(description = "id")
-    @NotBlank(message = "id `id` 校验不通过")
-    private String id;
+    @NotNull(message = "id `id` 校验不通过")
+    private Long id;
 
     /**
      * 连接名称
@@ -85,7 +85,7 @@ public class GenDatabaseUpdateRequest extends UpdateRequest<String> {
      * 获取主键
      */
     @Override
-    public String getPkId() {
+    public Long getPkId() {
         return this.id;
     }
 }

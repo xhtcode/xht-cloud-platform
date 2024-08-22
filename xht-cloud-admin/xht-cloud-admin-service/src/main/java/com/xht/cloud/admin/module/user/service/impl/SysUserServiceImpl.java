@@ -229,7 +229,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * 分页查询用户
      *
      * @param queryRequest {@link SysUserQueryRequest}
-     * @return {@link PageResponse<SysUserResponse>} 分页详情
+     * @return {@link SysUserResponse} 分页详情
      */
     @Override
     public PageResponse<SysUserResponse> findPage(SysUserQueryRequest queryRequest) {

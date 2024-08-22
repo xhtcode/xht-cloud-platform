@@ -19,14 +19,14 @@ public class GenTableColumnDO extends BaseNoneDeleteDO {
     /**
      * 字段名字
      */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     /**
      * 表id
      */
     @TableField(value = "table_id")
-    private String tableId;
+    private Long tableId;
 
     /**
      * 字段名字

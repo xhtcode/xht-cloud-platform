@@ -21,20 +21,20 @@ public class GenTableDO extends BaseNoneDeleteDO {
     /**
      * id
      */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     /**
      * id
      */
     @TableField(value = "config_id")
-    private String configId;
+    private Long configId;
 
     /**
      * 数据源id
      */
     @TableField(value = "gen_db_id")
-    private String genDbId;
+    private Long genDbId;
 
     /**
      * 表所在的数据库名称

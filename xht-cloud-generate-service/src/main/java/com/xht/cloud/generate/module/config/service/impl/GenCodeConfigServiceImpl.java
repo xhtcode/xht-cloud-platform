@@ -3,16 +3,15 @@ package com.xht.cloud.generate.module.config.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.framework.core.domain.response.PageResponse;
-import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
+import com.xht.cloud.generate.module.config.convert.GenCodeConfigConvert;
+import com.xht.cloud.generate.module.config.domain.dataobject.GenCodeConfigDO;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigCreateRequest;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigQueryRequest;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigUpdateRequest;
 import com.xht.cloud.generate.module.config.domain.response.GenCodeConfigResponse;
-import com.xht.cloud.generate.module.config.convert.GenCodeConfigConvert;
-import com.xht.cloud.generate.module.config.domain.dataobject.GenCodeConfigDO;
-import com.xht.cloud.generate.module.config.mapper.GenCodeConfigMapper;
 import com.xht.cloud.generate.module.config.domain.wrapper.GenCodeConfigWrapper;
+import com.xht.cloud.generate.module.config.mapper.GenCodeConfigMapper;
 import com.xht.cloud.generate.module.config.service.IGenCodeConfigService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,11 +38,11 @@ public class GenCodeConfigServiceImpl implements IGenCodeConfigService {
      * 创建
      *
      * @param createRequest {@link GenCodeConfigCreateRequest}
-     * @return {@link String} 主键
+     * @return {@link Long} 主键
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public String create(GenCodeConfigCreateRequest createRequest) {
+    public Long create(GenCodeConfigCreateRequest createRequest) {
         GenCodeConfigDO entity = genCodeConfigConvert.toDO(createRequest);
         genCodeConfigMapper.insert(entity);
         return entity.getId();
@@ -86,7 +85,7 @@ public class GenCodeConfigServiceImpl implements IGenCodeConfigService {
      * 分页查询
      *
      * @param queryRequest {@link GenCodeConfigQueryRequest}
-     * @return {@link PageResponse<GenCodeConfigResponse>} 分页详情
+     * @return {@link GenCodeConfigResponse} 分页详情
      */
     @Override
     public PageResponse<GenCodeConfigResponse> findPage(GenCodeConfigQueryRequest queryRequest) {

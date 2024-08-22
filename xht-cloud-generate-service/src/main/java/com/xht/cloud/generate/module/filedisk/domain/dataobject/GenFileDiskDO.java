@@ -38,7 +38,7 @@ public class GenFileDiskDO extends BaseNoneDeleteDO implements Serializable {
      * 配置id
      */
     @TableField("config_id")
-    private String configId;
+    private Long configId;
 
     /**
      * 文件名称

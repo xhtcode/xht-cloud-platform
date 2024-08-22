@@ -7,12 +7,11 @@ import com.xht.cloud.framework.core.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
 import com.xht.cloud.generate.constant.GenerateConstant;
+import com.xht.cloud.generate.exception.GenerateException;
 import com.xht.cloud.generate.module.column.convert.GenTableColumnConvert;
 import com.xht.cloud.generate.module.column.domain.dataobject.GenTableColumnDO;
 import com.xht.cloud.generate.module.column.domain.request.GenTableColumnUpdateRequest;
 import com.xht.cloud.generate.module.column.mapper.GenTableColumnMapper;
-import com.xht.cloud.generate.module.config.domain.dataobject.GenCodeConfigDO;
-import com.xht.cloud.generate.module.config.mapper.GenCodeConfigMapper;
 import com.xht.cloud.generate.module.database.domain.dataobject.GenDatabaseDO;
 import com.xht.cloud.generate.module.database.mapper.GenDatabaseMapper;
 import com.xht.cloud.generate.module.table.convert.GenTableConvert;
@@ -51,8 +50,6 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class GenTableServiceImpl implements IGenTableService {
 
-    private final GenCodeConfigMapper genCodeConfigMapper;
-
     private final GenTableMapper genTableMapper;
 
     private final GenDatabaseMapper genDatabaseMapper;
@@ -71,11 +68,11 @@ public class GenTableServiceImpl implements IGenTableService {
      * 创建
      *
      * @param createRequest {@link GenTableCreateRequest}
-     * @return {@link String} 主键
+     * @return {@link Long} 主键
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public String create(GenTableCreateRequest createRequest) {
+    public Long create(GenTableCreateRequest createRequest) {
         GenTableDO entity = genTableConvert.toDO(createRequest);
         genTableMapper.insert(entity);
         return entity.getId();
@@ -130,7 +127,7 @@ public class GenTableServiceImpl implements IGenTableService {
      * 分页查询
      *
      * @param queryRequest {@link GenTableQueryRequest}
-     * @return {@link PageResponse<GenTableResponse>} 分页详情
+     * @return {@link GenTableResponse} 分页详情
      */
     @Override
     public PageResponse<GenTableResponse> findPage(GenTableQueryRequest queryRequest) {
@@ -148,31 +145,35 @@ public class GenTableServiceImpl implements IGenTableService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean importTable(final ImportRequest importRequest) {
-        String dbId = importRequest.getDbId();
-        GenDatabaseDO genDatabaseDO = genDatabaseMapper.findById(dbId).orElse(null);
-        if (Objects.isNull(genDatabaseDO)) {
-            return Boolean.FALSE;
-        }
+        Long dbId = importRequest.getDbId();
+        GenDatabaseDO genDatabaseDO = genDatabaseMapper.findById(dbId).orElseThrow(() -> new GenerateException("查询不到数据源信息！"));
         List<String> tableNames = importRequest.getTableNames();
         IDataBaseQuery dataBaseQuery = dataBaseQueryFactory.getStrategy(genDatabaseDO.getDbType());
-        JdbcTemplate jdbcTemplate = JDBCUtils.jdbcTemplate(genDatabaseDO);
-        for (String tableName : tableNames) {
-            GenTableDO genTableDO = dataBaseQuery.selectTableByTableName(jdbcTemplate, genDatabaseDO, tableName);
-            List<GenTableColumnDO> columnDOList = dataBaseQuery.selectTableColumnsByTableName(jdbcTemplate, genDatabaseDO, tableName);
-            saveInfo(genDatabaseDO, genTableDO, columnDOList);
+        JDBCUtils jdbcUtils = JDBCUtils.jdbcTemplate(genDatabaseDO);
+        try {
+            JdbcTemplate jdbcTemplate = jdbcUtils.getJdbcTemplate();
+            for (String tableName : tableNames) {
+                GenTableDO genTableDO = dataBaseQuery.selectTableByTableName(jdbcTemplate, genDatabaseDO, tableName);
+                List<GenTableColumnDO> columnDOList = dataBaseQuery.selectTableColumnsByTableName(jdbcTemplate, genDatabaseDO, tableName);
+                saveInfo(importRequest, genDatabaseDO, genTableDO, columnDOList);
+            }
+        } catch (Exception e) {
+            throw new GenerateException("导入库表失败", e);
+        } finally {
+            jdbcUtils.close();
         }
         return Boolean.TRUE;
     }
 
-    public void saveInfo(GenDatabaseDO genDatabaseDO, GenTableDO genTableDO, List<GenTableColumnDO> genTableColumnDOS) {
+    public void saveInfo(ImportRequest importRequest, GenDatabaseDO genDatabaseDO, GenTableDO genTableDO, List<GenTableColumnDO> genTableColumnDOS) {
         genTableDO.setGenDbId(genDatabaseDO.getId());
-        genTableDO.setModuleName(GenerateTool.getModuleName(genTableDO.getTableName()));
-        genTableDO.setServiceName(genTableDO.getServiceName());
+        genTableDO.setModuleName(importRequest.getModuleName());
+        genTableDO.setConfigId(importRequest.getConfigId());
+        genTableDO.setServiceName(GenerateTool.getServiceName(genTableDO.getTableName()));
         genTableDO.setServiceDesc(genTableDO.getServiceDesc());
         genTableDO.setAuthorizationPrefix(GenerateTool.getAuthorizationPrefix(genTableDO.getTableName()));
         genTableDO.setPathUrl(GenerateTool.getPathUrl(genTableDO.getTableName()));
         genTableDO.setCodeName(GenerateTool.getClassName(genTableDO.getTableName()));
-        genTableDO.setConfigId(genCodeConfigMapper.selectOne(GenCodeConfigDO::getConfigDefault, GenerateConstant.SUCCESS_STATUS).orElse(new GenCodeConfigDO()).getId());
         genTableMapper.insert(genTableDO);
         if (!CollectionUtils.isEmpty(genTableColumnDOS)) {
             for (GenTableColumnDO genTableColumn : genTableColumnDOS) {
@@ -196,8 +197,16 @@ public class GenTableServiceImpl implements IGenTableService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean synchronous(final String tableId) {
-        //现在配置
-        return true;
+        GenTableDO genTableDO = genTableMapper.findById(tableId).orElseThrow(() -> new GenerateException("表不存在，请先导入表!"));
+        genTableMapper.deleteById(tableId);
+        genTableColumnMapper.delete(new LambdaQueryWrapper<GenTableColumnDO>().eq(GenTableColumnDO::getTableId, tableId));
+        ImportRequest importRequest = new ImportRequest();
+        importRequest.setTableNames(Collections.singletonList(genTableDO.getTableName()));
+        importRequest.setTableName(genTableDO.getTableName());
+        importRequest.setDbId(genTableDO.getGenDbId());
+        importRequest.setModuleName(genTableDO.getModuleName());
+        importRequest.setConfigId(genTableDO.getConfigId());
+        return importTable(importRequest);
     }
 
     /**
@@ -208,7 +217,7 @@ public class GenTableServiceImpl implements IGenTableService {
      */
     @Override
     public List<GenTableResponse> syncList(ImportRequest importRequest) {
-        String dbId = importRequest.getDbId();
+        Long dbId = importRequest.getDbId();
         String tableName = importRequest.getTableName();
         GenDatabaseDO genDatabaseDO = genDatabaseMapper.findById(dbId).orElse(null);
         if (Objects.isNull(genDatabaseDO)) {

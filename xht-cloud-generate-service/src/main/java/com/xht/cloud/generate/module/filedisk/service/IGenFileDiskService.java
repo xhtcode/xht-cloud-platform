@@ -61,5 +61,5 @@ public interface IGenFileDiskService {
      */
     List<GenFileDiskResponse> findListInfo(String configId, String parentId);
 
-    void moveFile(String source, String target, String configId);
+    void moveFile(String source, String target, Long configId);
 }

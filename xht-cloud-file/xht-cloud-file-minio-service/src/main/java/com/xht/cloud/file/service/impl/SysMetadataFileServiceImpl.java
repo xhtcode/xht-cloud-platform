@@ -83,7 +83,7 @@ public class SysMetadataFileServiceImpl implements ISysMetadataFileService {
      * 查询文件列表信息
      *
      * @param queryRequest {@link SysMetadataFileQueryRequest}
-     * @return {@link PageResponse<SysMetadataFileResponse>} 分页详情
+     * @return {@link SysMetadataFileResponse} 分页详情
      */
     @Override
     public PageResponse<SysMetadataFileResponse> findPage(SysMetadataFileQueryRequest queryRequest) {

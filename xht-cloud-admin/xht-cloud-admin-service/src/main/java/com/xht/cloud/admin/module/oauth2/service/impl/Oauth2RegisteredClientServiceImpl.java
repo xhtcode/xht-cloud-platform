@@ -168,7 +168,7 @@ public class Oauth2RegisteredClientServiceImpl implements IOauth2RegisteredClien
      * 分页查询客户端
      *
      * @param queryRequest {@link Oauth2RegisteredClientQueryRequest}
-     * @return {@link PageResponse<Oauth2RegisteredClientResponse>} 分页详情
+     * @return {@link Oauth2RegisteredClientResponse} 分页详情
      */
     @Override
     public PageResponse<Oauth2RegisteredClientResponse> findPage(Oauth2RegisteredClientQueryRequest queryRequest) {

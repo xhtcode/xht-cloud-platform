@@ -1,11 +1,12 @@
 package com.xht.cloud.generate.module.config.service;
 
- import com.xht.cloud.framework.core.domain.response.PageResponse;
- import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigCreateRequest;
- import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigQueryRequest;
- import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigUpdateRequest;
- import com.xht.cloud.generate.module.config.domain.response.GenCodeConfigResponse;
- import java.util.List;
+import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigCreateRequest;
+import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigQueryRequest;
+import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigUpdateRequest;
+import com.xht.cloud.generate.module.config.domain.response.GenCodeConfigResponse;
+
+import java.util.List;
 
 /**
  * 描述 ：代码生成器-配置中心
@@ -18,9 +19,9 @@ public interface IGenCodeConfigService{
      * 创建
      *
      * @param createRequest {@link GenCodeConfigCreateRequest}
-     * @return {@link String} 主键
+     * @return {@link Long} 主键
      */
-    String create(GenCodeConfigCreateRequest createRequest);
+    Long create(GenCodeConfigCreateRequest createRequest);
 
     /**
      * 根据id修改
@@ -47,7 +48,7 @@ public interface IGenCodeConfigService{
     /**
      * 分页查询
      * @param queryRequest {@link GenCodeConfigQueryRequest}
-     * @return {@link PageResponse<GenCodeConfigResponse>} 分页详情
+     * @return {@link GenCodeConfigResponse} 分页详情
      */
     PageResponse<GenCodeConfigResponse> findPage(GenCodeConfigQueryRequest queryRequest);
 

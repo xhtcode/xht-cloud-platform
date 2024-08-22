@@ -51,7 +51,7 @@ public interface ISysDictItemService {
      * 分页查询字典数据
      *
      * @param queryRequest {@link SysDictItemQueryRequest}
-     * @return {@link PageResponse<SysDictItemResponse>} 分页详情
+     * @return {@link SysDictItemResponse} 分页详情
      */
     PageResponse<SysDictItemResponse> findPage(SysDictItemQueryRequest queryRequest);
 

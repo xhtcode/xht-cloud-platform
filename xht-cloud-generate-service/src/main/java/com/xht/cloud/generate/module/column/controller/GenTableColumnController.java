@@ -90,7 +90,7 @@ public class GenTableColumnController {
      * 分页查询
      *
      * @param queryRequest {@link GenTableColumnQueryRequest}
-     * @return {@link PageResponse <GenTableColumnResponse>} 分页详情
+     * @return {@link GenTableColumnResponse} 分页详情
      */
     @Operation(summary = "分页查询-代码生成业务字段")
     @GetMapping

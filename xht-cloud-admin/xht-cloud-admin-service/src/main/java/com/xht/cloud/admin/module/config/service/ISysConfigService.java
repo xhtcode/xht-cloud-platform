@@ -49,7 +49,7 @@ public interface ISysConfigService {
      * 分页查询
      *
      * @param queryRequest {@link SysConfigQueryRequest}
-     * @return {@link PageResponse<SysConfigResponse>} 分页详情
+     * @return {@link SysConfigResponse} 分页详情
      */
     PageResponse<SysConfigResponse> findPage(SysConfigQueryRequest queryRequest);
 

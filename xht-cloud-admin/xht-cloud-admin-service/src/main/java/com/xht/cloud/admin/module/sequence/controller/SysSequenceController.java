@@ -104,7 +104,7 @@ public class SysSequenceController {
      * 分页查询
      *
      * @param queryRequest {@link SysSequenceQueryRequest}
-     * @return {@link PageResponse <SysSequenceResponse>} 分页详情
+     * @return {@link SysSequenceResponse} 分页详情
      */
     @Operation(summary = "分页查询-序列生成器")
     @GetMapping

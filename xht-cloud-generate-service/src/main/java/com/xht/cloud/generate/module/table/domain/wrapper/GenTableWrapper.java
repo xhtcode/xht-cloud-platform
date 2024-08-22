@@ -28,8 +28,8 @@ public final class GenTableWrapper implements EntityWrapper<GenTableDO> {
         }
         LambdaQueryWrapper<GenTableDO> wrapper = new LambdaQueryWrapper<>();
         return wrapper
-                .eq(StringUtils.hasText(entity.getId()), GenTableDO::getId, entity.getId())
-                .eq(StringUtils.hasText(entity.getConfigId()), GenTableDO::getConfigId, entity.getConfigId())
+                .eq(Objects.nonNull(entity.getId()), GenTableDO::getId, entity.getId())
+                .eq(Objects.nonNull(entity.getConfigId()), GenTableDO::getConfigId, entity.getConfigId())
                 .like(StringUtils.hasText(entity.getTableName()), GenTableDO::getTableName, entity.getTableName())
         ;
     }

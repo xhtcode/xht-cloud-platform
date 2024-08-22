@@ -1,6 +1,7 @@
 package com.xht.cloud.generate.support.database;
 
 import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.generate.exception.GenerateException;
 import com.xht.cloud.generate.module.column.domain.dataobject.GenTableColumnDO;
 import com.xht.cloud.generate.module.database.domain.dataobject.GenDatabaseDO;
 import com.xht.cloud.generate.module.table.domain.dataobject.GenTableDO;
@@ -46,12 +47,14 @@ public class MySqlDatabase extends AbstractDataBaseQuery implements IDataBaseQue
     @Override
     @SuppressWarnings("all")
     public List<GenTableDO> selectListTableByLikeTableName(GenDatabaseDO databaseDO, String tableName) {
-        JdbcTemplate jdbcTemplate = JDBCUtils.jdbcTemplate(databaseDO);
+        JDBCUtils jdbcUtils = JDBCUtils.jdbcTemplate(databaseDO);
         try {
-            return jdbcTemplate.query(getTableLikeQuery(tableName), rowTableMapper());
+            return jdbcUtils.getJdbcTemplate().query(getTableLikeQuery(tableName), rowTableMapper());
         } catch (Exception e) {
             log.info("{}出错了", databaseDO.getConnName(), e);
-            throw new RuntimeException("表数据获取错误!");
+            throw new GenerateException("表数据获取错误!");
+        } finally {
+            jdbcUtils.close();
         }
     }
 
@@ -62,7 +65,7 @@ public class MySqlDatabase extends AbstractDataBaseQuery implements IDataBaseQue
             return jdbcTemplate.query(getColumnQuery(tableName), rowColumnMapper(), tableName);
         } catch (Exception e) {
             log.info("{}出错了", databaseDO.getConnName(), e);
-            throw new RuntimeException("字段获取错误!");
+            throw new GenerateException("字段获取错误!");
         }
     }
 

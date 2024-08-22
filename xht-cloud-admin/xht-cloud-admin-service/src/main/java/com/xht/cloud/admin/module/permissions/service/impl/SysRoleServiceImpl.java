@@ -150,7 +150,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * 分页查询角色
      *
      * @param queryRequest {@link SysRoleQueryRequest}
-     * @return {@link PageResponse<SysRoleResponse>} 分页详情
+     * @return {@link SysRoleResponse} 分页详情
      */
     @Override
     public PageResponse<SysRoleResponse> findPage(SysRoleQueryRequest queryRequest) {

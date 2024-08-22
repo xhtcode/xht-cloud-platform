@@ -14,10 +14,6 @@ public interface GenerateConstant {
 
     String ERROR_STATUS = "0";
 
-    String[] BASE_COLUMN_NAME = new String[]{"id", "create_time", "create_by", "update_time", "update_by"};
-
-    String[] BASE_COLUMN_BASE_DELETE_NAME = new String[]{"create_time", "create_by", "update_time", "update_by", "del_flag"};
     String[] BASE_COLUMN_BASE_DELETE_NAME_ = new String[]{"id","create_time", "create_by", "update_time", "update_by", "del_flag"};
 
-    String[] BASE_COLUMN_DELETE_NAME = new String[]{"del_flag"};
 }

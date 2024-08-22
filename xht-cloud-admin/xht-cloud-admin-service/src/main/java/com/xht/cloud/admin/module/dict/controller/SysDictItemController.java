@@ -113,7 +113,7 @@ public class SysDictItemController {
      * 分页查询字典数据
      *
      * @param queryRequest {@link SysDictItemQueryRequest}
-     * @return {@link PageResponse<SysDictItemResponse>} 分页详情
+     * @return {@link SysDictItemResponse} 分页详情
      */
     @Operation(summary = "分页查询-字典数据")
     @GetMapping

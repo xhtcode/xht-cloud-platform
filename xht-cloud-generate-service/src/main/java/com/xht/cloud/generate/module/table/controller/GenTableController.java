@@ -2,7 +2,6 @@ package com.xht.cloud.generate.module.table.controller;
 
 import com.xht.cloud.framework.core.R;
 import com.xht.cloud.framework.core.domain.response.PageResponse;
-import com.xht.cloud.framework.web.validation.group.Query;
 import com.xht.cloud.generate.module.table.domain.request.GenTableCreateRequest;
 import com.xht.cloud.generate.module.table.domain.request.GenTableQueryRequest;
 import com.xht.cloud.generate.module.table.domain.request.GenTableUpdateRequest;
@@ -93,7 +92,7 @@ public class GenTableController {
      * 分页查询
      *
      * @param queryRequest {@link GenTableQueryRequest}
-     * @return {@link PageResponse<GenTableResponse>} 分页详情
+     * @return {@link GenTableResponse} 分页详情
      */
     @Operation(summary = "分页查询-代码生成器-数据库信息")
     @GetMapping
@@ -132,7 +131,7 @@ public class GenTableController {
      * @return R
      */
     @GetMapping("/syncList/")
-    public R<List<GenTableResponse>> syncList(@Validated(value = Query.class) ImportRequest importRequest) {
+    public R<List<GenTableResponse>> syncList(ImportRequest importRequest) {
         return R.ok(genTableService.syncList(importRequest));
     }
 

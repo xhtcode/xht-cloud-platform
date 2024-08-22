@@ -2,7 +2,6 @@ package com.xht.cloud.generate.core.controller.request;
 
 
 import com.xht.cloud.framework.core.domain.request.CreateRequest;
-import com.xht.cloud.generate.core.groups.DownGroups;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
@@ -31,7 +30,7 @@ public class GenCodeRequest extends CreateRequest {
     @Schema(description = "包名")
     private String packageName;
 
-    @NotEmpty(message = "表id不能为空", groups = {DownGroups.class})
+    @NotEmpty(message = "表id不能为空")
     @Schema(description = "表id")
     private List<String> tableIds;
 

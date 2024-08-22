@@ -45,7 +45,7 @@ public class SysOperationLogServiceImpl implements ISysOperationLogService {
      * 分页查询
      *
      * @param queryRequest {@link SysOperationLogQueryRequest}
-     * @return {@link PageResponse< SysOperationLogResponse >} 分页详情
+     * @return {@link SysOperationLogResponse} 分页详情
      */
     @Override
     public PageResponse<SysOperationLogResponse> findPage(SysOperationLogQueryRequest queryRequest) {
