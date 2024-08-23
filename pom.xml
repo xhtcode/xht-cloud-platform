@@ -17,7 +17,6 @@
         <module>xht-cloud-generate-service</module>
         <module>xht-cloud-gateway</module>
         <module>xht-cloud-file</module>
-        <module>xht-cloud-mall</module>
     </modules>
 
     <properties>

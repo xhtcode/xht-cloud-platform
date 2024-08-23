@@ -33,6 +33,10 @@
         </dependency>
         <dependency>
             <groupId>com.xht.cloud.framework</groupId>
+            <artifactId>xht-cloud-spring-boot-starter-log</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xht.cloud.framework</groupId>
             <artifactId>xht-cloud-spring-boot-starter-redis</artifactId>
         </dependency>
         <dependency>

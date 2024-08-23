@@ -5,18 +5,19 @@ import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpHeaders;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 /**
  * 描述 ：spring doc 配置
@@ -36,15 +37,25 @@ public class SpringDocAutoConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean(OpenAPI.class)
     public OpenAPI springShopOpenAPI() {
+        // @formatter:off
         Map<String, SecurityScheme> securitySchemas = buildSecuritySchemes();
         OpenAPI openAPI = new OpenAPI()
-                // 接口信息
-                .info(buildInfo(swaggerProperties))
-                // 接口安全配置
+                .info(
+                        new Info()
+                                .title(swaggerProperties.getTitle())
+                                .description(swaggerProperties.getDescription())
+                                .version(swaggerProperties.getVersion())
+                                .contact(new Contact()
+                                        .name(swaggerProperties.getAuthor())
+                                        .url(swaggerProperties.getUrl())
+                                        .email(swaggerProperties.getEmail()))
+                )
                 .components(new Components().securitySchemes(securitySchemas))
-                .addSecurityItem(new SecurityRequirement().addList(HttpHeaders.AUTHORIZATION));
+                .addSecurityItem(new SecurityRequirement().addList(AUTHORIZATION));
         securitySchemas.keySet().forEach(key -> openAPI.addSecurityItem(new SecurityRequirement().addList(key)));
+        // @formatter:on
         return openAPI;
     }
 
@@ -56,27 +67,10 @@ public class SpringDocAutoConfiguration {
         Map<String, SecurityScheme> securitySchemes = new HashMap<>();
         SecurityScheme securityScheme = new SecurityScheme()
                 .type(SecurityScheme.Type.APIKEY) // 类型
-                .name(HttpHeaders.AUTHORIZATION) // 请求头的 name
+                .name(AUTHORIZATION) // 请求头的 name
                 .in(SecurityScheme.In.HEADER); // token 所在位置
-        securitySchemes.put(HttpHeaders.AUTHORIZATION, securityScheme);
+        securitySchemes.put(AUTHORIZATION, securityScheme);
         return securitySchemes;
-    }
-
-    /**
-     * API 摘要信息
-     */
-    private Info buildInfo(SwaggerProperties properties) {
-        return new Info()
-                .title(properties.getTitle())
-                .description(properties.getDescription())
-                .version(properties.getVersion())
-                .contact(new Contact()
-                        .name(properties.getAuthor())
-                        .url(properties.getUrl())
-                        .email(properties.getEmail()))
-                .license(new License()
-                        .name("使用请遵守商用授权协议")
-                        .url("javascript(0)"));
     }
 
 }

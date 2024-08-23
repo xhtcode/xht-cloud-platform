@@ -34,6 +34,8 @@ import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import static com.xht.cloud.generate.constant.GenerateConstant.PATH_SEPARATOR;
+
 /**
  * 描述 ：代码生成器核心任务
  *
@@ -126,7 +128,7 @@ public class GenerateCoreServiceImpl implements IGenerateCoreService {
             for (GenFileDiskDO genFileDiskDO : genFileDiskDOS) {
                 try {
                     //这里要对空白文件夹作处理
-                    zip.putNextEntry(new ZipEntry(genFileDiskDO.getFilePath() + (Objects.equals("3", genFileDiskDO.getFileType()) ? "" : "/")));
+                    zip.putNextEntry(new ZipEntry(genFileDiskDO.getFilePath() + (Objects.equals("3", genFileDiskDO.getFileType()) ? "" : PATH_SEPARATOR)));
                     IoUtil.write(zip, StandardCharsets.UTF_8, false, genFileDiskDO.getFileContent());
                     zip.flush();
                     zip.closeEntry();

@@ -41,7 +41,7 @@ public final class GenerateTool {
     public static String generateCodeFilePath(GenCodeRequest genCodeRequest, GenTableDO genTableDO, String filePath) {
         Map<String, String> map = new HashMap<>();
         map.put("projectName", genCodeRequest.getProjectName());
-        map.put("packageName", genCodeRequest.getPackageName());
+        map.put("packageName", StringUtils.replace(genCodeRequest.getPackageName(), POINT, PATH_SEPARATOR));
         map.put("moduleName", genTableDO.getModuleName());
         map.put("serviceName", genTableDO.getServiceName());
         map.put("fileName", genTableDO.getCodeName());
@@ -130,8 +130,8 @@ public final class GenerateTool {
      * @return controller地址前缀
      */
     public static String getPathUrl(String tableName) {
-        String url = StrUtil.replace(tableName, "_", "/");
-        return StrUtil.addPrefixIfNot(url, "/");
+        String url = StrUtil.replace(tableName, "_", PATH_SEPARATOR);
+        return StrUtil.addPrefixIfNot(url, PATH_SEPARATOR);
     }
 
     /**

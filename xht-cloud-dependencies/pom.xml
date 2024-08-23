@@ -31,8 +31,8 @@
         <redisson-spring-boot-starter.version>3.30.0</redisson-spring-boot-starter.version>
 
         <!--接口文档-->
-        <swagger.annotations.version>2.2.21</swagger.annotations.version>
-        <knife4j.version>4.4.0</knife4j.version>
+        <swagger.annotations.version>2.2.22</swagger.annotations.version>
+        <knife4j.version>4.5.0</knife4j.version>
 
         <!--ip2region版本-->
         <ip2region.version>2.7.0</ip2region.version>

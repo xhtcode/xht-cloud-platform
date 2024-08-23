@@ -12,6 +12,7 @@ import lombok.Getter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 描述 ：响应数据父类
@@ -52,7 +53,7 @@ public final class R<T> implements Serializable {
     /**
      * 响应数据
      */
-    @Schema(description = "响应数据", name = "data")
+    @Schema(description = "响应数据", name = "data", subTypes = Objects.class)
     private T data;
 
     public R() {

@@ -19,6 +19,12 @@ public abstract class PageQueryRequest extends Request implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 关键字
+     */
+    @Schema(name = "keyWord", description = "关键字")
+    private String keyWord;
+
+    /**
      * 当前页
      */
     @Schema(name = "current", description = "当前页参数", defaultValue = "0")
