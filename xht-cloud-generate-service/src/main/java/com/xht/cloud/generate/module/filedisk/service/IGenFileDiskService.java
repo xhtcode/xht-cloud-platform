@@ -59,7 +59,7 @@ public interface IGenFileDiskService {
      * @param parentId 上级目录id
      * @return 文件信息
      */
-    List<GenFileDiskResponse> findListInfo(String configId, String parentId);
+    List<GenFileDiskResponse> findListInfo(Long configId, Long parentId);
 
-    void moveFile(String source, String target, Long configId);
+    void moveFile(Long source, Long target, Long configId);
 }

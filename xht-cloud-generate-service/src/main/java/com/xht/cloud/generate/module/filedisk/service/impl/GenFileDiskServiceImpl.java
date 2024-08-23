@@ -1,6 +1,5 @@
 package com.xht.cloud.generate.module.filedisk.service.impl;
 
-import cn.hutool.core.thread.ThreadUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.xht.cloud.framework.core.constant.StringConstant;
@@ -23,7 +22,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -213,7 +214,6 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
         ;
         // @formatter:on
         List<GenFileDiskDO> genFileDiskDOS = genFileDiskDao.list(queryWrapper);
-        ThreadUtil.sleep(500);
         return fileDiskConvert.toResponse(genFileDiskDOS);
     }
 
@@ -225,7 +225,7 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
      * @return 文件信息
      */
     @Override
-    public List<GenFileDiskResponse> findListInfo(String configId, String parentId) {
+    public List<GenFileDiskResponse> findListInfo(Long configId, Long parentId) {
         LambdaQueryWrapper<GenFileDiskDO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper
                 .eq(GenFileDiskDO::getParentId, parentId)
@@ -239,10 +239,10 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void moveFile(String source, String target, Long configId) {
+    public void moveFile(Long source, Long target, Long configId) {
         GenFileDiskDO fileDiskDO = new GenFileDiskDO();
         fileDiskDO.setConfigId(configId);
-        if (!Objects.equals("-1", target)) {
+        if (!Objects.equals(-1L, target)) {
             fileDiskDO = genFileDiskDao.getOptById(target).orElseThrow(() -> new BizException("找不到文件信息"));
         }
         if (!Objects.equals("3", fileDiskDO.getFileType()) && Objects.equals(configId, fileDiskDO.getConfigId())) {
@@ -252,11 +252,29 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
                     .set(GenFileDiskDO::getParentId, target)
                     .eq(GenFileDiskDO::getId, source)
                     .eq(GenFileDiskDO::getConfigId,configId)
-                    .orderByAsc(GenFileDiskDO::getFileType)
-                    .orderByDesc(GenFileDiskDO::getFileSort)
             ;
             // @formatter:on
             genFileDiskDao.update(updateWrapper);
+        }
+        List<GenFileDiskDO> fileDiskDOS = new ArrayList<>();
+        updatePath(fileDiskDO, fileDiskDOS);
+        genFileDiskDao.updateBatchById(fileDiskDOS);
+    }
+
+    public void updatePath(GenFileDiskDO parentGenFileDiskDO, List<GenFileDiskDO> fileDiskDOS) {
+        List<GenFileDiskDO> genFileDiskDOS = genFileDiskDao.selectList(GenFileDiskDO::getParentId, parentGenFileDiskDO.getParentId());
+        if (!CollectionUtils.isEmpty(genFileDiskDOS)) {
+            for (GenFileDiskDO genFileDiskDO : genFileDiskDOS) {
+                String filePath = String.format("%s%s%s",
+                        StringUtils.emptyToDefault(parentGenFileDiskDO.getFilePath(), StringConstant.EMPTY_STR), PATH_SEPARATOR,
+                        genFileDiskDO.getFileName());
+                String fileCodePath = String.format("%s%s%s", StringUtils.emptyToDefault(parentGenFileDiskDO.getFileCodePath(), StringConstant.EMPTY_STR), PATH_SEPARATOR,
+                        genFileDiskDO.getFileName());
+                genFileDiskDO.setFilePath(filePath);
+                genFileDiskDO.setFileCodePath(fileCodePath);
+                fileDiskDOS.add(genFileDiskDO);
+                updatePath(genFileDiskDO, fileDiskDOS);
+            }
         }
     }
 }

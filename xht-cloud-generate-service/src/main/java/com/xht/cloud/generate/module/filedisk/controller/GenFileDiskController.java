@@ -62,7 +62,7 @@ public class GenFileDiskController {
 
     @Operation(summary = "根据id修改-文件")
     @PutMapping("/{source}/{target}/{configId}")
-    public R<Boolean> moveFile(@PathVariable("source") String source, @PathVariable("target") String target, @PathVariable("configId") Long configId) {
+    public R<Boolean> moveFile(@PathVariable("source") Long source, @PathVariable("target") Long target, @PathVariable("configId") Long configId) {
         fileDiskService.moveFile(source, target, configId);
         return ok(Boolean.TRUE);
     }
@@ -123,7 +123,7 @@ public class GenFileDiskController {
      */
     @Operation(summary = "分页查询-按条件查询文件")
     @GetMapping("/{configId}/{parentId}")
-    public R<List<GenFileDiskResponse>> findListInfo(@PathVariable("configId") String configId, @PathVariable("parentId") String parentId) {
+    public R<List<GenFileDiskResponse>> findListInfo(@PathVariable("configId") Long configId, @PathVariable("parentId") Long parentId) {
         return R.ok(fileDiskService.findListInfo(configId, parentId));
     }
 
