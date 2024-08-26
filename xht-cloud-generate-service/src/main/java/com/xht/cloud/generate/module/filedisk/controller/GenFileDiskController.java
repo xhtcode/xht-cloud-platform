@@ -62,7 +62,7 @@ public class GenFileDiskController {
 
     @Operation(summary = "根据id修改-文件")
     @PutMapping("/{source}/{target}/{configId}")
-    public R<Boolean> moveFile(@PathVariable("source") Long source, @PathVariable("target") Long target, @PathVariable("configId") Long configId) {
+    public R<Boolean> moveFile(@PathVariable("source") String source, @PathVariable("target") String target, @PathVariable("configId") Long configId) {
         fileDiskService.moveFile(source, target, configId);
         return ok(Boolean.TRUE);
     }
@@ -75,7 +75,7 @@ public class GenFileDiskController {
      */
     @Operation(summary = "根据id删除-文件")
     @DeleteMapping
-    public R<Boolean> remove(@RequestBody List<Long> ids) {
+    public R<Boolean> remove(@RequestBody List<String> ids) {
         fileDiskService.remove(ids);
         return ok(Boolean.TRUE);
     }
@@ -105,9 +105,9 @@ public class GenFileDiskController {
     }
 
     @GetMapping("/tree")
-    public R<List<INode<Long>>> findTreeList(@Validated GenFileDiskQueryRequest queryRequest) {
+    public R<List<INode<String>>> findTreeList(@Validated GenFileDiskQueryRequest queryRequest) {
         List<GenFileDiskResponse> fileDiskServiceList = fileDiskService.findList(queryRequest);
-        List<INode<Long>> result = new ArrayList<>();
+        List<INode<String>> result = new ArrayList<>();
         for (GenFileDiskResponse response : fileDiskServiceList) {
             result.add(new TreeNode<>(response.getId(), response.getParentId(), response.getFileSort()).setExtra(BeanUtil.beanToMap(response)));
         }
@@ -123,7 +123,7 @@ public class GenFileDiskController {
      */
     @Operation(summary = "分页查询-按条件查询文件")
     @GetMapping("/{configId}/{parentId}")
-    public R<List<GenFileDiskResponse>> findListInfo(@PathVariable("configId") Long configId, @PathVariable("parentId") Long parentId) {
+    public R<List<GenFileDiskResponse>> findListInfo(@PathVariable("configId") Long configId, @PathVariable("parentId") String parentId) {
         return R.ok(fileDiskService.findListInfo(configId, parentId));
     }
 

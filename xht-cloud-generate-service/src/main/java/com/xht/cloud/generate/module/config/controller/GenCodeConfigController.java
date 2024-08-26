@@ -1,7 +1,10 @@
 package com.xht.cloud.generate.module.config.controller;
 
+import cn.hutool.core.io.IoUtil;
 import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.core.domain.KeyValue;
 import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.generate.exception.GenerateException;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigCreateRequest;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigQueryRequest;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigUpdateRequest;
@@ -10,10 +13,12 @@ import com.xht.cloud.generate.module.config.service.IGenCodeConfigService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -79,6 +84,7 @@ public class GenCodeConfigController {
      * @param id {@link String} 数据库主键
      * @return {@link GenCodeConfigResponse}
      */
+    @Operation(summary = "根据id查询详细-配置中心")
     @GetMapping("/{id}")
     public R<GenCodeConfigResponse> findById(@PathVariable("id") String id) {
         return R.ok(genCodeConfigService.findById(id));
@@ -90,6 +96,7 @@ public class GenCodeConfigController {
      * @param queryRequest {@link GenCodeConfigQueryRequest}
      * @return {@link GenCodeConfigResponse} 分页详情
      */
+    @Operation(summary = "分页查询-配置中心")
     @GetMapping
     public R<PageResponse<GenCodeConfigResponse>> findPage(GenCodeConfigQueryRequest queryRequest) {
         return R.ok(genCodeConfigService.findPage(queryRequest));
@@ -101,8 +108,43 @@ public class GenCodeConfigController {
      *
      * @return {@link GenCodeConfigResponse}
      */
+    @Operation(summary = "查询全部-配置中心")
     @GetMapping("/list/")
     public R<List<GenCodeConfigResponse>> list() {
         return R.ok(genCodeConfigService.list());
+    }
+
+    /**
+     * 导出-配置中心
+     *
+     * @param configId 配置id
+     * @param response {@link HttpServletResponse}
+     */
+    @Operation(summary = "导出-配置中心")
+    @GetMapping("/export/{configId}")
+    public void exportZip(@PathVariable("configId") Long configId, HttpServletResponse response) {
+        try {
+            KeyValue<String, byte[]> keyValue = genCodeConfigService.exportZip(configId);
+            byte[] data = keyValue.getValue();
+            response.reset();
+            response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s.zip\"", keyValue.getKey()));
+            response.addHeader("Content-Length", "" + data.length);
+            response.setContentType("application/octet-stream; charset=UTF-8");
+            IoUtil.write(response.getOutputStream(), true, data);
+        } catch (Exception e) {
+            log.info("代码下载异常{}", e.getMessage(), e);
+            throw new GenerateException("代码下载异常！");
+        }
+    }
+
+    /**
+     * 导入-配置中心
+     *
+     * @param file {@link MultipartFile} 文件信息
+     */
+    @Operation(summary = "导入-配置中心")
+    @PostMapping("/import")
+    public R<Boolean> importZip(@RequestPart("file") MultipartFile file) {
+        return R.ok(genCodeConfigService.importZip(file));
     }
 }

@@ -1,10 +1,12 @@
 package com.xht.cloud.generate.module.config.service;
 
+import com.xht.cloud.framework.core.domain.KeyValue;
 import com.xht.cloud.framework.core.domain.response.PageResponse;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigCreateRequest;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigQueryRequest;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigUpdateRequest;
 import com.xht.cloud.generate.module.config.domain.response.GenCodeConfigResponse;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -53,4 +55,18 @@ public interface IGenCodeConfigService{
     PageResponse<GenCodeConfigResponse> findPage(GenCodeConfigQueryRequest queryRequest);
 
     List<GenCodeConfigResponse> list();
+
+    /**
+     * 导出-配置中心
+     * @param configId 配置id
+     * @return 导出内容
+     */
+    KeyValue<String, byte[]> exportZip(Long configId);
+
+    /**
+     * 导入-配置中心
+     *
+     * @param file   {@link MultipartFile} 文件信息
+     */
+    Boolean importZip(MultipartFile file);
 }

@@ -25,14 +25,14 @@ public class GenFileDiskDO extends BaseNoneDeleteDO implements Serializable {
     /**
      * id
      */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private String id;
 
     /**
      * 上级目录
      */
     @TableField("parent_id")
-    private Long parentId;
+    private String parentId;
 
     /**
      * 配置id
@@ -88,4 +88,13 @@ public class GenFileDiskDO extends BaseNoneDeleteDO implements Serializable {
      */
     @TableField("ignore_field")
     private String ignoreField;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id='" + id + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", filePath='" + filePath + '\'' +
+                '}';
+    }
 }

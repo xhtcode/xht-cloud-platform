@@ -11,19 +11,19 @@ import lombok.Data;
  **/
 @Data
 @Schema(name = "GenFileDiskUpdateRequest", description = "文件管理")
-public class GenFileDiskUpdateRequest extends GenFileDiskCreateRequest implements IUpdateRequestFun<Long> {
+public class GenFileDiskUpdateRequest extends GenFileDiskCreateRequest implements IUpdateRequestFun<String> {
 
     /**
      * id
      */
     @Schema(description = "主键")
-    private Long id;
+    private String id;
 
     /**
      * 获取主键
      */
     @Override
-    public Long getPkId() {
+    public String getPkId() {
         return this.id;
     }
 }

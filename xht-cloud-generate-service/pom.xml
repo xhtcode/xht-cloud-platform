@@ -43,6 +43,10 @@
             <groupId>com.xht.cloud.framework</groupId>
             <artifactId>xht-cloud-spring-boot-starter-swagger</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.xht.cloud.framework</groupId>
+            <artifactId>xht-cloud-framework-core-file</artifactId>
+        </dependency>
         <!-- nacos 配置中心-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

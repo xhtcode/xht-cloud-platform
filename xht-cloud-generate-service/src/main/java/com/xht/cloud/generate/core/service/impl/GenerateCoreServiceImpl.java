@@ -66,9 +66,9 @@ public class GenerateCoreServiceImpl implements IGenerateCoreService {
      * @return 代码文件树的格式
      */
     @Override
-    public List<INode<Long>> viewCode(GenCodeRequest genCodeRequest, String tableId) {
+    public List<INode<String>> viewCode(GenCodeRequest genCodeRequest, String tableId) {
         List<GenFileDiskDO> genFileDiskDOS = generateCode(genCodeRequest, tableId);
-        List<INode<Long>> result = new ArrayList<>();
+        List<INode<String>> result = new ArrayList<>();
         for (GenFileDiskDO item : genFileDiskDOS) {
             result.add(new TreeNode<>(item.getId(), item.getParentId(), item.getFileSort()).setExtra(BeanUtil.beanToMap(item)));
         }
@@ -115,6 +115,7 @@ public class GenerateCoreServiceImpl implements IGenerateCoreService {
     @Override
     public byte[] downloadCode(GenCodeRequest genCodeRequest) throws Exception {
         List<String> tableIds = genCodeRequest.getTableIds();
+        Assert.notEmpty(tableIds, () -> new GenerateException("查询不到表信息！"));
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ZipOutputStream zip = new ZipOutputStream(outputStream, StandardCharsets.UTF_8);
         zip.setComment("小糊涂代码生成器");
@@ -134,6 +135,7 @@ public class GenerateCoreServiceImpl implements IGenerateCoreService {
                     zip.closeEntry();
                 } catch (Exception e) {
                     log.error("下载错误 {}", e.getMessage());
+                    throw new GenerateException("代码文件导出失败！", e);
                 }
             }
         }

@@ -34,7 +34,7 @@ public interface IGenFileDiskService {
      *
      * @param ids id集合
      */
-    void remove(List<Long> ids);
+    void remove(List<String> ids);
 
     /**
      * 根据id查询详细文件
@@ -59,7 +59,7 @@ public interface IGenFileDiskService {
      * @param parentId 上级目录id
      * @return 文件信息
      */
-    List<GenFileDiskResponse> findListInfo(Long configId, Long parentId);
+    List<GenFileDiskResponse> findListInfo(Long configId, String parentId);
 
-    void moveFile(Long source, Long target, Long configId);
+    void moveFile(String source, String target, Long configId);
 }

@@ -96,7 +96,7 @@ public class GenTableColumnDO extends BaseNoneDeleteDO {
     private Integer columnSort;
 
     /**
-     * 字段名称 get
+     * 字段名称 genFileId
      */
     @TableField(exist = false)
     private String columnNameGet;

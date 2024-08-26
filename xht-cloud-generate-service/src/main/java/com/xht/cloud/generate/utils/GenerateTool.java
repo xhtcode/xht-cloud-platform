@@ -81,7 +81,7 @@ public final class GenerateTool {
     public static void addColumnInfo(VelocityContext ctx, List<GenTableColumnDO> columnDOS, GenFileDiskDO genFileDiskDO, ColumnTypeManager columnTypeManager) {
         List<GenTableColumnDO> columns = filterCustom(columnDOS, genFileDiskDO.getIgnoreField());
         for (GenTableColumnDO columnDO : columns) {
-            columnDO.setColumnNameGet(String.format("get%s", StrUtil.upperFirst(columnDO.getColumnCodeName())));
+            columnDO.setColumnNameGet(String.format("genFileId%s", StrUtil.upperFirst(columnDO.getColumnCodeName())));
             columnDO.setColumnNameSet(String.format("set%s", StrUtil.upperFirst(columnDO.getColumnCodeName())));
             columnDO.setTsName(columnTypeManager.getTsType(columnDO.getColumnDbType()));
             columnDO.setJavaName(columnTypeManager.getJavaType(columnDO.getColumnDbType()));

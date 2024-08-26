@@ -45,7 +45,7 @@ public class GenerateCoreController {
             @Parameter(name = "tableId",description = "表id")
     })
     @GetMapping("/code/view/{tableId}")
-    public R<List<INode<Long>>> viewCode(@PathVariable("tableId") String tableId,@ParameterObject @Validated GenCodeRequest genCodeRequest) {
+    public R<List<INode<String>>> viewCode(@PathVariable("tableId") String tableId,@ParameterObject @Validated GenCodeRequest genCodeRequest) {
         return R.ok(generateCoreService.viewCode(genCodeRequest, tableId));
     }
 

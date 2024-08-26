@@ -46,7 +46,7 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
 
     private final GenFileDiskConvert fileDiskConvert;
 
-    public GenFileDiskDO findParentId(Long parentId) {
+    public GenFileDiskDO findParentId(String parentId) {
         GenFileDiskDO parentGenFileDiskDO = new GenFileDiskDO();
         if (!Objects.equals(-1L, parentId)) {
             parentGenFileDiskDO = genFileDiskDao.getOne(new LambdaQueryWrapper<GenFileDiskDO>().select(
@@ -78,7 +78,7 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
         if (!SqlHelper.exist(genCodeConfigMapper.selectCount(GenCodeConfigDO::getId, configId))) {
             throw new BizException("配置信息查询不到，文件创建失败");
         }
-        Long parentId = createRequest.getParentId();
+        String parentId = createRequest.getParentId();
         GenFileDiskDO parentGenFileDiskDO = findParentId(parentId);
         if (Objects.equals("2", parentGenFileDiskDO.getFileType()) && !Objects.equals("3", createRequest.getFileType())) {
             createRequest.setFileType("2");
@@ -120,7 +120,7 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
         if (!SqlHelper.exist(genCodeConfigMapper.selectCount(GenCodeConfigDO::getId, updateRequest.getConfigId()))) {
             throw new GenerateException("配置信息查询不到，文件创建失败");
         }
-        Long parentId = updateRequest.getParentId();
+        String parentId = updateRequest.getParentId();
         GenFileDiskDO parentGenFileDiskDO = findParentId(parentId);
         if (Objects.equals("2", parentGenFileDiskDO.getFileType()) && !Objects.equals("3", updateRequest.getFileType())) {
             updateRequest.setFileType("2");
@@ -172,7 +172,7 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
      * @param ids id集合
      */
     @Override
-    public void remove(List<Long> ids) {
+    public void remove(List<String> ids) {
         Assert.notEmpty(ids, "id 不能为空！");
         genFileDiskDao.removeByIds(ids);
     }
@@ -197,7 +197,7 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
      */
     @Override
     public List<GenFileDiskResponse> findList(GenFileDiskQueryRequest queryRequest) {
-        Long parentId = queryRequest.getParentId();
+        String parentId = queryRequest.getParentId();
         Long configId = queryRequest.getConfigId();
         String filePath = queryRequest.getFilePath();
         String notFileType = queryRequest.getNotFileType();
@@ -225,7 +225,7 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
      * @return 文件信息
      */
     @Override
-    public List<GenFileDiskResponse> findListInfo(Long configId, Long parentId) {
+    public List<GenFileDiskResponse> findListInfo(Long configId, String parentId) {
         LambdaQueryWrapper<GenFileDiskDO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper
                 .eq(GenFileDiskDO::getParentId, parentId)
@@ -239,10 +239,10 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void moveFile(Long source, Long target, Long configId) {
+    public void moveFile(String source, String target, Long configId) {
         GenFileDiskDO fileDiskDO = new GenFileDiskDO();
         fileDiskDO.setConfigId(configId);
-        if (!Objects.equals(-1L, target)) {
+        if (!Objects.equals("-1", target)) {
             fileDiskDO = genFileDiskDao.getOptById(target).orElseThrow(() -> new BizException("找不到文件信息"));
         }
         if (!Objects.equals("3", fileDiskDO.getFileType()) && Objects.equals(configId, fileDiskDO.getConfigId())) {

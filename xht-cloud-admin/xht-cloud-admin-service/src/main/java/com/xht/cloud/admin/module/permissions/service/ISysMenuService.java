@@ -1,12 +1,11 @@
 package com.xht.cloud.admin.module.permissions.service;
 
+import com.xht.cloud.admin.enums.MenuTypeEnums;
 import com.xht.cloud.admin.module.permissions.domain.request.SysMenuCreateRequest;
 import com.xht.cloud.admin.module.permissions.domain.request.SysMenuQueryRequest;
 import com.xht.cloud.admin.module.permissions.domain.request.SysMenuUpdateRequest;
 import com.xht.cloud.admin.module.permissions.domain.response.SysMenuResponse;
-import com.xht.cloud.admin.enums.MenuTypeEnums;
 import com.xht.cloud.framework.utils.treenode.INode;
-import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 
@@ -70,7 +69,7 @@ public interface ISysMenuService {
      * @param updateRequest {@link SysMenuUpdateRequest}
      */
     default void validationAndFormat(String id, SysMenuUpdateRequest updateRequest) {
-        BeanUtils.copyProperties(validationAndFormat(updateRequest), updateRequest);
+        validationAndFormat(updateRequest);
         updateRequest.setId(id);
     }
 

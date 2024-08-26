@@ -18,7 +18,7 @@ public class GenFileDiskQueryRequest extends PageQueryRequest {
      * 上级目录
      */
     @Schema(description = "上级目录")
-    private Long parentId;
+    private String parentId;
 
     /**
      * 配置id

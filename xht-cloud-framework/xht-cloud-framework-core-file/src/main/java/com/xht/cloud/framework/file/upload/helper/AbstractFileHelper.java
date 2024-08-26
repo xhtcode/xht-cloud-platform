@@ -76,6 +76,15 @@ public abstract class AbstractFileHelper {
      */
     public abstract AbstractFileHelper checkFileSize(Consumer<DataSizeUtils> customizer);
 
+    /**
+     * 获取一个 {@link UploadFileBO} 对象，内部封装了一些MultipartFile的信息
+     *
+     * @return {@link UploadFileBO} MultipartFile的信息
+     */
+    public final UploadFileBO format() {
+        return format((builder) -> {
+        });
+    }
 
     /**
      * 获取一个 {@link UploadFileBO} 对象，内部封装了一些MultipartFile的信息

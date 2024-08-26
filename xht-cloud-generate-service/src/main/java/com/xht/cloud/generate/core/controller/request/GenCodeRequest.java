@@ -30,7 +30,6 @@ public class GenCodeRequest extends CreateRequest {
     @Schema(description = "包名")
     private String packageName;
 
-    @NotEmpty(message = "表id不能为空")
     @Schema(description = "表id")
     private List<String> tableIds;
 

@@ -22,3 +22,4 @@ springdoc:
     enabled: true
   api-docs:
     enabled: true
+  default-flat-param-object: true

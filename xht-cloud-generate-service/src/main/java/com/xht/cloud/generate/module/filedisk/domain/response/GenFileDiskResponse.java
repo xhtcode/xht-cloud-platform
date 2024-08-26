@@ -22,13 +22,13 @@ public class GenFileDiskResponse extends Response {
      * id
      */
     @Schema(description = "主键")
-    private Long id;
+    private String id;
 
     /**
      * 上级目录
      */
     @Schema(description = "上级目录")
-    private Long parentId;
+    private String parentId;
 
     /**
      * 配置id
