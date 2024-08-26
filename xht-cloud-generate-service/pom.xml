@@ -37,10 +37,6 @@
         </dependency>
         <dependency>
             <groupId>com.xht.cloud.framework</groupId>
-            <artifactId>xht-cloud-spring-boot-starter-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.xht.cloud.framework</groupId>
             <artifactId>xht-cloud-spring-boot-starter-swagger</artifactId>
         </dependency>
         <dependency>
