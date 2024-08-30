@@ -1,15 +1,16 @@
 package com.xht.cloud.framework.web.handler;
 
 
-import com.xht.cloud.framework.starter.exception.ApiSignatureErrorStatusCode;
-import com.xht.cloud.framework.starter.exception.ApiSignatureException;
+import com.xht.cloud.framework.core.R;
 import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.exception.GlobalException;
 import com.xht.cloud.framework.exception.SysException;
 import com.xht.cloud.framework.exception.constant.GlobalErrorStatusCode;
 import com.xht.cloud.framework.exception.user.UserException;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.starter.exception.ApiSignatureErrorStatusCode;
+import com.xht.cloud.framework.starter.exception.ApiSignatureException;
 import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.web.validation.exception.ValidationException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -178,4 +179,20 @@ public class DefaultGlobalExceptionHandler implements Serializable {
         return R.failed(GlobalErrorStatusCode.PARAMS_ERROR, resultMap);
     }
 
+    /**
+     * 校验异常捕获 扩展
+     *
+     * @param e       BindException
+     * @param request HttpServletRequest
+     * @return Result
+     */
+    @ExceptionHandler(ValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public R<Map<String, Object>> handleException(ValidationException e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put(e.getFiledName(), e.getMessage());
+        log.warn("请求地址:{}参数检验失败,请求方式：{} ,data={}", requestURI, request.getMethod(), resultMap, e);
+        return R.failed(GlobalErrorStatusCode.PARAMS_ERROR, resultMap);
+    }
 }

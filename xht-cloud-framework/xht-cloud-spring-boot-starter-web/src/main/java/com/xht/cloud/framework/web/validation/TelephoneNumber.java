@@ -20,7 +20,7 @@ public @interface TelephoneNumber {
     /**
      * 提示信息
      */
-    String message() default "手机号不能为空";
+    String message() default "手机号不合法";
 
     /**
      * 分组

@@ -44,6 +44,10 @@
         </dependency>
         <dependency>
             <groupId>com.xht.cloud.framework</groupId>
+            <artifactId>xht-cloud-framework-core-file</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xht.cloud.framework</groupId>
             <artifactId>xht-cloud-spring-boot-starter-openfeign</artifactId>
             <exclusions>
                 <exclusion>

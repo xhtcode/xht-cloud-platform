@@ -19,7 +19,7 @@ public enum GlobalErrorStatusCode implements IErrorStatusCode {
 
     BAD_REQUEST(400,"错误请求"),
 
-    PARAMS_ERROR(400,"请求参数不正确"),
+    PARAMS_ERROR(400,"请求参数错误"),
 
     UNAUTHORIZED(401,"未授权"),
 

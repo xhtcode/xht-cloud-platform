@@ -11,9 +11,7 @@ import com.xht.cloud.framework.mybatis.convert.IBaseConvert;
 import com.xht.cloud.framework.mybatis.wrapper.EntityWrapper;
 import com.xht.cloud.framework.utils.support.StringUtils;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.mapstruct.NullValueCheckStrategy;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Objects;
@@ -31,7 +29,6 @@ public interface SysRoleConvert extends IBaseConvert<SysRoleCreateRequest, SysRo
      */
     @Override
     @Named(value = "addRequestToDo")
-    @Mapping(target = "dataScope", expression = "java(com.xht.cloud.framework.mybatis.enums.DeptUserDataScopeEnum.getDataScope(createRequest.getDataScope()))")
     SysRoleDO toDO(SysRoleCreateRequest createRequest);
 
     /**
@@ -39,7 +36,6 @@ public interface SysRoleConvert extends IBaseConvert<SysRoleCreateRequest, SysRo
      */
     @Override
     @Named(value = "updateRequestToDo")
-    @Mapping(target = "dataScope", expression = "java(com.xht.cloud.framework.mybatis.enums.DeptUserDataScopeEnum.getDataScope(updateRequest.getDataScope()))")
     SysRoleDO toDO(SysRoleUpdateRequest updateRequest);
 
     /**
@@ -47,7 +43,6 @@ public interface SysRoleConvert extends IBaseConvert<SysRoleCreateRequest, SysRo
      */
     @Override
     @Named(value = "queryRequestToDo")
-    @Mapping(target = "dataScope", expression = "java(com.xht.cloud.framework.mybatis.enums.DeptUserDataScopeEnum.getDataScope(queryRequest.getDataScope()))")
     SysRoleDO toDO(SysRoleQueryRequest queryRequest);
 
     /**
@@ -55,7 +50,6 @@ public interface SysRoleConvert extends IBaseConvert<SysRoleCreateRequest, SysRo
      */
     @Override
     @Named(value = "DoToResponse")
-    @Mapping(target = "dataScope", nullValueCheckStrategy = NullValueCheckStrategy.ON_IMPLICIT_CONVERSION, expression = "java(null != testDO.getDataScope() ?  testDO.getDataScope().getValue() : null)")
     SysRoleResponse toResponse(SysRoleDO testDO);
 
 

@@ -5,7 +5,9 @@ import com.xht.cloud.framework.mybatis.mapper.BaseMapperX;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 描述 ：菜单权限表
@@ -25,4 +27,6 @@ public interface SysMenuMapper extends BaseMapperX<SysMenuDO> {
     List<SysMenuDO> findChildByMenuIdAndMenuStatus(@Param("menuId") String menuId, @Param("menuStatus") String menuStatus);
 
     List<SysMenuDO> selectByUserIdAndMenuType(@Param("userId") String userId, @Param("menuTypes") List<String> menuTypeEnums);
+
+    Set<String> selectMenuAuthorityByUserId(@Param("userId") Serializable userId);
 }

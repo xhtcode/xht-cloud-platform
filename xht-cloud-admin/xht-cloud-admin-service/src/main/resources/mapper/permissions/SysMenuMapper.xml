@@ -86,4 +86,15 @@
         </if>
 
     </select>
+
+    <select id="selectMenuAuthorityByUserId" resultType="java.lang.String">
+        SELECT
+            t1.menu_authority
+        FROM sys_menu t1
+                 LEFT JOIN sys_role_menu t2 on t1.id = t2.menu_id
+                 LEFT JOIN sys_user_role t3 ON t3.role_id = t2.role_id
+        WHERE t3.user_id = #{userId}
+          AND t1.menu_authority is not null
+          AND t1.del_flag = 0
+    </select>
 </mapper>

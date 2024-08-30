@@ -21,24 +21,24 @@ public class SysAdminUserResDTO {
     /**
      * 用户账号
      */
-    @Schema(description = "user_name")
+    @Schema(description = "用户账号")
     private String userName;
 
     /**
      * 账号密码
      */
-    @Schema(description = "pass_word")
+    @Schema(description = "账号密码")
     private String passWord;
 
     /**
      * 头像地址
      */
-    @Schema(description = "user_avatar")
+    @Schema(description = "头像地址")
     private String userAvatar;
 
     /**
      * 手机号码
      */
-    @Schema(description = "contact_phone")
+    @Schema(description = "手机号码")
     private String contactPhone;
 }

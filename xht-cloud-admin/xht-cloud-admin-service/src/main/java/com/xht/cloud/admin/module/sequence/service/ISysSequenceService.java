@@ -33,7 +33,7 @@ public interface ISysSequenceService {
     /**
      * 删除
      *
-     * @param ids {@link List <String>} id集合
+     * @param ids {@link String} id集合
      */
     void remove(List<String> ids);
 

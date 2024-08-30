@@ -3,6 +3,7 @@ package com.xht.cloud.framework.security.resource;
 import cn.hutool.core.util.ArrayUtil;
 import com.xht.cloud.framework.security.core.CustomDaoAuthenticationProvider;
 import com.xht.cloud.framework.security.core.PermitAllUrlProperties;
+import com.xht.cloud.framework.security.resource.aspect.SkipAuthAspect;
 import com.xht.cloud.framework.security.resource.introspection.GlobalOpaqueTokenIntrospector;
 import com.xht.cloud.framework.security.web.Oauth2AuthenticationEntryPoint;
 import com.xht.cloud.framework.security.web.UnAuthorizedAccessDeniedHandler;
@@ -56,5 +57,9 @@ public class ResourceSecurityConfig {
         return http.build();
     }
 
+    @Bean
+    public SkipAuthAspect skipAuthAspect3() {
+        return new SkipAuthAspect();
+    }
 
 }

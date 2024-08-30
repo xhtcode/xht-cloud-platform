@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.xht.cloud.framework.mybatis.dataobject.BaseNoneDeleteDO;
+import com.xht.cloud.framework.mybatis.dataobject.BaseDO;
 import lombok.Data;
 
 import java.io.Serial;
@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 @Data
 @TableName("gen_file_disk")
-public class GenFileDiskDO extends BaseNoneDeleteDO implements Serializable {
+public class GenFileDiskDO extends BaseDO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

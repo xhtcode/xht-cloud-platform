@@ -1,5 +1,6 @@
 package com.xht.cloud.framework.mybatis.p6spy;
 
+import cn.hutool.db.sql.SqlUtil;
 import com.p6spy.engine.spy.appender.StdoutLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
@@ -14,7 +15,7 @@ public class SpyStdoutLogger extends StdoutLogger {
     @Override
     public void logText(String sql) {
         if (!StringUtils.hasText(sql)) return;
-        System.err.println("执行结果:\t" + sql);
+        System.err.println("执行结果:\t" + SqlUtil.formatSql(sql));
         System.err.println("\n==========================================  Sql  End   ==========================================");
     }
 }

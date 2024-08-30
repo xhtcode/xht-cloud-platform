@@ -1,5 +1,6 @@
 package com.xht.cloud.admin.module.permissions.domain.request;
 
+import com.xht.cloud.admin.api.user.enums.DeptUserDataScopeEnum;
 import com.xht.cloud.framework.core.domain.request.UpdateRequest;
 import com.xht.cloud.framework.web.validation.IntegerInterval;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -56,7 +57,7 @@ public class SysRoleUpdateRequest extends UpdateRequest<String> {
      */
     @Schema(description = "数据权限")
     @NotNull(message = "数据权限 `dataScope` 校验不通过")
-    private Integer dataScope;
+    private DeptUserDataScopeEnum dataScope;
 
     /**
      * 角色状态（0停用1正常）

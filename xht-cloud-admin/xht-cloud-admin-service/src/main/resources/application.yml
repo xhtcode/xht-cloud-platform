@@ -13,10 +13,3 @@ mybatis-plus:
       logic-not-delete-value: 0 # 逻辑未删除值(默认为 1)
     banner: false
   mapper-locations: classpath*:/mapper/**/*.xml  #加载mybatis的配置文件
-xht:
-  cloud:
-    oss:
-      bucket-name: test3
-      host: http://127.0.0.1:8001
-      access-key: Gt5ZfWeHNZPAw9miSa98
-      secret-key: j1O32GqBsL7zPmSrB4deEw6UblFt9WqoEbLiiJIZ

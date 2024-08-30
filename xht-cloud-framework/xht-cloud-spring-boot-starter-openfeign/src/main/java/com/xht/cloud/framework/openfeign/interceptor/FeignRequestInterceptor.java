@@ -1,10 +1,10 @@
 package com.xht.cloud.framework.openfeign.interceptor;
 
-import com.xht.cloud.framework.core.constant.LogConstant;
-import com.xht.cloud.framework.core.rpc.RpcConstants;
+import com.xht.cloud.framework.core.trace.TraceIdUtils;
+import com.xht.cloud.framework.exception.BizException;
+import com.xht.cloud.framework.exception.constant.GlobalErrorStatusCode;
 import com.xht.cloud.framework.openfeign.core.OpenFeignProperties;
 import com.xht.cloud.framework.utils.support.StringUtils;
-import com.xht.cloud.framework.core.trace.TraceIdUtils;
 import com.xht.cloud.framework.utils.web.HttpServletUtils;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
@@ -12,6 +12,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
+
+import static com.xht.cloud.framework.core.constant.LogConstant.*;
+import static com.xht.cloud.framework.core.rpc.RpcConstants.AUTHORIZATION;
+import static com.xht.cloud.framework.core.rpc.RpcConstants.RPC_HEADER_KEY;
 
 /**
  * 描述 ：openFeign 拦截器配置
@@ -29,19 +33,21 @@ public class FeignRequestInterceptor implements RequestInterceptor {
     }
 
     public void apply(RequestTemplate template) {
-        template.header(RpcConstants.RPC_HEADER_KEY, rpcHeaderValue.getAuthValue());
         HttpServletRequest request = HttpServletUtils.getRequest();
         if (Objects.isNull(request)) return;
-        String authorization = request.getHeader(RpcConstants.AUTHORIZATION);
-        String traceId = request.getHeader(LogConstant.REQUEST_TRACE_ID);
-        String userId = request.getHeader(LogConstant.REQUEST_USER_ID);
-        String username = request.getHeader(LogConstant.REQUEST_USER_ACCOUNT);
+        String headerValue = request.getHeader(RPC_HEADER_KEY);
+        if (StringUtils.hasText(headerValue)) throw new BizException(GlobalErrorStatusCode.NOT_FOUND);
+        String authorization = request.getHeader(AUTHORIZATION);
+        String traceId = request.getHeader(REQUEST_TRACE_ID);
+        String userId = request.getHeader(REQUEST_USER_ID);
+        String username = request.getHeader(REQUEST_USER_ACCOUNT);
         if (StringUtils.hasText(authorization)) {
-            template.header(RpcConstants.AUTHORIZATION, authorization);
+            template.header(AUTHORIZATION, authorization);
         }
-        template.header(LogConstant.REQUEST_TRACE_ID, StringUtils.emptyToDefault(traceId, TraceIdUtils.getTraceId()));
-        template.header(LogConstant.REQUEST_USER_ID, userId);
-        template.header(LogConstant.REQUEST_USER_ACCOUNT, username);
+        template.header(REQUEST_TRACE_ID, StringUtils.emptyToDefault(traceId, TraceIdUtils.getTraceId()));
+        template.header(REQUEST_USER_ID, userId);
+        template.header(REQUEST_USER_ACCOUNT, username);
+        template.header(RPC_HEADER_KEY, rpcHeaderValue.getAuthValue());
         log.info("OpenFeign分布式调用，链路ID：{}，用户ID：{}，用户账号：{}，令牌：{}", traceId,
                 userId, username,
                 authorization);

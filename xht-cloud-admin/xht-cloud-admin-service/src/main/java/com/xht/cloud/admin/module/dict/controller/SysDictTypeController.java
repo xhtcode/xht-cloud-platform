@@ -69,7 +69,7 @@ public class SysDictTypeController {
     /**
      * 根据id删除字典类型
      *
-     * @param ids {@link List <String>} id集合
+     * @param ids {@link String} id集合
      * @return {@link Boolean} true成功 false失败
      */
     @Operation(summary = "根据id删除-字典类型")

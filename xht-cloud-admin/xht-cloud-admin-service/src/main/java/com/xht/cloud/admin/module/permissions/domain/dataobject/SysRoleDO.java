@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.xht.cloud.admin.api.user.enums.DeptUserDataScopeEnum;
 import com.xht.cloud.framework.mybatis.dataobject.BaseDO;
-import com.xht.cloud.framework.mybatis.enums.DeptUserDataScopeEnum;
 import lombok.Data;
 
 /**

@@ -43,7 +43,7 @@ public final class SecurityContextUtil {
      * @return 当前登录账号
      */
     public static String getUserAccount() {
-        return user().orElseThrow(() -> new UserException("获取不到登录信息")).getUserAccount();
+        return user().orElseThrow(() -> new UserException("获取不到登录信息")).getNickName();
     }
 
     /**

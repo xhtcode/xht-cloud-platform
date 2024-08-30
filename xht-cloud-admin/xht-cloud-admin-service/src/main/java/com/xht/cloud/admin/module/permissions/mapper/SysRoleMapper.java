@@ -5,7 +5,9 @@ import com.xht.cloud.framework.mybatis.mapper.BaseMapperX;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 描述 ：系统角色表
@@ -21,15 +23,24 @@ public interface SysRoleMapper extends BaseMapperX<SysRoleDO> {
      * @param userId 用户id
      * @return 该用户所拥有的角色
      */
-    List<SysRoleDO> selectListByUserId(@Param("userId") String userId);
+    List<SysRoleDO> selectListByUserId(@Param("userId") Serializable userId);
+
+    /**
+     * 根据用户id查询该用户所拥有的角色code
+     *
+     * @param userId 用户id
+     * @return 该用户所拥有的角色
+     */
+    Set<String> selectRoleCodeByUserId(@Param("userId") Serializable userId);
+
 
     /**
      * 根据用户id 查询最大的数据权限
      *
      * @param userId 用户id
-     * @return
+     * @return 数据权限级别
      */
-    Integer selectDataScopeByUserId(@Param("userId") String userId);
+    Integer selectDataScopeByUserId(@Param("userId") Serializable userId);
 
     /**
      * 根据用户id 和用户数据权限级别查询所拥有的角色id

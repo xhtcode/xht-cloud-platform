@@ -83,7 +83,7 @@ public class SysDictItemController {
     /**
      * 根据id删除字典数据
      *
-     * @param ids {@link List <String>} id集合
+     * @param ids {@link String} id集合
      * @return {@link Boolean} true成功 false失败
      */
     @Operation(summary = "根据id删除-字典数据")

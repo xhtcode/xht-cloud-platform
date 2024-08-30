@@ -12,7 +12,7 @@ public interface SecurityConstant {
     /**
      * 请求的`类型
      */
-    String REQUEST_USER_TYPE = "userType";
+    String REQUEST_USER_TYPE = "usertype";
 
     /**
      * 请求的`验证码 uuid`name值
@@ -27,12 +27,12 @@ public interface SecurityConstant {
     /**
      * 请求的`账号`name值
      */
-    String REQUEST_USERNAME = "userName";
+    String REQUEST_USERNAME = "username";
 
     /**
      * 请求的`密码`name值
      */
-    String REQUEST_PASSWORD = "passWord";
+    String REQUEST_PASSWORD = "password";
 
     /**
      * 请求的范围

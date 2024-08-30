@@ -70,7 +70,7 @@ public class SysDeptController {
     /**
      * 根据id删除
      *
-     * @param ids {@link List <String>} id集合
+     * @param ids {@link String} id集合
      * @return {@link Boolean} true成功 false失败
      */
     @Operation(summary = "根据id删除-部门")

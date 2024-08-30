@@ -1,6 +1,6 @@
 package com.xht.cloud.framework.mybatis.handler.dto;
 
-import com.xht.cloud.framework.mybatis.enums.DeptUserDataScopeEnum;
+import com.xht.cloud.framework.core.enums.IEnum;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,7 +11,7 @@ import lombok.Getter;
  **/
 @Getter
 @Builder
-public class DataScopeDTO {
+public class DataScopeDTO<T extends IEnum<?>> {
 
     /**
      * 如果返回false 那么就不会拼装sql数据 用户最大数据权限使用
@@ -22,7 +22,5 @@ public class DataScopeDTO {
 
     private String userId;
 
-//    private CustomUserDetails customUserDetails;
-
-    private DeptUserDataScopeEnum dataScope;
+    private T dataScope;
 }

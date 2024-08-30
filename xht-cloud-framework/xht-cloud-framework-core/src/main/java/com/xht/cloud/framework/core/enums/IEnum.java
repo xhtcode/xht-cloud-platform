@@ -13,4 +13,6 @@ public interface IEnum<T extends Serializable> {
      * @return 字典值
      */
     T getValue();
+
+    String name();
 }

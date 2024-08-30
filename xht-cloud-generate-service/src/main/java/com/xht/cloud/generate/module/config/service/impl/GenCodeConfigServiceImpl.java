@@ -200,6 +200,9 @@ public class GenCodeConfigServiceImpl implements IGenCodeConfigService {
             Set<String> keys = resultMap.keySet();
             Map<String, List<Path>> pathListMap = buildHierarchy(keys);
             genFileId(ROOT_FOLDER, File.separator, result, resultMap, pathListMap);
+            if (CollectionUtils.isEmpty(resultMap)) {
+                throw new GenerateException("文件列表解析错误，请确保根目录有两个文件以上！");
+            }
             fileDiskMapper.saveBatch(result);
         } catch (IOException e) {
             throw new GenerateException("模板解析错误", e);

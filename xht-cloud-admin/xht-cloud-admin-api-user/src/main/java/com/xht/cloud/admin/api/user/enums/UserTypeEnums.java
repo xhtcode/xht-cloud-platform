@@ -18,7 +18,7 @@ public enum UserTypeEnums implements IEnum<Integer> {
 
     ADMIN(0, "管理员"),
 
-    SYSTEM_USER(1, "系统用户"),
+    STAFF(1, "工作人员"),
 
     USER(2, "用户"),
 

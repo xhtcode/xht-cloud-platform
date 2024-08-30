@@ -11,10 +11,8 @@ import java.util.Objects;
 
 /**
  * 描述 ：JDBC工具类
- * <pre> </pre>
  *
  * @author 小糊涂
- * @version : 1.0
  **/
 @Slf4j
 public class JDBCUtils {

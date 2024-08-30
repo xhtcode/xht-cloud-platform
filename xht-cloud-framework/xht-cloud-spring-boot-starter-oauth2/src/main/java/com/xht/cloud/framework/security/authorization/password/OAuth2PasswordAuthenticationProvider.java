@@ -55,7 +55,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
     @Override
     protected Authentication authenticateUserDetails(RequestUserBO userBuilder, RegisteredClient registeredClient) throws AuthenticationException {
         SysLoginLogDTO sysLoginLogDTO = new SysLoginLogDTO();
-        Boolean saveLog = true;
+        boolean saveLog = true;
         try {
             userBuilder.checkPassword().checkUserName().checkUserType().checkCaptcha();
             HttpServletRequest request = HttpServletUtils.getRequest();
@@ -66,11 +66,11 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
             sysLoginLogDTO.setLoginAddress(IPUtils.getRealAddress(ip));
             sysLoginLogDTO.setUserAgent(HttpServletUtils.getHeader(request, "user-agent"));
             sysLoginLogDTO.setUserType(userBuilder.getUserType().getDesc());
-            sysLoginLogDTO.setUserAccount(userBuilder.getUsername());
+            sysLoginLogDTO.setUserName(userBuilder.getUsername());
             IUserDetailsService userDetailsService = getUserDetailsService(userBuilder.getUserType());
             UserDetailsBO userDetails = userDetailsService.loadUser(userBuilder);
             sysLoginLogDTO.setUserId(userDetails.getId());
-            sysLoginLogDTO.setUserName(userDetails.getUsername());
+            sysLoginLogDTO.setNickName(userDetails.getUsername());
             sysLoginLogDTO.setLoginStatus(LoginStatusEnums.SUCCESS);
             sysLoginLogDTO.setLoginDesc("登录成功");
             return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
@@ -85,7 +85,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
         } catch (Exception e) {
             sysLoginLogDTO.setLoginStatus(LoginStatusEnums.ERROR);
             sysLoginLogDTO.setLoginDesc(e.getMessage());
-            throw new OAuth2AuthenticationException(new OAuth2Error(AUTHENTICATION_FAILURE.getCode().toString(), e.getMessage(), ERROR_URL), e);
+            throw new OAuth2AuthenticationException(new OAuth2Error(AUTHENTICATION_FAILURE.getCode().toString(), "服务内部错误！", ERROR_URL), e);
         } finally {
             userBuilder.clearCaptcha();
             if (saveLog) {

@@ -26,13 +26,13 @@ public class SysLoginLogResponse extends Response {
      * 用户账号
      */
     @Schema(description = "用户账号")
-    private String userAccount;
+    private String userName;
 
     /**
      * 用户名称
      */
     @Schema(description = "用户名称")
-    private String userName;
+    private String nickName;
 
     /**
      * 用户类型

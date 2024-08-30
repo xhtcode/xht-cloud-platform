@@ -13,8 +13,8 @@ import com.xht.cloud.admin.module.permissions.mapper.SysRoleMapper;
 import com.xht.cloud.admin.module.permissions.mapper.SysRoleMenuMapper;
 import com.xht.cloud.admin.module.permissions.mapper.SysUserRoleMapper;
 import com.xht.cloud.admin.module.permissions.service.IPermissionService;
-import com.xht.cloud.admin.module.user.domain.dataobject.SysUserDO;
-import com.xht.cloud.admin.module.user.mapper.SysUserMapper;
+import com.xht.cloud.admin.module.user.domain.dataobject.SysUserStaffDO;
+import com.xht.cloud.admin.module.user.mapper.SysUserStaffMapper;
 import com.xht.cloud.admin.tool.ExceptionTool;
 import com.xht.cloud.framework.utils.support.StringUtils;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PermissionServiceImpl implements IPermissionService {
 
-    private final SysUserMapper sysUserMapper;
+    private final SysUserStaffMapper sysUserStaffMapper;
 
     private final SysRoleMapper sysRoleMapper;
 
@@ -112,8 +112,8 @@ public class PermissionServiceImpl implements IPermissionService {
     @Override
     public boolean userAuthorizationRole(String userId, List<String> roleIds) {
         ExceptionTool.permissionValidation(!StringUtils.hasText(userId), "userId is must  not null!");
-        SysUserDO sysUserDO = sysUserMapper.findById(userId).orElse(null);
-        ExceptionTool.permissionValidation(Objects.isNull(sysUserDO), "查询不到相关用户信息!");
+        SysUserStaffDO sysUserStaffDO = sysUserStaffMapper.findById(userId).orElse(null);
+        ExceptionTool.permissionValidation(Objects.isNull(sysUserStaffDO), "查询不到相关用户信息!");
         sysUserRoleMapper.delete(sysUserRoleConvert.lambdaQuery().eq(SysUserRoleDO::getUserId, userId));
         if (!CollectionUtils.isEmpty(roleIds)) {
             long sysRoleDOCount = sysRoleMapper.selectCount(sysRoleConvert.lambdaQuery().in(SysRoleDO::getId, roleIds));

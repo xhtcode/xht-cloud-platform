@@ -2,7 +2,7 @@ package com.xht.cloud.admin.tool;
 
 import com.xht.cloud.admin.exceptions.MenuException;
 import com.xht.cloud.admin.exceptions.PermissionException;
-import com.xht.cloud.admin.module.user.domain.dataobject.SysUserDO;
+import com.xht.cloud.admin.module.user.domain.dataobject.SysUserStaffDO;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.exception.user.UserNotFountException;
 import com.xht.cloud.framework.security.utils.SecurityContextUtil;
@@ -43,11 +43,11 @@ public final class ExceptionTool {
     /**
      * 权限异常
      *
-     * @param sysUserDO 用户信息
+     * @param sysUserStaffDO 用户信息
      */
-    public static void permissionValidation(SysUserDO sysUserDO) {
-        Assert.notNull(sysUserDO, UserNotFountException::new);
-        if (sysUserDO.getAdminStatus().isAdmin() && !SecurityContextUtil.isAdmin()) {
+    public static void permissionValidation(SysUserStaffDO sysUserStaffDO) {
+        Assert.notNull(sysUserStaffDO, UserNotFountException::new);
+        if (!SecurityContextUtil.isAdmin()) {
             throw new PermissionException(SYSTEM_FORBIDDEN);
         }
     }

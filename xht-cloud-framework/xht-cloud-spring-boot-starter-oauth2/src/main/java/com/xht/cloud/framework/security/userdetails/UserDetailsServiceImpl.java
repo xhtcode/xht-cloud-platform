@@ -1,15 +1,13 @@
 package com.xht.cloud.framework.security.userdetails;
 
-import com.xht.cloud.admin.api.user.dto.SysUserResDTO;
+import com.xht.cloud.admin.api.user.dto.UserCenterResponse;
 import com.xht.cloud.admin.api.user.enums.UserTypeEnums;
-import com.xht.cloud.admin.api.user.feign.UserInfoClient;
+import com.xht.cloud.admin.api.user.feign.UserCenterClient;
 import com.xht.cloud.framework.core.R;
 import com.xht.cloud.framework.core.ROptional;
-import com.xht.cloud.framework.security.convert.SysUserConvert;
 import com.xht.cloud.framework.security.domain.UserDetailsBO;
-import jakarta.annotation.Resource;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import static com.xht.cloud.framework.security.constant.CustomAuthorizationGrantType.PASSWORD;
@@ -20,11 +18,10 @@ import static com.xht.cloud.framework.security.constant.CustomAuthorizationGrant
  * @author 小糊涂
  **/
 @Slf4j
-@RequiredArgsConstructor
-public class UserDetailsServiceImpl implements IUserDetailsService {
+public class UserDetailsServiceImpl extends IUserDetailsService {
 
-    @Resource
-    private UserInfoClient userInfoClient;
+    @Autowired
+    private UserCenterClient userCenterClient;
 
     /**
      * 用于检索用户进行身份验证
@@ -34,32 +31,15 @@ public class UserDetailsServiceImpl implements IUserDetailsService {
     @Override
     public UserDetailsBO loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("用于检索用户进行身份验证 {}", username);
-        R<SysUserResDTO> userByAccount = userInfoClient.findUserByAccount(username);
-        ROptional<SysUserResDTO> rOptional = ROptional.of(userByAccount);
+        R<UserCenterResponse> userByUserName = userCenterClient.findUserByUserName(username, UserTypeEnums.STAFF);
+        ROptional<UserCenterResponse> rOptional = ROptional.of(userByUserName);
         String errorMessage = String.format("`%s`账号不存在", username);
         if (rOptional.isSuccess()) {
-            SysUserResDTO sysUserResDTO = rOptional.getData().orElseThrow(() -> new UsernameNotFoundException(errorMessage));
-            return sysUserConvert.convert(sysUserResDTO);
+            UserCenterResponse userResDTO = rOptional.getData().orElseThrow(() -> new UsernameNotFoundException(errorMessage));
+            return getUserDetailsBO(userResDTO);
         }
         throw new UsernameNotFoundException(errorMessage);
     }
-
-    final SysUserConvert sysUserConvert = sysUserResDTO1 -> {
-        UserDetailsBO userDetailsBO = new UserDetailsBO();
-        userDetailsBO.setId(sysUserResDTO1.getUserId());
-        userDetailsBO.setUserAccount(sysUserResDTO1.getUserAccount());
-        userDetailsBO.setUsername(sysUserResDTO1.getUserName());
-        userDetailsBO.setPassword(sysUserResDTO1.getPassWord());
-        userDetailsBO.setSuperAdmin(sysUserResDTO1.getSuperAdmin());
-        userDetailsBO.setDataScope(sysUserResDTO1.getDataScope());
-        userDetailsBO.setUserStatus(sysUserResDTO1.getUserStatus());
-        userDetailsBO.setMobile(sysUserResDTO1.getMobile());
-        userDetailsBO.setDeptId(sysUserResDTO1.getDeptId());
-        userDetailsBO.setMenuCode(sysUserResDTO1.getMenuCode());
-        userDetailsBO.setRoleCode(sysUserResDTO1.getRoleCode());
-        userDetailsBO.setSourceName(sysUserResDTO1.getSourceName());
-        return userDetailsBO;
-    };
 
     /**
      * 是否支持此客户端校验
@@ -70,6 +50,6 @@ public class UserDetailsServiceImpl implements IUserDetailsService {
      */
     @Override
     public boolean support(String grantType, UserTypeEnums userType) {
-        return PASSWORD.getValue().equals(grantType) && UserTypeEnums.SYSTEM_USER.equals(userType);
+        return PASSWORD.getValue().equals(grantType) && UserTypeEnums.STAFF.equals(userType);
     }
 }

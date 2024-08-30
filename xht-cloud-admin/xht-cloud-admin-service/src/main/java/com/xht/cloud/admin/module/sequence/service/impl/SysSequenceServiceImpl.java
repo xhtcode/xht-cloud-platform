@@ -80,7 +80,7 @@ public class SysSequenceServiceImpl implements ISysSequenceService {
     /**
      * 删除序列
      *
-     * @param ids {@link List <String>} id集合
+     * @param ids {@link String} id集合
      */
     @Override
     @Transactional(rollbackFor = Exception.class)

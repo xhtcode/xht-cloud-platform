@@ -2,6 +2,7 @@ package com.xht.cloud.admin.module.permissions.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.xht.cloud.admin.api.user.enums.DeptUserDataScopeEnum;
 import com.xht.cloud.admin.constant.CommonStatus;
 import com.xht.cloud.admin.exceptions.PermissionException;
 import com.xht.cloud.admin.module.dept.convert.SysDeptConvert;
@@ -23,7 +24,6 @@ import com.xht.cloud.admin.module.permissions.service.ISysRoleService;
 import com.xht.cloud.framework.core.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.exception.BizException;
-import com.xht.cloud.framework.mybatis.enums.DeptUserDataScopeEnum;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

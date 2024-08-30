@@ -38,7 +38,7 @@ public class SecurityConfigProperties {
     /**
      * 安全请求头值
      */
-    private String securityHeaderValue;
+    private String securityHeaderValue = "123456";
 
     public List<String> formatWhiteUrls() {
         boolean activeProfileProd = DeveloperTool.isProdActiveProfile(SpringContextUtil.getActiveProfile());

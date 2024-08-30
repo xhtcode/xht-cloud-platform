@@ -2,6 +2,8 @@ package com.xht.cloud.framework.mybatis.dao;
 
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.xht.cloud.framework.exception.SysException;
+import com.xht.cloud.framework.exception.constant.GlobalErrorStatusCode;
 import com.xht.cloud.framework.mybatis.dataobject.AbstractDO;
 import com.xht.cloud.framework.mybatis.mapper.BaseMapperX;
 
@@ -22,7 +24,9 @@ public abstract class BaseDaoImpl<M extends BaseMapperX<T>, T extends AbstractDO
      * @param entity 实体
      * @return 修改
      */
-    public abstract boolean update(T entity);
+    public boolean update(T entity) {
+        throw new SysException(GlobalErrorStatusCode.ERROR_CONFIGURATION);
+    }
 
     /**
      * 查询一个

@@ -2,8 +2,10 @@ package com.xht.cloud.framework.security.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.xht.cloud.admin.api.user.enums.DeptUserDataScopeEnum;
 import com.xht.cloud.admin.api.user.enums.SuperAdminUserEnums;
 import com.xht.cloud.admin.api.user.enums.UserStatusEnums;
+import com.xht.cloud.admin.api.user.enums.UserTypeEnums;
 import com.xht.cloud.framework.core.domain.Identifier;
 import com.xht.cloud.framework.security.constant.SecurityConstant;
 import lombok.Data;
@@ -32,12 +34,17 @@ public class UserDetailsBO extends Identifier<String> implements UserDetails, OA
     /**
      * 用户账号
      */
-    private String userAccount;
+    private String nickName;
 
     /**
      * 用户名
      */
     private String username;
+
+    /**
+     * 用户类型
+     */
+    private UserTypeEnums userType;
 
 
     /**
@@ -57,7 +64,7 @@ public class UserDetailsBO extends Identifier<String> implements UserDetails, OA
     /**
      * 数据权限级别
      */
-    private Integer dataScope;
+    private DeptUserDataScopeEnum dataScope;
 
     /**
      * 用户状态 0启用 1禁用.
@@ -188,6 +195,6 @@ public class UserDetailsBO extends Identifier<String> implements UserDetails, OA
     @Override
     @JsonIgnore
     public String getName() {
-        return this.userAccount;
+        return this.username;
     }
 }

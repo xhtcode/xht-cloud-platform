@@ -19,12 +19,12 @@ public class SysUserResDTO {
     /**
      * 用户账号
      */
-    private String userAccount;
+    private String userName;
 
     /**
      * 用户名
      */
-    private String userName;
+    private String nickName;
 
 
     /**

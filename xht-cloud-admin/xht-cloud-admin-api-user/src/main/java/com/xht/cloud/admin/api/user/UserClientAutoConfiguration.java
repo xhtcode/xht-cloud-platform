@@ -1,5 +1,6 @@
 package com.xht.cloud.admin.api.user;
 
+import com.xht.cloud.admin.api.user.feign.UserCenterClient;
 import com.xht.cloud.framework.core.server.ServerConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -13,7 +14,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  **/
 @Slf4j
 @AutoConfiguration
-@EnableFeignClients(basePackages = "com.xht.cloud.admin.api.user.feign")
+@EnableFeignClients(clients = {UserCenterClient.class})
 public class UserClientAutoConfiguration {
 
     public UserClientAutoConfiguration() {

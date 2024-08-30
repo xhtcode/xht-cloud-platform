@@ -3,6 +3,7 @@ package com.xht.cloud.admin.handler.datatascope;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import com.xht.cloud.admin.api.user.enums.DeptUserDataScopeEnum;
 import com.xht.cloud.admin.exceptions.PermissionException;
 import com.xht.cloud.admin.module.dept.domain.dataobject.SysDeptDO;
 import com.xht.cloud.admin.module.dept.mapper.SysDeptMapper;
@@ -10,7 +11,6 @@ import com.xht.cloud.admin.module.permissions.mapper.SysRoleMapper;
 import com.xht.cloud.framework.mybatis.core.DataScopeFieldBuilder;
 import com.xht.cloud.framework.mybatis.dataobject.AbstractDO;
 import com.xht.cloud.framework.mybatis.enums.DataScopeTypeEnums;
-import com.xht.cloud.framework.mybatis.enums.DeptUserDataScopeEnum;
 import com.xht.cloud.framework.mybatis.handler.DataScopeSqlFactory;
 import com.xht.cloud.framework.mybatis.handler.DataScopeSqlHandler;
 import com.xht.cloud.framework.mybatis.handler.dto.DataScopeDTO;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * @author 小糊涂
  **/
 @Service
-public class DeptUserDataScopeSqlHandler extends DataScopeSqlHandler {
+public class DeptUserDataScopeSqlHandler extends DataScopeSqlHandler<DeptUserDataScopeEnum> {
 
     private final SysRoleMapper sysRoleMapper;
 
@@ -50,24 +50,23 @@ public class DeptUserDataScopeSqlHandler extends DataScopeSqlHandler {
      * @return {@link DataScopeDTO}
      */
     @Override
-    public DataScopeDTO verify() {
+    public DataScopeDTO<DeptUserDataScopeEnum> verify() {
         if (SecurityContextUtil.isAdmin()) {
-            return DataScopeDTO.builder().verify(false).build();
+            return DataScopeDTO.<DeptUserDataScopeEnum>builder().verify(false).build();
         }
         UserDetailsBO user = SecurityContextUtil.user().orElseThrow(() -> new PermissionException("未查询到登录用户信息！"));
-        Integer dataScope = user.getDataScope();
-        DeptUserDataScopeEnum deptUserDataScopeEnum = DeptUserDataScopeEnum.getDataScope(dataScope);
-        if (Objects.isNull(deptUserDataScopeEnum)) {
+        DeptUserDataScopeEnum dataScope = user.getDataScope();
+        if (Objects.isNull(dataScope)) {
             throw new PermissionException("部门级权限不足，请联系管理员重新分配部门级数据权限！");
         }
-        if (Objects.equals(DeptUserDataScopeEnum.DATA_SCOPE_ALL.getValue(), dataScope)) {
-            return DataScopeDTO.builder().verify(false).build();
+        if (Objects.equals(DeptUserDataScopeEnum.DATA_SCOPE_ALL, dataScope)) {
+            return DataScopeDTO.<DeptUserDataScopeEnum>builder().verify(false).build();
         }
         String deptId = user.getDeptId();
         if (!StringUtils.hasText(deptId)) {
             throw new PermissionException("未分配部门，请联系管理员！");
         }
-        return DataScopeDTO.builder().verify(true).userId(user.getId()).deptId(deptId).dataScope(deptUserDataScopeEnum)
+        return DataScopeDTO.<DeptUserDataScopeEnum>builder().verify(true).userId(user.getId()).deptId(deptId).dataScope(dataScope)
                 .build();
     }
 
@@ -77,7 +76,7 @@ public class DeptUserDataScopeSqlHandler extends DataScopeSqlHandler {
      * @param lambdaQueryWrapper sql构建器
      */
     @Override
-    public <T extends AbstractDO> void generate(DataScopeDTO dataScopeDTO, DataScopeFieldBuilder<T> builder, LambdaQueryWrapper<T> lambdaQueryWrapper) {
+    public <DO extends AbstractDO> void generate(DataScopeDTO<DeptUserDataScopeEnum> dataScopeDTO, DataScopeFieldBuilder<DO> builder, LambdaQueryWrapper<DO> lambdaQueryWrapper) {
         String deptId = dataScopeDTO.getDeptId();
         String userId = dataScopeDTO.getUserId();
         DeptUserDataScopeEnum deptUserDataScopeEnum = dataScopeDTO.getDataScope();
@@ -100,7 +99,7 @@ public class DeptUserDataScopeSqlHandler extends DataScopeSqlHandler {
                 SqlGenerator.generateInClause(builder.getDeptField(), resultList, lambdaQueryWrapper);
             }
             case DATA_SCOPE_SELF -> { //本人数据
-                SFunction<T, ?> userField = builder.getUserField();
+                SFunction<DO, ?> userField = builder.getUserField();
                 if (Objects.isNull(userField)) {
                     lambdaQueryWrapper.eq(builder.getDeptField(), deptId);
                 } else {
@@ -116,7 +115,7 @@ public class DeptUserDataScopeSqlHandler extends DataScopeSqlHandler {
      * @param queryWrapper sql构建器
      */
     @Override
-    public <T extends AbstractDO> void generate(DataScopeDTO dataScopeDTO, DataScopeFieldBuilder<T> builder, QueryWrapper<T> queryWrapper) {
+    public <DO extends AbstractDO> void generate(DataScopeDTO<DeptUserDataScopeEnum> dataScopeDTO, DataScopeFieldBuilder<DO> builder, QueryWrapper<DO> queryWrapper) {
         String deptId = dataScopeDTO.getDeptId();
         String userId = dataScopeDTO.getUserId();
         DeptUserDataScopeEnum deptUserDataScopeEnum = dataScopeDTO.getDataScope();
@@ -155,7 +154,7 @@ public class DeptUserDataScopeSqlHandler extends DataScopeSqlHandler {
      * @return sql 字符串
      */
     @Override
-    public <T extends AbstractDO> String generate(DataScopeDTO dataScopeDTO, DataScopeFieldBuilder<T> builder) {
+    public <DO extends AbstractDO> String generate(DataScopeDTO<DeptUserDataScopeEnum> dataScopeDTO, DataScopeFieldBuilder<DO> builder) {
         String deptId = dataScopeDTO.getDeptId();
         String userId = dataScopeDTO.getUserId();
         DeptUserDataScopeEnum deptUserDataScopeEnum = dataScopeDTO.getDataScope();

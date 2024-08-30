@@ -7,11 +7,7 @@ package com.xht.cloud.framework.exception.user;
  **/
 public class UserNotFountException extends UserException {
 
-    public UserNotFountException(String userName) {
-        super(String.format("账号：`%s`不存在", userName));
-    }
-
     public UserNotFountException() {
-        super("用户信息不存在");
+        super("查询不到用户信息");
     }
 }

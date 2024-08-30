@@ -1,6 +1,8 @@
 package com.xht.cloud.admin.constant;
 
 
+import com.xht.cloud.framework.core.constant.StringConstant;
+
 /**
  * 描述 ：菜单常量
  *
@@ -22,6 +24,9 @@ public interface MenuConstant {
     String STATUS_ERROR = "0";
 
     String STATUS_SUCCESS = "1";
+
+
+    String DELIMITER = StringConstant.DEFAULT_DELIMITER;
 
 
     /**

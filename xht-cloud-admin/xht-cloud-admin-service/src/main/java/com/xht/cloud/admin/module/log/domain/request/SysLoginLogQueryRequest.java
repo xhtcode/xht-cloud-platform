@@ -19,7 +19,7 @@ public class SysLoginLogQueryRequest extends PageQueryRequest {
      * 用户账号
      */
     @Schema(description = "用户账号")
-    private String userAccount;
+    private String userName;
 
     /**
      * 用户类型

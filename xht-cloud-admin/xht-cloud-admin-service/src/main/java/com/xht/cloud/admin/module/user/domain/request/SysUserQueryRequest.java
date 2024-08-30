@@ -1,8 +1,7 @@
 package com.xht.cloud.admin.module.user.domain.request;
 
-import com.xht.cloud.framework.core.domain.request.PageQueryRequest;
 import com.xht.cloud.admin.api.user.enums.UserStatusEnums;
-import com.xht.cloud.admin.api.user.enums.UserTypeEnums;
+import com.xht.cloud.framework.core.domain.request.PageQueryRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -29,13 +28,13 @@ public class SysUserQueryRequest extends PageQueryRequest {
      * 用户名称
      */
     @Schema(description = "用户名称")
-    private String userName;
+    private String nickName;
 
     /**
      * 用户账号
      */
     @Schema(description = "用户账号")
-    private String userAccount;
+    private String userName;
 
     /**
      * 用户id
@@ -49,9 +48,4 @@ public class SysUserQueryRequest extends PageQueryRequest {
     @Schema(description = "用户状态")
      private UserStatusEnums userStatus;
 
-    /**
-     * 账号类型，0：自主注册，1：QQ，2：微信
-     */
-    @Schema(description = "账号类型，0：自主注册，1：QQ，2：微信")
-    private UserTypeEnums userType;
 }

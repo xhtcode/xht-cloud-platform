@@ -44,7 +44,7 @@ public interface SysLoginLogConvert extends PageConvert<SysLoginLogDO, SysLoginL
         }
         return wrapper
                 .eq(!Objects.isNull(entity.getLoginStatus()), SysLoginLogDO::getLoginStatus, entity.getLoginStatus())
-                .like(!StringUtils.isEmpty(entity.getUserAccount()), SysLoginLogDO::getUserAccount, entity.getUserAccount())
+                .like(!StringUtils.isEmpty(entity.getUserName()), SysLoginLogDO::getUserName, entity.getUserName())
                 ;
     }
 }

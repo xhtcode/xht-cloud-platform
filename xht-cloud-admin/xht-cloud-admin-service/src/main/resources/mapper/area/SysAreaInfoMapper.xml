@@ -38,7 +38,7 @@
         <include refid="BaseColumnList"></include>
         , ( select count(1) from sys_area_info t1 where t1.parent_id = sys_area_info.id ) as leaf
         FROM sys_area_info
-        WHERE del_flag=1
+        WHERE del_flag=0
         <if test=" query.parentId != null and query.parentId != '' ">
             and parent_id = #{query.parentId}
         </if>

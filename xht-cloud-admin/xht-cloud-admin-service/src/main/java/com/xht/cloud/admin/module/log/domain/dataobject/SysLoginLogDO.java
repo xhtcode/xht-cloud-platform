@@ -34,14 +34,14 @@ public class SysLoginLogDO extends AbstractDO {
     /**
      * 用户账号
      */
-    @TableField(value = "user_account")
-    private String userAccount;
+    @TableField(value = "user_name")
+    private String userName;
 
     /**
      * 用户名称
      */
-    @TableField(value = "user_name")
-    private String userName;
+    @TableField(value = "nick_name")
+    private String nickName;
 
     /**
      * 用户类型

@@ -11,14 +11,14 @@ import com.xht.cloud.admin.module.dept.domain.response.SysDeptResponse;
 import com.xht.cloud.admin.module.dept.mapper.SysDeptMapper;
 import com.xht.cloud.admin.module.dept.service.ISysDeptService;
 import com.xht.cloud.admin.module.permissions.domain.dataobject.SysMenuDO;
-import com.xht.cloud.admin.module.user.convert.SysUserConvert;
-import com.xht.cloud.admin.module.user.domain.dataobject.SysUserDO;
-import com.xht.cloud.admin.module.user.mapper.SysUserMapper;
+import com.xht.cloud.admin.module.user.dao.SysUserStaffDao;
+import com.xht.cloud.admin.module.user.domain.dataobject.SysUserStaffDO;
 import com.xht.cloud.framework.core.domain.request.Request;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.mybatis.core.DataScopeFieldBuilder;
 import com.xht.cloud.framework.mybatis.enums.DataScopeTypeEnums;
 import com.xht.cloud.framework.mybatis.handler.DataScopeSqlFactory;
+import com.xht.cloud.framework.mybatis.tool.SqlHelper;
 import com.xht.cloud.framework.utils.treenode.INode;
 import com.xht.cloud.framework.utils.treenode.TreeNode;
 import com.xht.cloud.framework.utils.treenode.TreeUtils;
@@ -45,14 +45,11 @@ public class SysDeptServiceImpl implements ISysDeptService {
 
     private final SysDeptMapper sysDeptMapper;
 
-    private final SysUserMapper sysUserMapper;
+    private final SysUserStaffDao sysUserStaffDao;
 
     private final DataScopeSqlFactory dataScopeFactory;
 
     private final SysDeptConvert sysDeptConvert;
-
-    private final SysUserConvert sysUserConvert;
-
 
     /**
      * 创建
@@ -114,10 +111,9 @@ public class SysDeptServiceImpl implements ISysDeptService {
                 .in(SysDeptDO::getParentId, ids);
         List<SysDeptDO> sysDeptDOS = sysDeptMapper.selectList(lambdaQueryWrapper);
         Assert.isTrue(!CollectionUtils.isEmpty(sysDeptDOS), "选择的部门存在有下级部门禁止删除!");
-        List<SysUserDO> sysUserDOS = sysUserMapper.selectList(sysUserConvert.lambdaQuery().in(SysUserDO::getDeptId, ids));
-        Assert.isTrue(!CollectionUtils.isEmpty(sysUserDOS), "选择的部门中已绑定用户禁止删除!");
+        long userCount = sysUserStaffDao.selectCountIn(SysUserStaffDO::getDeptId, ids);
+        Assert.isTrue(SqlHelper.exist(userCount), "选择的部门中已绑定用户禁止删除!");
         sysDeptMapper.deleteBatchIds(ids);
-
     }
 
     /**

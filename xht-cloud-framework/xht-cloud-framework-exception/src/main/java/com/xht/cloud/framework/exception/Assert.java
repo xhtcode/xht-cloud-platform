@@ -1,6 +1,8 @@
 package com.xht.cloud.framework.exception;
 
 
+import com.xht.cloud.framework.exception.constant.IErrorStatusCode;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
@@ -36,6 +38,16 @@ public final class Assert {
         if (str == null || str.isBlank()) throw errorSupplier.get();
     }
 
+    /**
+     * 字符串为空抛出异常
+     *
+     * @param str             字符串
+     * @param errorStatusCode 异常状态
+     */
+    public static <X extends Throwable> void hasText(String str, IErrorStatusCode errorStatusCode) throws X {
+        if (str == null || str.isBlank()) throw new BizException(errorStatusCode);
+    }
+
     // -----------------------------------------------字符串相关 end-----------------------------------------------
     // -----------------------------------------------对象 start-----------------------------------------------
 
@@ -58,6 +70,17 @@ public final class Assert {
     public static <X extends Throwable> void notNull(Object object, Supplier<X> errorSupplier) throws X {
         if (Objects.isNull(object)) throw errorSupplier.get();
     }
+
+    /**
+     * 对象为空抛出异常
+     *
+     * @param object          对象
+     * @param errorStatusCode {@link IErrorStatusCode} 异常状态
+     */
+    public static <X extends Throwable> void notNull(Object object, IErrorStatusCode errorStatusCode) throws X {
+        if (Objects.isNull(object)) throw new BizException(errorStatusCode);
+    }
+
     // -----------------------------------------------对象 end-----------------------------------------------
     // -----------------------------------------------集合 start-----------------------------------------------
 

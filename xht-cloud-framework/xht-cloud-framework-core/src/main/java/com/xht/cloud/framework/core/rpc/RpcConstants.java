@@ -10,7 +10,7 @@ public interface RpcConstants {
     /**
      * RPC 调用时专用key
      */
-    String RPC_HEADER_KEY = "RPC_HEADER";
+    String RPC_HEADER_KEY = "XhtAuthorization";
 
     /**
      * 认证标识
