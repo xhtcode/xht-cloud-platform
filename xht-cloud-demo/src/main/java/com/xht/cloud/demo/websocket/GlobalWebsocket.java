@@ -25,7 +25,7 @@ public class GlobalWebsocket extends SecureWebSocket {
 
     /**
      * key: userKye
-     * value: GlobalWebsocket  这里你直接存储 session 也是可以的
+     * type: GlobalWebsocket  这里你直接存储 session 也是可以的
      */private static final Map<String, GlobalWebsocket> CLIENTS = new ConcurrentHashMap<>();
 
     /**

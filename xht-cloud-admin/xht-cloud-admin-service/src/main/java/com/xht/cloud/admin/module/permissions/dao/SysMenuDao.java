@@ -29,8 +29,8 @@ public class SysMenuDao extends BaseDaoImpl<SysMenuMapper, SysMenuDO> {
      */
     public List<SysMenuDO> selectMenuRouter() {
         List<String> list = new ArrayList<>();
-        list.add(MenuTypeEnums.C.getValue());
         list.add(MenuTypeEnums.M.getValue());
+        list.add(MenuTypeEnums.C.getValue());
         return getBaseMapper().selectListIn(SysMenuDO::getMenuType, list);
     }
 
@@ -44,6 +44,7 @@ public class SysMenuDao extends BaseDaoImpl<SysMenuMapper, SysMenuDO> {
     public List<SysMenuDO> selectMenuRouter(String userId) {
         List<String> list = new ArrayList<>();
         list.add(MenuTypeEnums.M.getValue());
+        list.add(MenuTypeEnums.C.getValue());
         return getBaseMapper().selectByUserIdAndMenuType(userId, list);
     }
 

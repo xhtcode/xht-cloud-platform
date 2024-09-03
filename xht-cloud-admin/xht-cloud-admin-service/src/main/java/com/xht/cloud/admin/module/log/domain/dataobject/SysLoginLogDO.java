@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.xht.cloud.admin.api.log.enums.LoginStatusEnums;
+import com.xht.cloud.admin.api.user.enums.UserTypeEnums;
 import com.xht.cloud.framework.mybatis.dataobject.AbstractDO;
 import lombok.Data;
 
@@ -47,7 +48,7 @@ public class SysLoginLogDO extends AbstractDO {
      * 用户类型
      */
     @TableField(value = "user_type")
-    private String userType;
+    private UserTypeEnums userType;
 
     /**
      * 登录类型

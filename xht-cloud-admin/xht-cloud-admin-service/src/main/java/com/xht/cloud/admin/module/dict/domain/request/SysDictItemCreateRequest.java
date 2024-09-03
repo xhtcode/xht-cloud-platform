@@ -7,6 +7,7 @@ import com.xht.cloud.framework.web.validation.group.Query;
 import com.xht.cloud.framework.web.validation.group.Update;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -56,7 +57,7 @@ public class SysDictItemCreateRequest extends CreateRequest {
      * 字典数据状态
      */
     @Schema(description = "字典数据状态")
-    @NotBlank(message = "字典数据状态 `dictStatus` 不能为空")
+    @NotNull(message = "字典数据状态 `dictStatus` 不能为空")
     private DictStatusEnums dictStatus;
 
     /**

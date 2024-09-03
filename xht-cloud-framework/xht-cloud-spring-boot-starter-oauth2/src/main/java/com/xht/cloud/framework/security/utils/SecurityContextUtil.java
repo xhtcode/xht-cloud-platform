@@ -1,12 +1,16 @@
 package com.xht.cloud.framework.security.utils;
 
+import cn.hutool.core.util.ArrayUtil;
 import com.xht.cloud.framework.exception.user.UserException;
 import com.xht.cloud.framework.security.domain.UserDetailsBO;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.PatternMatchUtils;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * 描述 ：springSecurity上下文对象
@@ -38,20 +42,34 @@ public final class SecurityContextUtil {
     }
 
     /**
+     * 获取登录的用户信息
+     */
+    public static UserDetailsBO userNoNull() {
+        return user().orElseThrow(() -> new UserException("用户登录信息获取失败"));
+    }
+
+    /**
      * 获取当前的登录账号
      *
      * @return 当前登录账号
      */
     public static String getUserAccount() {
-        return user().orElseThrow(() -> new UserException("获取不到登录信息")).getNickName();
+        return userNoNull().getNickName();
     }
 
     /**
      * 获取用户名称
      */
     public static String getUserName() {
-        return user().orElseThrow(() -> new UserException("获取不到登录信息")).getUsername();
+        return userNoNull().getUsername();
     }
+    /**
+     * 获取用户名称
+     */
+    public static String getUserId() {
+        return userNoNull().getId();
+    }
+
 
 
     /**
@@ -73,5 +91,42 @@ public final class SecurityContextUtil {
         return Objects.nonNull(authentication) && authentication.isAuthenticated();
     }
 
+    /**
+     * 判断接口是否有任意xxx，xxx角色
+     *
+     * @param roleCodes 角色
+     * @return {boolean}
+     */
+    public static boolean hasRoleCode(String... roleCodes) {
+        if (ArrayUtil.isEmpty(roleCodes)) {
+            return false;
+        }
+        UserDetailsBO userDetailsBO = userNoNull();
+        if (userDetailsBO.isAdmin()) {
+            return true;
+        }
+        Set<String> roles = userDetailsBO.getRoleCode();
+        if (CollectionUtils.isEmpty(roles)) return false;
+        return roles.stream().anyMatch(x -> PatternMatchUtils.simpleMatch(roleCodes, x));
+    }
+
+    /**
+     * 判断接口是否有任意xxx，xxx权限
+     *
+     * @param permissions 权限
+     * @return {boolean}
+     */
+    public static boolean hasAnyAuthority(String... permissions) {
+        if (ArrayUtil.isEmpty(permissions)) {
+            return false;
+        }
+        UserDetailsBO userDetailsBO = userNoNull();
+        if (userDetailsBO.isAdmin()) {
+            return true;
+        }
+        Set<String> menuCode = userDetailsBO.getMenuCode();
+        if (CollectionUtils.isEmpty(menuCode)) return false;
+        return menuCode.stream().anyMatch(x -> PatternMatchUtils.simpleMatch(permissions, x));
+    }
 
 }

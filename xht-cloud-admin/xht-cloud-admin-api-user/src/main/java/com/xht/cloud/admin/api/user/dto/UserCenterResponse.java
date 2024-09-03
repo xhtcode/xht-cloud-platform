@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -105,4 +107,17 @@ public class UserCenterResponse extends AbstractResponse {
      */
     @Schema(description = "数据来源")
     private String dataSource;
+
+    /**
+     * 联系手机号
+     */
+    @Schema(description = "contact_mobile")
+    private String contactMobile;
+
+    /**
+     * 空的token信息
+     */
+    @Schema(description = "空的token信息")
+    private final Map<String, Object> token = Collections.emptyMap();
+
 }

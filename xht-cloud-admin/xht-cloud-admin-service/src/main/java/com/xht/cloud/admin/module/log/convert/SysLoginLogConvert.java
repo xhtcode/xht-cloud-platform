@@ -10,6 +10,7 @@ import com.xht.cloud.framework.mybatis.convert.PageConvert;
 import com.xht.cloud.framework.security.utils.SecurityContextUtil;
 import com.xht.cloud.framework.utils.support.StringUtils;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.Objects;
 
@@ -21,6 +22,7 @@ import java.util.Objects;
 @Mapper(componentModel = "spring")
 public interface SysLoginLogConvert extends PageConvert<SysLoginLogDO, SysLoginLogResponse> {
 
+    @Mapping(target = "userType", expression = "java(com.xht.cloud.admin.api.user.enums.UserTypeEnums.of(operationLogDTO.getUserType()))")
     SysLoginLogDO dtoToDo(SysLoginLogDTO operationLogDTO);
 
     /**
@@ -40,7 +42,7 @@ public interface SysLoginLogConvert extends PageConvert<SysLoginLogDO, SysLoginL
         }
         UserTypeEnums userType = entity.getUserType();
         if (Objects.nonNull(userType)) {
-            wrapper.eq(SysLoginLogDO::getUserType,userType.getDesc());
+            wrapper.eq(SysLoginLogDO::getUserType,userType.getValue());
         }
         return wrapper
                 .eq(!Objects.isNull(entity.getLoginStatus()), SysLoginLogDO::getLoginStatus, entity.getLoginStatus())

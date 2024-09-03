@@ -71,6 +71,7 @@ public class SysStaffUserInfoStrategy extends AbstractUserInfoStrategy<SysUserSt
         response.setPassWord(userInfo.getPassWord());
         response.setPassWordSalt(userInfo.getPassWordSalt());
         response.setDeptId(userInfo.getDeptId());
+        response.setContactMobile(userInfo.getContactMobile());
         response.setDataScope(userInfo.getDataScope());
         response.setUserAvatar(userInfo.getUserAvatar());
         response.setUserStatus(userInfo.getUserStatus());

@@ -1,7 +1,8 @@
 package com.xht.cloud.admin.module.user.domain.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xht.cloud.framework.core.domain.response.Response;
+import com.xht.cloud.framework.utils.jackson.desensitization.annotation.SensitiveField;
+import com.xht.cloud.framework.utils.jackson.desensitization.constant.SensitiveFieldConstant;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -29,9 +30,8 @@ public class SysUserAdminResponse extends Response {
     /**
      * 密码
      */
-    @JsonIgnore
     @Schema(description = "pass_word", hidden = true)
-    private transient String passWord;
+    private String passWord;
 
     /**
      * 头像地址
@@ -43,6 +43,7 @@ public class SysUserAdminResponse extends Response {
      * 手机号码
      */
     @Schema(description = "手机号码")
+    @SensitiveField(type = SensitiveFieldConstant.PHONE)
     private String contactPhone;
 
 }

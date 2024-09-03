@@ -24,5 +24,5 @@ public class SysUserAdminQueryRequest extends PageQueryRequest {
      * 手机号码
      */
     @Schema(description = "手机号码")
-    private String contactMobile;
+    private String contactPhone;
 }

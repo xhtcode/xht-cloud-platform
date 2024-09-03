@@ -1,19 +1,28 @@
 package com.xht.cloud.admin.module.user.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.admin.api.user.dto.UserCenterResponse;
 import com.xht.cloud.admin.api.user.enums.UserTypeEnums;
-import com.xht.cloud.admin.module.user.domain.request.UserUpdateRequest;
+import com.xht.cloud.admin.module.log.convert.SysLoginLogConvert;
+import com.xht.cloud.admin.module.log.dao.SysLoginLogDao;
+import com.xht.cloud.admin.module.log.domain.dataobject.SysLoginLogDO;
+import com.xht.cloud.admin.module.log.domain.response.SysLoginLogResponse;
 import com.xht.cloud.admin.module.user.factory.UserInfoFactory;
 import com.xht.cloud.admin.module.user.factory.UserRouterFactory;
-import com.xht.cloud.admin.module.user.factory.UserUpdateFactory;
 import com.xht.cloud.admin.module.user.service.IUserCenterService;
+import com.xht.cloud.framework.exception.user.UserException;
+import com.xht.cloud.framework.mybatis.tool.PageTool;
+import com.xht.cloud.framework.security.domain.UserDetailsBO;
+import com.xht.cloud.framework.security.utils.SecurityContextUtil;
 import com.xht.cloud.framework.utils.treenode.INode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
+import static com.xht.cloud.admin.api.log.enums.LoginStatusEnums.LOGIN_OUT;
 
 /**
  * 描述 ：用户中心
@@ -24,6 +33,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UserCenterServiceImpl implements IUserCenterService {
+
+    private final SysLoginLogDao sysLoginLogDao;
+
+    private final SysLoginLogConvert sysLoginLogConvert;
 
     /**
      * 根据用户账号获取用户信息
@@ -62,29 +75,25 @@ public class UserCenterServiceImpl implements IUserCenterService {
     }
 
     /**
-     * 根据用户id用户类型 修改用户信息
+     * 获取登录日志
      *
-     * @param userId            用户id
-     * @param userType          用户类型
-     * @param userUpdateRequest 用户要修改的信息
-     * @return true修改成功
+     * @param maxSize 最大记录数 超过10取10 小于5取5
+     * @return 登录日志
      */
     @Override
-    public Boolean updateUserInfo(String userId, UserTypeEnums userType, UserUpdateRequest userUpdateRequest) {
-        return UserUpdateFactory.getStrategyNoNull(userType).updateUserInfo(userId, userUpdateRequest);
-    }
-
-    /**
-     * 根据用户id用户类型 修改用户头像
-     *
-     * @param userId   用户id
-     * @param userType 用户类型
-     * @param file     头像信息
-     * @return true修改成功
-     */
-    @Override
-    public Boolean updateUserAvatar(String userId, UserTypeEnums userType, MultipartFile file) {
-        return UserUpdateFactory.getStrategyNoNull(userType).updateUserAvatar(userId, file);
+    public List<SysLoginLogResponse> getUserLoginLog(int maxSize) {
+        LambdaQueryWrapper<SysLoginLogDO> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        UserDetailsBO userDetailsBO = SecurityContextUtil.user().orElseThrow(() -> new UserException("获取不到登录信息"));
+        lambdaQueryWrapper
+                .eq(SysLoginLogDO::getUserId, userDetailsBO.getId())
+                .eq(SysLoginLogDO::getUserType, userDetailsBO.getUserType())
+                .ne(SysLoginLogDO::getLoginStatus, LOGIN_OUT)
+                .orderByDesc(SysLoginLogDO::getLoginTime)
+        ;
+        if (maxSize < 5) maxSize = 5;
+        if (maxSize > 10) maxSize = 10;
+        IPage<SysLoginLogDO> page = sysLoginLogDao.page(PageTool.getPage(0, maxSize), lambdaQueryWrapper);
+        return sysLoginLogConvert.convert(page.getRecords());
     }
 
 }

@@ -22,6 +22,10 @@ public class PassWordBO {
     @Schema(description = "新密码", requiredMode = Schema.RequiredMode.REQUIRED, example = "654321")
     @NotEmpty(message = "新密码不能为空")
     @Length(min = 6, max = 16, message = "密码长度为 6-16 位")
-    private String newPassword;
+    private String newPassword1;
 
+    @Schema(description = "新密码", requiredMode = Schema.RequiredMode.REQUIRED, example = "654321")
+    @NotEmpty(message = "新密码不能为空")
+    @Length(min = 6, max = 16, message = "密码长度为 6-16 位")
+    private String newPassword2;
 }

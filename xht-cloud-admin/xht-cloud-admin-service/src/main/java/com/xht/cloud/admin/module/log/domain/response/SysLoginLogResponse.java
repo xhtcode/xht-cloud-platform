@@ -1,5 +1,6 @@
 package com.xht.cloud.admin.module.log.domain.response;
 
+import com.xht.cloud.admin.api.user.enums.UserTypeEnums;
 import com.xht.cloud.framework.core.domain.response.Response;
 import com.xht.cloud.admin.api.log.enums.LoginStatusEnums;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -29,16 +30,16 @@ public class SysLoginLogResponse extends Response {
     private String userName;
 
     /**
-     * 用户名称
+     * 用户昵称
      */
-    @Schema(description = "用户名称")
+    @Schema(description = "用户昵称")
     private String nickName;
 
     /**
      * 用户类型
      */
     @Schema(description = "用户类型")
-    private String userType;
+    private UserTypeEnums userType;
 
     /**
      * 登录类型

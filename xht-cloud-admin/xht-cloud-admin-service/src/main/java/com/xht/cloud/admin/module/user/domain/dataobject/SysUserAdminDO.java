@@ -44,6 +44,6 @@ public class SysUserAdminDO extends BaseDO {
      * 手机号码
      */
     @TableField(value = "contact_phone")
-    private String contactMobile;
+    private String contactPhone;
 
 }

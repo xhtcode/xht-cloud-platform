@@ -4,8 +4,6 @@ import com.xht.cloud.admin.api.user.dto.UserCenterResponse;
 import com.xht.cloud.admin.api.user.enums.DeptUserDataScopeEnum;
 import com.xht.cloud.admin.api.user.enums.UserStatusEnums;
 import com.xht.cloud.admin.api.user.enums.UserTypeEnums;
-import com.xht.cloud.admin.module.permissions.dao.SysMenuDao;
-import com.xht.cloud.admin.module.permissions.dao.SysRoleDao;
 import com.xht.cloud.admin.module.user.dao.SysUserAdminDao;
 import com.xht.cloud.admin.module.user.domain.dataobject.SysUserAdminDO;
 import com.xht.cloud.admin.module.user.strategy.AbstractUserInfoStrategy;
@@ -14,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import java.util.Collections;
 
 /**
  * 描述 ：系统管理员用户策略
@@ -27,10 +25,6 @@ import java.util.Set;
 public class SysAdminUserInfoStrategy extends AbstractUserInfoStrategy<SysUserAdminDO> {
 
     private final SysUserAdminDao sysUserAdminDao;
-
-    private final SysRoleDao sysRoleDao;
-
-    private final SysMenuDao sysMenuDao;
 
     /**
      * 根据用户账号获取数据库用户数据
@@ -64,8 +58,6 @@ public class SysAdminUserInfoStrategy extends AbstractUserInfoStrategy<SysUserAd
     protected UserCenterResponse builder(SysUserAdminDO userInfo) {
         UserCenterResponse response = new UserCenterResponse();
         Integer userId = userInfo.getId();
-        Set<String> roleCode = sysRoleDao.getAllRoleCode();
-        Set<String> authorityCode = sysMenuDao.selectAllMenuAuthority();
         response.setUserId(String.valueOf(userId));
         response.setUserType(getUserType());
         response.setUserName(userInfo.getUserName());
@@ -73,12 +65,13 @@ public class SysAdminUserInfoStrategy extends AbstractUserInfoStrategy<SysUserAd
         response.setPassWord(userInfo.getPassWord());
         response.setPassWordSalt(null);
         response.setDeptId(null);
+        response.setContactMobile(userInfo.getContactPhone());
         response.setDataScope(DeptUserDataScopeEnum.DATA_SCOPE_ALL);
         response.setUserAvatar(userInfo.getUserAvatar());
         response.setUserStatus(UserStatusEnums.NORMAL);
         response.setRegisteredTime(userInfo.getCreateTime());
-        response.setRoleCode(roleCode);
-        response.setAuthorityCode(authorityCode);
+        response.setRoleCode(Collections.emptySet());
+        response.setAuthorityCode(Collections.emptySet());
         response.setDataSource("暂无设置");
         return response;
     }

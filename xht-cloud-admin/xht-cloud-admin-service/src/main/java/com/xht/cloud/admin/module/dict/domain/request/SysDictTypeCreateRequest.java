@@ -4,6 +4,7 @@ import com.xht.cloud.admin.api.dict.enums.DictStatusEnums;
 import com.xht.cloud.framework.core.domain.request.CreateRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -33,7 +34,7 @@ public class SysDictTypeCreateRequest extends CreateRequest {
      * 字典类型状态
      */
     @Schema(description = "字典类型状态")
-    @NotBlank(message = "字典类型状态 `dictStatus` 不能为空")
+    @NotNull(message = "字典类型状态 `dictStatus` 不能为空")
     private DictStatusEnums dictStatus;
 
     /**

@@ -6,6 +6,7 @@ import com.xht.cloud.framework.security.utils.SecurityContextUtil;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.PatternMatchUtils;
 
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -15,6 +16,27 @@ import java.util.Set;
  **/
 public class PermissionCheckService {
 
+    /**
+     * 查询用户id是否当前登录的用户id 如果是管理员直接返回true
+     *
+     * @param userId 用户id
+     * @return true是
+     */
+    public boolean checkCurrentUserId(String userId) {
+        UserDetailsBO userDetailsBO = SecurityContextUtil.userNoNull();
+        return userDetailsBO.isAdmin() || Objects.equals(userId, userDetailsBO.getId());
+    }
+
+    /**
+     * 查询用户账号是否当前登录的用户账号 如果是管理员直接返回true
+     *
+     * @param userName 用户账号
+     * @return true是
+     */
+    public boolean checkCurrentUserName(String userName) {
+        UserDetailsBO userDetailsBO = SecurityContextUtil.userNoNull();
+        return userDetailsBO.isAdmin() || Objects.equals(userName, userDetailsBO.getUsername());
+    }
     /**
      * 判断接口是否有任意xxx，xxx角色
      *

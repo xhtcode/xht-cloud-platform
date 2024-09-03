@@ -139,7 +139,8 @@ public class GenerateCoreServiceImpl implements IGenerateCoreService {
                 }
             }
         }
-        IoUtil.close(zip);
-        return outputStream.toByteArray();
+        byte[] byteArray = outputStream.toByteArray();
+        IoUtil.close(outputStream);
+        return byteArray;
     }
 }

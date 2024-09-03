@@ -39,7 +39,7 @@ public class SysLoginLogDTO extends DTO {
      * 用户类型
      */
     @Schema(description = "用户类型")
-    private String userType;
+    private Integer userType;
 
     /**
      * 用户名称

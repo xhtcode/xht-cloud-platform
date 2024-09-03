@@ -34,7 +34,7 @@ public class SysUserAdminDao extends BaseDaoImpl<SysUserAdminMapper, SysUserAdmi
         LambdaUpdateWrapper<SysUserAdminDO> updateWrapper = new LambdaUpdateWrapper<SysUserAdminDO>()
                 .set(StringUtils.hasText(entity.getUserName()), SysUserAdminDO::getUserName, entity.getUserName())
                 .set(StringUtils.hasText(entity.getUserAvatar()), SysUserAdminDO::getUserAvatar, entity.getUserAvatar())
-                .set(StringUtils.hasText(entity.getContactMobile()), SysUserAdminDO::getContactMobile, entity.getContactMobile())
+                .set(StringUtils.hasText(entity.getContactPhone()), SysUserAdminDO::getContactPhone, entity.getContactPhone())
                 .eq(SysUserAdminDO::getUserName, entity.getUserName())
                 .ne(SysUserAdminDO::getId, entity.getId());
         return update(updateWrapper);
@@ -75,7 +75,7 @@ public class SysUserAdminDao extends BaseDaoImpl<SysUserAdminMapper, SysUserAdmi
         Page<SysUserAdminDO> page = PageTool.getPage(queryRequest);
         LambdaQueryWrapper<SysUserAdminDO> wrapper = new LambdaQueryWrapper<SysUserAdminDO>()
                 .like(StringUtils.hasText(queryRequest.getUserName()), SysUserAdminDO::getUserName, queryRequest.getUserName())
-                .like(StringUtils.hasText(queryRequest.getContactMobile()), SysUserAdminDO::getContactMobile, queryRequest.getContactMobile());
+                .like(StringUtils.hasText(queryRequest.getContactPhone()), SysUserAdminDO::getContactPhone, queryRequest.getContactPhone());
         return page(page, wrapper);
     }
 }

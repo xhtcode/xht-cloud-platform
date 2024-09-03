@@ -5,6 +5,8 @@ import com.xht.cloud.framework.core.domain.response.Response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.util.Objects;
+
 /**
  * 描述 ：字典数据
  *
@@ -36,7 +38,7 @@ public class SysDictItemResponse extends Response {
      * 字典数据编码
      */
     @Schema(description = "字典数据编码")
-    private String dictCode;
+    private Object dictCode;
 
     /**
      * 字典数据值
@@ -68,4 +70,13 @@ public class SysDictItemResponse extends Response {
     @Schema(description = "字典数据描述")
     private String dictDesc;
 
+    @SuppressWarnings("unused")
+    public Object getDictCode() {
+        if (Objects.isNull(this.dictCode)) return null;
+        try {
+            return Integer.parseInt(this.dictCode.toString());
+        } catch (Exception e) {
+            return this.dictCode;
+        }
+    }
 }

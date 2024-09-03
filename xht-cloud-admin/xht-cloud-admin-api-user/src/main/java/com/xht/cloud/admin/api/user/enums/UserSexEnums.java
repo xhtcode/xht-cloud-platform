@@ -15,11 +15,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum UserSexEnums implements IEnum<Integer> {
 
-    UNKNOWN(0), //未知
 
-    MALE(1), // 男
+
+    MALE(0), // 男
 
     FEMALE(1), // 女
+
+    UNKNOWN(2), //未知
     ;
 
     @JsonValue

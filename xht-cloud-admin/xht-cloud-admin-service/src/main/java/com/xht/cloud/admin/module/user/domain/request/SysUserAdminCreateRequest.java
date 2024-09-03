@@ -40,6 +40,6 @@ public class SysUserAdminCreateRequest extends CreateRequest {
      */
     @Schema(description = "手机号码")
     @TelephoneNumber
-    private String contactMobile;
+    private String contactPhone;
 
 }

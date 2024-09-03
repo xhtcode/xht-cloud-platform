@@ -87,6 +87,7 @@ public class SysUserStaffDao extends BaseDaoImpl<SysUserStaffMapper, SysUserStaf
     public boolean update(SysUserStaffDO requestUser) {
         LambdaUpdateWrapper<SysUserStaffDO> wrapper = new LambdaUpdateWrapper<>();
         wrapper
+                .set(StringUtils.hasText(requestUser.getNickName()), SysUserStaffDO::getNickName, requestUser.getNickName())
                 .set(StringUtils.hasText(requestUser.getDeptId()), SysUserStaffDO::getDeptId, requestUser.getDeptId())
                 .set(Objects.nonNull(requestUser.getUserStatus()), SysUserStaffDO::getUserStatus, requestUser.getUserStatus())
                 .set(StringUtils.hasText(requestUser.getIdentityCard()), SysUserStaffDO::getIdentityCard, requestUser.getIdentityCard())
@@ -95,6 +96,7 @@ public class SysUserStaffDao extends BaseDaoImpl<SysUserStaffMapper, SysUserStaf
                 .set(StringUtils.hasText(requestUser.getContactMobile()), SysUserStaffDO::getContactMobile, requestUser.getContactMobile())
                 .set(StringUtils.hasText(requestUser.getAddressId()), SysUserStaffDO::getAddressId, requestUser.getAddressId())
                 .set(StringUtils.hasText(requestUser.getAddressName()), SysUserStaffDO::getAddressName, requestUser.getAddressName())
+                .set(StringUtils.hasText(requestUser.getUserSignature()), SysUserStaffDO::getUserSignature, requestUser.getUserSignature())
                 .eq(SysUserStaffDO::getId, requestUser.getId());
         return update(wrapper);
     }

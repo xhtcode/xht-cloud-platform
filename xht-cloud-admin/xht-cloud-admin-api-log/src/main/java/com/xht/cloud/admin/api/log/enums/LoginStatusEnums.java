@@ -24,7 +24,12 @@ public enum LoginStatusEnums implements IEnum<String> {
     /**
      * 1登录失败
      */
-    ERROR("1");
+    ERROR("1"),
+
+    /**
+     * 退出登录
+     */
+    LOGIN_OUT("2");
 
     @JsonValue
     @EnumValue

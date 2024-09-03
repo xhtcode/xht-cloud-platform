@@ -8,6 +8,8 @@ import com.xht.cloud.admin.module.user.service.ISysUserStaffService;
 import com.xht.cloud.framework.core.R;
 import com.xht.cloud.framework.core.domain.response.PageResponse;
 import com.xht.cloud.framework.redis.idempotent.annotation.Idempotent;
+import com.xht.cloud.framework.security.core.PermissionCheckService;
+import com.xht.cloud.framework.utils.jackson.desensitization.SkipSensitiveThreadLocal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,6 +36,8 @@ import static com.xht.cloud.framework.core.R.ok;
 public class SysUserStaffController {
 
     private final ISysUserStaffService sysUserService;
+
+    private final PermissionCheckService permissionCheckService;
 
     /**
      * 创建
@@ -88,6 +92,9 @@ public class SysUserStaffController {
     @Parameter(name = "id", description = "id", required = true)
     @GetMapping("/detail/{id}")
     public R<SysUserStaffResponse> findById(@PathVariable("id") String id) {
+        if (permissionCheckService.checkCurrentUserId(id)) {
+            SkipSensitiveThreadLocal.skipAll();
+        }
         return R.ok(sysUserService.findById(id));
     }
 

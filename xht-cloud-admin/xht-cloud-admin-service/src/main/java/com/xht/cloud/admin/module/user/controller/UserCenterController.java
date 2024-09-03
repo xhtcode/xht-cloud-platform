@@ -1,7 +1,8 @@
 package com.xht.cloud.admin.module.user.controller;
 
 import com.xht.cloud.admin.api.user.dto.UserCenterResponse;
-import com.xht.cloud.admin.module.user.domain.request.UserUpdateRequest;
+import com.xht.cloud.admin.module.log.domain.response.SysLoginLogResponse;
+import com.xht.cloud.admin.module.user.domain.PassWordBO;
 import com.xht.cloud.admin.module.user.service.IUserCenterService;
 import com.xht.cloud.framework.core.R;
 import com.xht.cloud.framework.utils.treenode.INode;
@@ -10,8 +11,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -58,28 +59,27 @@ public class UserCenterController {
     }
 
     /**
-     * 修改当前登录的用户信息
+     * 获取登录日志
      *
-     * @param userUpdateRequest 用户要修改的信息
-     * @return true修改成功
+     * @param maxSize 最大记录数 超过10取10 小于5取5
+     * @return 登录日志
      */
-    @Operation(summary = "修改个人信息")
-    @PutMapping(value = "/info")
-    public R<Boolean> updateUserInfo(@RequestBody UserUpdateRequest userUpdateRequest) {
-        return ok(userCenterService.updateLoginUserInfo(userUpdateRequest));
+    @Operation(summary = "获取登录日志", description = "最大记录数 超过10取10 小于5取5")
+    @GetMapping(value = "/login/log")
+    public R<List<SysLoginLogResponse>> getUserLoginLog(@RequestParam(value = "maxSize", required = false, defaultValue = "5") int maxSize) {
+        return ok(userCenterService.getUserLoginLog(maxSize));
     }
 
     /**
-     * 修改当前登录的用户头像
+     * 用户修改密码
      *
-     * @param file 头像信息
-     * @return true修改成功
+     * @param updatePassWordBO 密码请求
+     * @return true 修改成功
      */
-    @Operation(summary = "修改个人头像")
-    @PutMapping(value = "/avatar")
-    public R<Boolean> updateUserAvatar(@RequestPart("file") MultipartFile file) {
-        return ok(userCenterService.updateLoginUserAvatar(file));
+    @Operation(summary = "用户修改密码")
+    @PutMapping("/pwd")
+    public R<Boolean> updatePassword(@Validated @RequestBody PassWordBO updatePassWordBO) {
+        return ok(Boolean.TRUE);
     }
-
 
 }

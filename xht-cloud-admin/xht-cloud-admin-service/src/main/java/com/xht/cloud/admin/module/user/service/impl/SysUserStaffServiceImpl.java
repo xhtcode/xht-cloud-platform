@@ -16,6 +16,8 @@ import com.xht.cloud.admin.module.user.domain.response.SysUserStaffResponse;
 import com.xht.cloud.admin.module.user.service.ISysUserStaffService;
 import com.xht.cloud.framework.core.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
+import com.xht.cloud.framework.security.utils.SecurityContextUtil;
+import com.xht.cloud.framework.utils.support.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +26,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static com.xht.cloud.admin.constant.UserConstant.UPDATE_USER_DEPT_ID;
+import static com.xht.cloud.admin.constant.UserConstant.UPDATE_USER_STATUS;
 
 /**
  * 描述 ：用户
@@ -75,7 +80,18 @@ public class SysUserStaffServiceImpl implements ISysUserStaffService {
     @Transactional(rollbackFor = Exception.class)
     public Boolean update(SysUserStaffUpdateRequest request) {
         Assert.notNull(request, "修改的用户信息不能为空");
-        return sysUserStaffDao.update(sysUserStaffConvert.toDO(request));
+        SysUserStaffDO sysUserStaffDO = sysUserStaffConvert.toDO(request);
+        if (StringUtils.hasText(request.getAddressId())) {
+            SysAreaInfoDO sysAreaInfoDO = sysAreaInfoDao.getOptById(request.getAddressId()).orElseGet(SysAreaInfoDO::new);
+            sysUserStaffDO.setAddressName(sysAreaInfoDO.getName());
+        }
+        if (SecurityContextUtil.hasAnyAuthority(UPDATE_USER_STATUS)) {
+            sysUserStaffDO.setUserStatus(null);
+        }
+        if (SecurityContextUtil.hasAnyAuthority(UPDATE_USER_DEPT_ID)) {
+            sysUserStaffDO.setDeptId(null);
+        }
+        return sysUserStaffDao.update(sysUserStaffDO);
     }
 
     /**

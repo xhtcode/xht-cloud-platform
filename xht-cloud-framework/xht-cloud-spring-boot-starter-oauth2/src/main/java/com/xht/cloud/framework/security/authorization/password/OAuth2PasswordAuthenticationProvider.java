@@ -57,7 +57,6 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
         SysLoginLogDTO sysLoginLogDTO = new SysLoginLogDTO();
         boolean saveLog = true;
         try {
-            userBuilder.checkPassword().checkUserName().checkUserType().checkCaptcha();
             HttpServletRequest request = HttpServletUtils.getRequest();
             String ip = IPUtils.getIp(request);
             sysLoginLogDTO.setLoginType(this.authorizationGrantType.getValue());
@@ -65,7 +64,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
             sysLoginLogDTO.setLoginIp(ip);
             sysLoginLogDTO.setLoginAddress(IPUtils.getRealAddress(ip));
             sysLoginLogDTO.setUserAgent(HttpServletUtils.getHeader(request, "user-agent"));
-            sysLoginLogDTO.setUserType(userBuilder.getUserType().getDesc());
+            sysLoginLogDTO.setUserType(userBuilder.getUserType().getValue());
             sysLoginLogDTO.setUserName(userBuilder.getUsername());
             IUserDetailsService userDetailsService = getUserDetailsService(userBuilder.getUserType());
             UserDetailsBO userDetails = userDetailsService.loadUser(userBuilder);
@@ -73,6 +72,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
             sysLoginLogDTO.setNickName(userDetails.getUsername());
             sysLoginLogDTO.setLoginStatus(LoginStatusEnums.SUCCESS);
             sysLoginLogDTO.setLoginDesc("登录成功");
+            userBuilder.checkPassword().checkUserName().checkUserType().checkCaptcha();
             return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
         } catch (UsernameNotFoundException | BadCredentialsException e) {
             sysLoginLogDTO.setLoginStatus(LoginStatusEnums.ERROR);
