@@ -9,7 +9,7 @@ import com.xht.cloud.admin.module.dept.domain.request.SysPositionUpdateRequest;
 import com.xht.cloud.admin.module.dept.domain.response.SysPositionResponse;
 import com.xht.cloud.framework.mybatis.convert.IBaseConvert;
 import com.xht.cloud.framework.mybatis.wrapper.EntityWrapper;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import org.mapstruct.Mapper;
 import org.springframework.util.ObjectUtils;
 

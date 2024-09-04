@@ -1,7 +1,7 @@
 package com.xht.cloud.admin.module.log.domain.response;
 
 import com.xht.cloud.admin.api.log.enums.OperationStatus;
-import com.xht.cloud.framework.core.domain.response.Response;
+import com.xht.cloud.framework.domain.response.Response;
 import com.xht.cloud.framework.core.enums.OperateTypeEnums;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

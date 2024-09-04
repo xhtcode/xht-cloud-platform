@@ -4,7 +4,7 @@ import com.xht.cloud.admin.api.user.dto.UserCenterResponse;
 import com.xht.cloud.admin.api.user.enums.UserTypeEnums;
 import com.xht.cloud.admin.api.user.feign.UserCenterClient;
 import com.xht.cloud.admin.module.user.service.IUserCenterService;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import com.xht.cloud.framework.security.resource.annotaion.SkipAuthentication;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

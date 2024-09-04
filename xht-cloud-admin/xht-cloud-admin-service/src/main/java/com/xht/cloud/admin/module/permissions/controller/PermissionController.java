@@ -1,7 +1,7 @@
 package com.xht.cloud.admin.module.permissions.controller;
 
 import com.xht.cloud.admin.module.permissions.service.IPermissionService;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

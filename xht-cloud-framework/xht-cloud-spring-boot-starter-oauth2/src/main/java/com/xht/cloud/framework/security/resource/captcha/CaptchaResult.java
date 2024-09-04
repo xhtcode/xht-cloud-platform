@@ -1,6 +1,6 @@
 package com.xht.cloud.framework.security.resource.captcha;
 
-import com.xht.cloud.framework.core.domain.response.AbstractResponse;
+import com.xht.cloud.framework.domain.response.AbstractResponse;
 import lombok.Data;
 
 /**

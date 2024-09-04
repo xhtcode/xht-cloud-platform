@@ -3,7 +3,7 @@ package com.xht.cloud.admin.module.log.service;
 import com.xht.cloud.admin.api.log.dto.SysLoginLogDTO;
 import com.xht.cloud.admin.module.log.domain.request.SysLoginLogQueryRequest;
 import com.xht.cloud.admin.module.log.domain.response.SysLoginLogResponse;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 
 /**
  * 描述 ：系统登录日志记录

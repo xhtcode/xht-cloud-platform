@@ -4,7 +4,7 @@ import com.xht.cloud.admin.module.sequence.domain.request.SysSequenceCreateReque
 import com.xht.cloud.admin.module.sequence.domain.request.SysSequenceQueryRequest;
 import com.xht.cloud.admin.module.sequence.domain.request.SysSequenceUpdateRequest;
 import com.xht.cloud.admin.module.sequence.domain.response.SysSequenceResponse;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 
 import java.util.List;
 

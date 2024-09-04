@@ -1,6 +1,6 @@
 package com.xht.cloud.file.domain.request;
 
-import com.xht.cloud.framework.core.domain.request.Request;
+import com.xht.cloud.framework.domain.request.Request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

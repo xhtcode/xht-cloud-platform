@@ -1,7 +1,7 @@
 package com.xht.cloud.framework.openfeign.client;
 
-import com.xht.cloud.framework.core.domain.KeyValue;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.KeyValue;
+import com.xht.cloud.framework.domain.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 

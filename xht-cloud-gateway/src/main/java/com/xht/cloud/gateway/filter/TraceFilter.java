@@ -1,8 +1,8 @@
 package com.xht.cloud.gateway.filter;
 
-import com.xht.cloud.framework.utils.support.StringUtils;
-import com.xht.cloud.framework.core.trace.TraceIdUtils;
-import com.xht.cloud.framework.utils.web.ServerHttpRequestUtils;
+import com.xht.cloud.framework.utils.StringUtils;
+import com.xht.cloud.framework.utils.trace.TraceIdUtils;
+import com.xht.cloud.framework.web.ServerHttpRequestUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import static com.xht.cloud.framework.core.constant.LogConstant.*;
+import static com.xht.cloud.framework.constant.LogConstant.*;
 
 /**
  * 分布式请求链路过滤器.

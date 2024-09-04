@@ -2,12 +2,6 @@ package com.xht.cloud.admin.tool;
 
 import com.xht.cloud.admin.exceptions.MenuException;
 import com.xht.cloud.admin.exceptions.PermissionException;
-import com.xht.cloud.admin.module.user.domain.dataobject.SysUserStaffDO;
-import com.xht.cloud.framework.exception.Assert;
-import com.xht.cloud.framework.exception.user.UserNotFountException;
-import com.xht.cloud.framework.security.utils.SecurityContextUtil;
-
-import static com.xht.cloud.framework.exception.constant.GlobalErrorStatusCode.SYSTEM_FORBIDDEN;
 
 /**
  * 描述 ：异常判断抛出工具类
@@ -37,18 +31,6 @@ public final class ExceptionTool {
     public static void permissionValidation(boolean flag, String message) {
         if (flag) {
             throw new PermissionException(message);
-        }
-    }
-
-    /**
-     * 权限异常
-     *
-     * @param sysUserStaffDO 用户信息
-     */
-    public static void permissionValidation(SysUserStaffDO sysUserStaffDO) {
-        Assert.notNull(sysUserStaffDO, UserNotFountException::new);
-        if (!SecurityContextUtil.isAdmin()) {
-            throw new PermissionException(SYSTEM_FORBIDDEN);
         }
     }
 

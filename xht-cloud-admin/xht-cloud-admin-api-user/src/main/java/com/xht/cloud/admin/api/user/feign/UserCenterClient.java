@@ -2,8 +2,7 @@ package com.xht.cloud.admin.api.user.feign;
 
 import com.xht.cloud.admin.api.user.dto.UserCenterResponse;
 import com.xht.cloud.admin.api.user.enums.UserTypeEnums;
-import com.xht.cloud.framework.core.R;
-import com.xht.cloud.framework.core.server.ServerConstants;
+import com.xht.cloud.framework.domain.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  *
  * @author : 小糊涂
  **/
-@FeignClient(value = ServerConstants.XHT_CLOUD_ADMIN, contextId = "userCenterClient")
+@FeignClient(value = "xht-cloud-admin-service", contextId = "userCenterClient")
 public interface UserCenterClient {
 
 

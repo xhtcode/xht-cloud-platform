@@ -11,7 +11,7 @@ import com.xht.cloud.admin.module.sequence.domain.request.SysSequenceUpdateReque
 import com.xht.cloud.admin.module.sequence.domain.response.SysSequenceResponse;
 import com.xht.cloud.admin.module.sequence.mapper.SysSequenceMapper;
 import com.xht.cloud.admin.module.sequence.service.ISysSequenceService;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
 import lombok.RequiredArgsConstructor;

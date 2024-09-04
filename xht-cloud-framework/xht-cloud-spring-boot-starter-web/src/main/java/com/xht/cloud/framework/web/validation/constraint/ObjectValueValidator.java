@@ -1,6 +1,6 @@
 package com.xht.cloud.framework.web.validation.constraint;
 
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import com.xht.cloud.framework.web.validation.ObjectValueEmpty;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

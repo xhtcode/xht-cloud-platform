@@ -3,7 +3,7 @@ package com.xht.cloud.admin.module.log.service;
 import com.xht.cloud.admin.api.log.dto.OperationLogDTO;
 import com.xht.cloud.admin.module.log.domain.request.SysOperationLogQueryRequest;
 import com.xht.cloud.admin.module.log.domain.response.SysOperationLogResponse;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 
 /**
  * 描述 ：系统操作日志记录

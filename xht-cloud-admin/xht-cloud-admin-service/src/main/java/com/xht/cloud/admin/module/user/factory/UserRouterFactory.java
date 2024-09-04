@@ -4,7 +4,6 @@ import com.xht.cloud.admin.api.user.enums.UserTypeEnums;
 import com.xht.cloud.admin.module.user.strategy.AbstractUserRouterStrategy;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.exception.constant.GlobalErrorStatusCode;
-import com.xht.cloud.framework.exception.constant.UserErrorStatusCode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,9 +38,9 @@ public final class UserRouterFactory {
      * @return 策略执行器
      */
     public static AbstractUserRouterStrategy getStrategyNoNull(UserTypeEnums userTypeEnums) {
-        Assert.notNull(userTypeEnums, GlobalErrorStatusCode.PARAMS_ERROR);
+        Assert.notNull(userTypeEnums, GlobalErrorStatusCode.PARAM_INVALID);
         AbstractUserRouterStrategy strategy = USER_ROUTER_STRATEGY_MAP.get(userTypeEnums.getValue());
-        Assert.notNull(strategy, UserErrorStatusCode.SYSTEM_ERROR);
+        Assert.notNull(strategy, GlobalErrorStatusCode.ERROR);
         return strategy;
     }
 }

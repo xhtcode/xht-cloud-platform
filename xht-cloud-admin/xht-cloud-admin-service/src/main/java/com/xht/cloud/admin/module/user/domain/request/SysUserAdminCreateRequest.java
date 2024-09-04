@@ -1,6 +1,6 @@
 package com.xht.cloud.admin.module.user.domain.request;
 
-import com.xht.cloud.framework.core.domain.request.CreateRequest;
+import com.xht.cloud.framework.domain.request.CreateRequest;
 import com.xht.cloud.framework.web.validation.TelephoneNumber;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;

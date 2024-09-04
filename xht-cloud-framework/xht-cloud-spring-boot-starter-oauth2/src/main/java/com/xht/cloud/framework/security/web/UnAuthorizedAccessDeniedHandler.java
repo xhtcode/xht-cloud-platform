@@ -1,7 +1,8 @@
 package com.xht.cloud.framework.security.web;
 
-import com.xht.cloud.framework.core.R;
-import com.xht.cloud.framework.utils.web.HttpServletUtils;
+import com.xht.cloud.framework.domain.R;
+import com.xht.cloud.framework.exception.constant.GlobalErrorStatusCode;
+import com.xht.cloud.framework.web.HttpServletUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,8 +12,6 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 import java.io.IOException;
 
-import static com.xht.cloud.framework.exception.constant.UserErrorStatusCode.INSUFFICIENT_AUTHORITY;
-
 /**
  * 描述 ：请求未授权的接口
  *
@@ -20,6 +19,7 @@ import static com.xht.cloud.framework.exception.constant.UserErrorStatusCode.INS
  **/
 @Slf4j
 public class UnAuthorizedAccessDeniedHandler implements AccessDeniedHandler {
+
     /**
      * 处理拒绝访问失败
      *
@@ -33,6 +33,6 @@ public class UnAuthorizedAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         String message = accessDeniedException.getMessage();
         log.error("请求未授权：{}", message, accessDeniedException);
-        HttpServletUtils.writeString(response, R.failed().format(INSUFFICIENT_AUTHORITY));
+        HttpServletUtils.writeString(response, R.failed(GlobalErrorStatusCode.FORBIDDEN));
     }
 }

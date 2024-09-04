@@ -2,7 +2,7 @@ package com.xht.cloud.framework.security.domain.token;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.xht.cloud.framework.core.domain.response.AbstractResponse;
+import com.xht.cloud.framework.domain.response.AbstractResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

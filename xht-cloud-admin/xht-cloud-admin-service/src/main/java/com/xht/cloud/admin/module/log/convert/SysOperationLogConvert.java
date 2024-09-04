@@ -6,7 +6,7 @@ import com.xht.cloud.admin.module.log.domain.dataobject.SysOperationLogDO;
 import com.xht.cloud.admin.module.log.domain.request.SysOperationLogQueryRequest;
 import com.xht.cloud.admin.module.log.domain.response.SysOperationLogResponse;
 import com.xht.cloud.framework.mybatis.convert.PageConvert;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import org.mapstruct.Mapper;
 import org.springframework.util.ObjectUtils;
 

@@ -1,7 +1,7 @@
 package com.xht.cloud.generate.module.column.domain.response;
 
 
-import com.xht.cloud.framework.core.domain.response.Response;
+import com.xht.cloud.framework.domain.response.Response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

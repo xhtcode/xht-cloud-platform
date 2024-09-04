@@ -154,17 +154,7 @@
             <!-- 自定义 start、公共依赖包 -->
             <dependency>
                 <groupId>com.xht.cloud.framework</groupId>
-                <artifactId>xht-cloud-framework-exception</artifactId>
-                <version>${xht.cloud.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.xht.cloud.framework</groupId>
                 <artifactId>xht-cloud-framework-core</artifactId>
-                <version>${xht.cloud.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.xht.cloud.framework</groupId>
-                <artifactId>xht-cloud-framework-utils</artifactId>
                 <version>${xht.cloud.version}</version>
             </dependency>
             <dependency>

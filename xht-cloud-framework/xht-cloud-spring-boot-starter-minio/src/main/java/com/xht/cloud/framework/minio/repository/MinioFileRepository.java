@@ -1,7 +1,6 @@
 package com.xht.cloud.framework.minio.repository;
 
 import com.xht.cloud.framework.exception.Assert;
-import com.xht.cloud.framework.file.enums.OssErrorStatusCode;
 import com.xht.cloud.framework.file.exception.OssException;
 import io.minio.*;
 import io.minio.http.Method;
@@ -211,7 +210,7 @@ public class MinioFileRepository {
      * @return Iterable<Result < Item>>
      */
     public Iterable<Result<Item>> listObjects(ListObjectsArgs listObjectsArgs) {
-        Assert.notNull(listObjectsArgs, () -> new OssException(OssErrorStatusCode.BUSINESS_ERROR));
+        Assert.notNull(listObjectsArgs, () -> new OssException("查询参数不能为空!"));
         return minioClient.listObjects(listObjectsArgs);
     }
 

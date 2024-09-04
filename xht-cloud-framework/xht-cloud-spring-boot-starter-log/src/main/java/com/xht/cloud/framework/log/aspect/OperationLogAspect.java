@@ -3,13 +3,13 @@ package com.xht.cloud.framework.log.aspect;
 import com.xht.cloud.admin.api.log.dto.OperationLogDTO;
 import com.xht.cloud.admin.api.log.enums.OperationStatus;
 import com.xht.cloud.admin.api.log.feign.OperationLogClient;
-import com.xht.cloud.framework.core.constant.LogConstant;
-import com.xht.cloud.framework.core.constant.SpringPropertiesNameConstant;
+import com.xht.cloud.framework.constant.LogConstant;
 import com.xht.cloud.framework.core.rpc.RpcConstants;
+import com.xht.cloud.framework.jackson.JsonUtils;
 import com.xht.cloud.framework.log.annotation.OperationLog;
-import com.xht.cloud.framework.utils.jackson.JsonUtils;
-import com.xht.cloud.framework.utils.web.HttpServletUtils;
-import com.xht.cloud.framework.utils.web.IPUtils;
+import com.xht.cloud.framework.utils.spring.SpringContextUtil;
+import com.xht.cloud.framework.web.HttpServletUtils;
+import com.xht.cloud.framework.web.IPUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -17,7 +17,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.CodeSignature;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,15 +31,11 @@ import java.util.Objects;
 @Aspect
 public class OperationLogAspect {
 
-    @Value(SpringPropertiesNameConstant.SPRING_APPLICATION_KEY_SPEL)
-    private final String applicationName;
-
     private final OperationLogClient operationLogClient;
 
-    public OperationLogAspect(String applicationName, OperationLogClient operationLogClient) {
-        this.applicationName = applicationName;
+    public OperationLogAspect(OperationLogClient operationLogClient) {
         this.operationLogClient = operationLogClient;
-        log.debug(">>>>>>log-start 业务操作日志切面【{}】<<<<<<", applicationName);
+        log.debug(">>>>>>log-start 业务操作日志切面【{}】<<<<<<");
     }
 
     /**
@@ -70,7 +65,7 @@ public class OperationLogAspect {
             log.info("【业务操作日志切面】异常 e = {}", e.getMessage(), e);
         } finally {
             try {
-                operationLogDTO.setServerName(applicationName);
+                operationLogDTO.setServerName(SpringContextUtil.getApplicationName());
                 operationLogDTO.setBusName(operationLog.value());
                 operationLogDTO.setBusDesc(operationLog.description());
                 operationLogDTO.setOperateType(operationLog.operateType());

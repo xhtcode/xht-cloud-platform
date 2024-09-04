@@ -1,7 +1,7 @@
 package com.xht.cloud.framework.security.constant;
 
 import com.xht.cloud.framework.security.exception.OAuth2Exception;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 /**

@@ -2,9 +2,9 @@ package com.xht.cloud.generate.module.type.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import com.xht.cloud.generate.module.type.convert.GenColumnTypeConvert;
 import com.xht.cloud.generate.module.type.domain.dataobject.GenColumnTypeDO;
 import com.xht.cloud.generate.module.type.domain.request.GenColumnTypeCreateRequest;

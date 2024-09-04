@@ -4,7 +4,7 @@ import com.xht.cloud.admin.module.user.domain.request.SysUserQueryRequest;
 import com.xht.cloud.admin.module.user.domain.request.SysUserStaffCreateRequest;
 import com.xht.cloud.admin.module.user.domain.request.SysUserStaffUpdateRequest;
 import com.xht.cloud.admin.module.user.domain.response.SysUserStaffResponse;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 
 import java.util.List;
 

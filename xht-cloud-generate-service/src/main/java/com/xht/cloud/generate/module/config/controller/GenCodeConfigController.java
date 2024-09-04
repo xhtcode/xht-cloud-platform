@@ -1,9 +1,9 @@
 package com.xht.cloud.generate.module.config.controller;
 
 import cn.hutool.core.io.IoUtil;
-import com.xht.cloud.framework.core.R;
-import com.xht.cloud.framework.core.domain.KeyValue;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.R;
+import com.xht.cloud.framework.domain.KeyValue;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.generate.exception.GenerateException;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigCreateRequest;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigQueryRequest;
@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-import static com.xht.cloud.framework.core.R.ok;
+import static com.xht.cloud.framework.domain.R.ok;
 
 /**
  * 描述 ：代码生成器-配置中心

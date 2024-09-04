@@ -9,7 +9,7 @@ import com.xht.cloud.admin.module.dept.domain.request.SysPositionUpdateRequest;
 import com.xht.cloud.admin.module.dept.domain.response.SysPositionResponse;
 import com.xht.cloud.admin.module.dept.mapper.SysPositionMapper;
 import com.xht.cloud.admin.module.dept.service.ISysPositionService;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.xht.cloud.admin.module.permissions.domain.dataobject.SysRoleMenuDO;
 import com.xht.cloud.framework.mybatis.wrapper.EntityWrapper;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import org.mapstruct.Mapper;
 
 import java.util.Objects;

@@ -13,7 +13,7 @@ import com.xht.cloud.admin.module.dept.service.ISysDeptService;
 import com.xht.cloud.admin.module.permissions.domain.dataobject.SysMenuDO;
 import com.xht.cloud.admin.module.user.dao.SysUserStaffDao;
 import com.xht.cloud.admin.module.user.domain.dataobject.SysUserStaffDO;
-import com.xht.cloud.framework.core.domain.request.Request;
+import com.xht.cloud.framework.domain.request.Request;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.mybatis.core.DataScopeFieldBuilder;
 import com.xht.cloud.framework.mybatis.enums.DataScopeTypeEnums;

@@ -2,8 +2,8 @@ package com.xht.cloud.demo.pojo.vo;
 
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.xht.cloud.framework.utils.jackson.desensitization.annotation.SensitiveField;
-import com.xht.cloud.framework.utils.jackson.desensitization.constant.SensitiveFieldConstant;
+import com.xht.cloud.framework.jackson.desensitization.annotation.SensitiveField;
+import com.xht.cloud.framework.jackson.desensitization.constant.SensitiveFieldConstant;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;

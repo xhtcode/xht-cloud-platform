@@ -1,6 +1,6 @@
 package com.xht.cloud.framework.mybatis.handler;
 
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import com.xht.cloud.framework.exception.constant.GlobalErrorStatusCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -27,6 +27,6 @@ public class SqlExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public R<String> handle(SQLException e) {
         log.error("sql 异常: {}", e.getMessage(), e);
-        return R.<String>failed(GlobalErrorStatusCode.INTERNAL_SERVER_ERROR);
+        return R.<String>failed(GlobalErrorStatusCode.ERROR);
     }
 }

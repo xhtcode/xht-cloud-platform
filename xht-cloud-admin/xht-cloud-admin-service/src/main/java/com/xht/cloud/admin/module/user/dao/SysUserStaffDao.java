@@ -12,7 +12,7 @@ import com.xht.cloud.framework.mybatis.dao.BaseDaoImpl;
 import com.xht.cloud.framework.mybatis.enums.DataScopeTypeEnums;
 import com.xht.cloud.framework.mybatis.handler.DataScopeSqlFactory;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

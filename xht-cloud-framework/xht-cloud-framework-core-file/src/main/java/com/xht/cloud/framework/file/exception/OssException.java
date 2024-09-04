@@ -1,9 +1,7 @@
 package com.xht.cloud.framework.file.exception;
 
 
-import com.xht.cloud.framework.file.enums.OssErrorStatusCode;
-
-import static com.xht.cloud.framework.exception.constant.IErrorStatusCode.DEFAULT_ERR_CODE;
+import com.xht.cloud.framework.exception.constant.IErrorStatusCode;
 
 /**
  * 描述 ：
@@ -11,6 +9,9 @@ import static com.xht.cloud.framework.exception.constant.IErrorStatusCode.DEFAUL
  * @author 小糊涂
  **/
 public class OssException extends FileException {
+
+    private static final String ERROR_MSG = "OSS 存储异常";
+
     /**
      * @param message 异常描述
      */
@@ -21,12 +22,12 @@ public class OssException extends FileException {
     /**
      * @param statusCode 业务异常状态码 {@link OssErrorStatusCode}
      */
-    public OssException(OssErrorStatusCode statusCode) {
+    public OssException(IErrorStatusCode statusCode) {
         super(statusCode);
     }
 
     public OssException(Throwable e) {
-        super(DEFAULT_ERR_CODE, e.getLocalizedMessage(), e);
+        super(ERROR_MSG, e);
     }
 
 }

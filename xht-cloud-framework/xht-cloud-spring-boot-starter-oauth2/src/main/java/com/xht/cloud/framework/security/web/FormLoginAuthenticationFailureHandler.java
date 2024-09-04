@@ -1,8 +1,8 @@
 package com.xht.cloud.framework.security.web;
 
-import com.xht.cloud.framework.exception.constant.UserErrorStatusCode;
-import com.xht.cloud.framework.core.R;
-import com.xht.cloud.framework.utils.web.HttpServletUtils;
+import com.xht.cloud.framework.domain.R;
+import com.xht.cloud.framework.exception.constant.GlobalErrorStatusCode;
+import com.xht.cloud.framework.web.HttpServletUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,7 +32,7 @@ public class FormLoginAuthenticationFailureHandler implements AuthenticationFail
         //获取错误信息
         String localizedMessage = exception.getLocalizedMessage();
         log.error("当身份验证失败 {}", localizedMessage, exception);
-        HttpServletUtils.writeString(response, R.create(Boolean.FALSE).format(UserErrorStatusCode.AUTHENTICATION_FAILURE).setMsg(localizedMessage));
+        HttpServletUtils.writeString(response, R.failed(GlobalErrorStatusCode.UNAUTHORIZED));
     }
 
 }

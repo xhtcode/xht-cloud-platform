@@ -2,7 +2,7 @@ package com.xht.cloud.admin.module.sequence.domain.response;
 
 import com.xht.cloud.admin.enums.SeqLoopEnum;
 import com.xht.cloud.admin.enums.SeqResetFlagEnum;
-import com.xht.cloud.framework.core.domain.response.Response;
+import com.xht.cloud.framework.domain.response.Response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

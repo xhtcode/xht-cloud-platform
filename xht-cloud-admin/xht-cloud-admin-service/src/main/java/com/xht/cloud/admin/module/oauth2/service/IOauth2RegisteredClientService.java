@@ -4,7 +4,7 @@ import com.xht.cloud.admin.module.oauth2.domain.request.Oauth2RegisteredClientCr
 import com.xht.cloud.admin.module.oauth2.domain.request.Oauth2RegisteredClientQueryRequest;
 import com.xht.cloud.admin.module.oauth2.domain.request.Oauth2RegisteredClientUpdateRequest;
 import com.xht.cloud.admin.module.oauth2.domain.response.Oauth2RegisteredClientResponse;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 
 import java.util.List;
 

@@ -8,7 +8,7 @@ import com.xht.cloud.admin.module.log.domain.request.SysOperationLogQueryRequest
 import com.xht.cloud.admin.module.log.domain.response.SysOperationLogResponse;
 import com.xht.cloud.admin.module.log.mapper.SysOperationLogMapper;
 import com.xht.cloud.admin.module.log.service.ISysOperationLogService;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
 import com.xht.cloud.framework.security.utils.SecurityContextUtil;
 import lombok.RequiredArgsConstructor;

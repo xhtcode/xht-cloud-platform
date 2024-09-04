@@ -3,7 +3,6 @@ package com.xht.cloud.framework.file.exception;
 
 import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.exception.constant.IErrorStatusCode;
-import com.xht.cloud.framework.file.enums.OssErrorStatusCode;
 
 /**
  * 描述 ： 文件异常
@@ -20,13 +19,13 @@ public class FileException extends BizException {
     }
 
     /**
-     * @param statusCode 业务异常状态码 {@link OssErrorStatusCode}
+     * @param statusCode 业务异常状态码 {@link IErrorStatusCode}
      */
     public FileException(IErrorStatusCode statusCode) {
         super(statusCode);
     }
 
-    public FileException(Integer errorCode, String errMessage, Throwable e) {
-        super(errorCode, errMessage, e);
+    public FileException(String message, Throwable e) {
+        super(message, e);
     }
 }

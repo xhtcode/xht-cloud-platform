@@ -1,11 +1,11 @@
 package com.xht.cloud.framework.openfeign.interceptor;
 
-import com.xht.cloud.framework.core.trace.TraceIdUtils;
+import com.xht.cloud.framework.utils.trace.TraceIdUtils;
 import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.exception.constant.GlobalErrorStatusCode;
 import com.xht.cloud.framework.openfeign.core.OpenFeignProperties;
-import com.xht.cloud.framework.utils.support.StringUtils;
-import com.xht.cloud.framework.utils.web.HttpServletUtils;
+import com.xht.cloud.framework.utils.StringUtils;
+import com.xht.cloud.framework.web.HttpServletUtils;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 
-import static com.xht.cloud.framework.core.constant.LogConstant.*;
+import static com.xht.cloud.framework.constant.LogConstant.*;
 import static com.xht.cloud.framework.core.rpc.RpcConstants.AUTHORIZATION;
 import static com.xht.cloud.framework.core.rpc.RpcConstants.RPC_HEADER_KEY;
 

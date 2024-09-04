@@ -4,7 +4,7 @@ import com.xht.cloud.framework.starter.exception.ApiSignatureErrorStatusCode;
 import com.xht.cloud.framework.starter.exception.ApiSignatureException;
 import com.xht.cloud.framework.starter.signature.ApiSignatureBuilder;
 import com.xht.cloud.framework.starter.signature.ApiSignatureFilter;
-import com.xht.cloud.framework.utils.web.HttpServletUtils;
+import com.xht.cloud.framework.web.HttpServletUtils;
 import com.xht.cloud.sdk.signature.SignatureUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;

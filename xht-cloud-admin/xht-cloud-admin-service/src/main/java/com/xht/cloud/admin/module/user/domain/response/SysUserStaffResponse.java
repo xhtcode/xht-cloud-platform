@@ -3,9 +3,9 @@ package com.xht.cloud.admin.module.user.domain.response;
 import com.xht.cloud.admin.api.user.enums.DeptUserDataScopeEnum;
 import com.xht.cloud.admin.api.user.enums.UserSexEnums;
 import com.xht.cloud.admin.api.user.enums.UserStatusEnums;
-import com.xht.cloud.framework.core.domain.response.Response;
-import com.xht.cloud.framework.utils.jackson.desensitization.annotation.SensitiveField;
-import com.xht.cloud.framework.utils.jackson.desensitization.constant.SensitiveFieldConstant;
+import com.xht.cloud.framework.domain.response.Response;
+import com.xht.cloud.framework.jackson.desensitization.annotation.SensitiveField;
+import com.xht.cloud.framework.jackson.desensitization.constant.SensitiveFieldConstant;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

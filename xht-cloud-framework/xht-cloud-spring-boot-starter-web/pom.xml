@@ -24,10 +24,6 @@
             <artifactId>xht-cloud-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.xht.cloud.framework</groupId>
-            <artifactId>xht-cloud-framework-utils</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.xht.cloud.sdk</groupId>
             <artifactId>xht-cloud-sdk-signature</artifactId>
         </dependency>

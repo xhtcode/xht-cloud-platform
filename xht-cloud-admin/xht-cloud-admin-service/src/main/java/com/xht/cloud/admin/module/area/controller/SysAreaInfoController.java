@@ -5,9 +5,8 @@ import com.xht.cloud.admin.module.area.domain.request.SysAreaInfoQueryRequest;
 import com.xht.cloud.admin.module.area.domain.request.SysAreaInfoUpdateRequest;
 import com.xht.cloud.admin.module.area.domain.response.SysAreaInfoResponse;
 import com.xht.cloud.admin.module.area.service.ISysAreaInfoService;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
 import com.xht.cloud.framework.redis.idempotent.annotation.Idempotent;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import com.xht.cloud.framework.utils.treenode.INode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.xht.cloud.framework.core.R.ok;
+import static com.xht.cloud.framework.domain.R.ok;
 
 /**
  * 描述 ：地区信息

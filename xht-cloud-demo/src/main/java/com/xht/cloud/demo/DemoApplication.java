@@ -1,7 +1,7 @@
 package com.xht.cloud.demo;
 
 import com.xht.cloud.demo.pojo.vo.PersonalInfoVo;
-import com.xht.cloud.framework.utils.jackson.JsonUtils;
+import com.xht.cloud.framework.jackson.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

@@ -10,7 +10,7 @@ import com.xht.cloud.admin.module.user.domain.request.SysUserAdminQueryRequest;
 import com.xht.cloud.admin.module.user.domain.request.SysUserAdminUpdateRequest;
 import com.xht.cloud.admin.module.user.domain.response.SysUserAdminResponse;
 import com.xht.cloud.admin.module.user.service.ISysUserAdminService;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

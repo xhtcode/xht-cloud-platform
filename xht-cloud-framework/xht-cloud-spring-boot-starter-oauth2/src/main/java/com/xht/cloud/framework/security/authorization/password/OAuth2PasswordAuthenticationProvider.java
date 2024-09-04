@@ -2,6 +2,8 @@ package com.xht.cloud.framework.security.authorization.password;
 
 import com.xht.cloud.admin.api.log.dto.SysLoginLogDTO;
 import com.xht.cloud.admin.api.log.enums.LoginStatusEnums;
+import com.xht.cloud.framework.exception.BizException;
+import com.xht.cloud.framework.exception.constant.GlobalErrorStatusCode;
 import com.xht.cloud.framework.security.authorization.granttype.AbstractOAuth2AuthenticationProvider;
 import com.xht.cloud.framework.security.authorization.log.LoginEvent;
 import com.xht.cloud.framework.security.constant.CustomAuthorizationGrantType;
@@ -10,8 +12,8 @@ import com.xht.cloud.framework.security.domain.UserDetailsBO;
 import com.xht.cloud.framework.security.exception.CaptchaException;
 import com.xht.cloud.framework.security.userdetails.IUserDetailsService;
 import com.xht.cloud.framework.utils.spring.SpringContextUtil;
-import com.xht.cloud.framework.utils.web.HttpServletUtils;
-import com.xht.cloud.framework.utils.web.IPUtils;
+import com.xht.cloud.framework.web.HttpServletUtils;
+import com.xht.cloud.framework.web.IPUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -19,8 +21,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
@@ -28,10 +28,6 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-
-import static com.xht.cloud.framework.exception.constant.UserErrorStatusCode.AUTHENTICATION_FAILURE;
-import static com.xht.cloud.framework.exception.constant.UserErrorStatusCode.LOGIN_USER_ERROR;
-import static com.xht.cloud.framework.security.constant.SecurityConstant.ERROR_URL;
 
 /**
  * 描述 ：密码模式 认证处理器
@@ -77,15 +73,15 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
         } catch (UsernameNotFoundException | BadCredentialsException e) {
             sysLoginLogDTO.setLoginStatus(LoginStatusEnums.ERROR);
             sysLoginLogDTO.setLoginDesc(e.getMessage());
-            throw new OAuth2AuthenticationException(new OAuth2Error(LOGIN_USER_ERROR.getCode().toString(), "账号或密码错误！", ERROR_URL), e);
+            throw new BizException(GlobalErrorStatusCode.UNAUTHORIZED.getCode(), "账号或密码错误！", e);
         } catch (CaptchaException e) {
             saveLog = Boolean.FALSE;
             log.debug("[验证码错误时] 不保存登录日志！");
-            throw new OAuth2AuthenticationException(new OAuth2Error(AUTHENTICATION_FAILURE.getCode().toString(), e.getMessage(), ERROR_URL), e);
+            throw new BizException(CaptchaException.ERROR_MSG, e);
         } catch (Exception e) {
             sysLoginLogDTO.setLoginStatus(LoginStatusEnums.ERROR);
             sysLoginLogDTO.setLoginDesc(e.getMessage());
-            throw new OAuth2AuthenticationException(new OAuth2Error(AUTHENTICATION_FAILURE.getCode().toString(), "服务内部错误！", ERROR_URL), e);
+            throw new BizException(GlobalErrorStatusCode.UNAUTHORIZED, e);
         } finally {
             userBuilder.clearCaptcha();
             if (saveLog) {

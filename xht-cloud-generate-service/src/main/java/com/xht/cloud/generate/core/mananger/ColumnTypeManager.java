@@ -1,6 +1,6 @@
 package com.xht.cloud.generate.core.mananger;
 
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import com.xht.cloud.generate.module.type.domain.dataobject.GenColumnTypeDO;
 import com.xht.cloud.generate.module.type.mapper.GenColumnTypeMapper;
 import jakarta.annotation.PostConstruct;

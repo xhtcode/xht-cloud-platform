@@ -1,7 +1,7 @@
 package com.xht.cloud.admin.api.log.dto;
 
 import com.xht.cloud.admin.api.log.enums.LoginStatusEnums;
-import com.xht.cloud.framework.core.domain.dto.DTO;
+import com.xht.cloud.framework.domain.dto.DTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Data;

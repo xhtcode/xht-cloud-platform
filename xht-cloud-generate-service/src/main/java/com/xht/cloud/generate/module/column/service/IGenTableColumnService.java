@@ -1,6 +1,6 @@
 package com.xht.cloud.generate.module.column.service;
 
- import com.xht.cloud.framework.core.domain.response.PageResponse;
+ import com.xht.cloud.framework.domain.response.PageResponse;
  import com.xht.cloud.generate.module.column.domain.request.GenTableColumnCreateRequest;
  import com.xht.cloud.generate.module.column.domain.request.GenTableColumnQueryRequest;
  import com.xht.cloud.generate.module.column.domain.request.GenTableColumnUpdateRequest;

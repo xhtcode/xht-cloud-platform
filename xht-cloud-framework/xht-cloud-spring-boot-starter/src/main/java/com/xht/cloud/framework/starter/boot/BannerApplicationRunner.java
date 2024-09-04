@@ -1,6 +1,7 @@
 package com.xht.cloud.framework.starter.boot;
 
-import com.xht.cloud.framework.exception.SysException;
+import com.xht.cloud.framework.exception.BizException;
+import com.xht.cloud.framework.utils.spring.SpringContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -16,15 +17,9 @@ import java.util.Objects;
  **/
 @Slf4j
 public class BannerApplicationRunner implements ApplicationRunner {
-
-    /**
-     * 服务名称
-     */
-    private final String applicationName;
     private final ServerProperties serverProperties;
 
-    public BannerApplicationRunner(String applicationName, ServerProperties serverProperties) {
-        this.applicationName = applicationName;
+    public BannerApplicationRunner(ServerProperties serverProperties) {
         this.serverProperties = serverProperties;
     }
 
@@ -47,13 +42,13 @@ public class BannerApplicationRunner implements ApplicationRunner {
                                 \t健康检查: \thttp://127.0.0.1:{}{}/health\s
                                 \t开发文档: \thttps://xhtcode.github.io/xht-cloud-doc/\s
                                 -------------------------------------------------------------------------""",
-                        applicationName,
+                        SpringContextUtil.getApplicationName(),
                         port, contextPath,
                         port, contextPath,
                         port, contextPath
                 );
             } catch (Exception e) {
-                throw new SysException(e.getMessage());
+                throw new BizException(e.getMessage());
             }
         }).start();
     }

@@ -1,7 +1,7 @@
 package com.xht.cloud.admin.module.user.domain.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.xht.cloud.framework.core.domain.response.Response;
+import com.xht.cloud.framework.domain.response.Response;
 import lombok.Data;
 
 import java.util.ArrayList;

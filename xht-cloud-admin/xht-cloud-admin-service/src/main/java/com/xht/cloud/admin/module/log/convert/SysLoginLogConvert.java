@@ -8,7 +8,7 @@ import com.xht.cloud.admin.module.log.domain.request.SysLoginLogQueryRequest;
 import com.xht.cloud.admin.module.log.domain.response.SysLoginLogResponse;
 import com.xht.cloud.framework.mybatis.convert.PageConvert;
 import com.xht.cloud.framework.security.utils.SecurityContextUtil;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

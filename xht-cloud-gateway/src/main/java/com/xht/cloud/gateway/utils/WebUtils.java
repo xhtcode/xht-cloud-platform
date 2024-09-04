@@ -1,7 +1,7 @@
 package com.xht.cloud.gateway.utils;
 
-import com.xht.cloud.framework.core.R;
-import com.xht.cloud.framework.utils.jackson.JsonUtils;
+import com.xht.cloud.framework.domain.R;
+import com.xht.cloud.framework.jackson.JsonUtils;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

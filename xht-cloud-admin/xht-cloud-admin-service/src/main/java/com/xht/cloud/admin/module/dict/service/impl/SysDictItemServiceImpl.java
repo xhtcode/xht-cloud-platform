@@ -16,7 +16,7 @@ import com.xht.cloud.admin.module.dict.domain.response.SysDictItemResponse;
 import com.xht.cloud.admin.module.dict.mapper.SysDictItemMapper;
 import com.xht.cloud.admin.module.dict.mapper.SysDictTypeMapper;
 import com.xht.cloud.admin.module.dict.service.ISysDictItemService;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.mybatis.tool.PageTool;

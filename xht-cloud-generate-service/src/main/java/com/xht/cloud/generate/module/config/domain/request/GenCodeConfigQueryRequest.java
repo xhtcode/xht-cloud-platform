@@ -1,6 +1,6 @@
 package com.xht.cloud.generate.module.config.domain.request;
 
-import com.xht.cloud.framework.core.domain.request.PageQueryRequest;
+import com.xht.cloud.framework.domain.request.PageQueryRequest;
 import com.xht.cloud.framework.web.validation.IntegerInterval;
 import com.xht.cloud.framework.web.validation.group.Create;
 import com.xht.cloud.framework.web.validation.group.Update;

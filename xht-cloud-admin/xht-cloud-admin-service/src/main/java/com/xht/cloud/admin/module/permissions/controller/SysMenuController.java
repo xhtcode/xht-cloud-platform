@@ -6,7 +6,7 @@ import com.xht.cloud.admin.module.permissions.domain.request.SysMenuUpdateReques
 import com.xht.cloud.admin.module.permissions.domain.response.SysMenuResponse;
 import com.xht.cloud.admin.module.permissions.service.ISysMenuService;
 import com.xht.cloud.framework.redis.idempotent.annotation.Idempotent;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import com.xht.cloud.framework.utils.treenode.INode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.xht.cloud.framework.core.R.ok;
+import static com.xht.cloud.framework.domain.R.ok;
 
 /**
  * 描述 ：菜单权限

@@ -9,10 +9,12 @@ import com.xht.cloud.framework.exception.BizException;
  **/
 public class CaptchaException extends BizException {
 
+    public static final String ERROR_MSG = "验证码错误";
+
     /**
      * @param message 异常描述
      */
-    public CaptchaException(String message) {
-        super(message);
+    public CaptchaException() {
+        super(ERROR_MSG);
     }
 }

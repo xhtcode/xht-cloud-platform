@@ -8,13 +8,13 @@ import com.xht.cloud.admin.module.oauth2.domain.request.Oauth2RegisteredClientCr
 import com.xht.cloud.admin.module.oauth2.domain.request.Oauth2RegisteredClientQueryRequest;
 import com.xht.cloud.admin.module.oauth2.domain.request.Oauth2RegisteredClientUpdateRequest;
 import com.xht.cloud.admin.module.oauth2.domain.response.Oauth2RegisteredClientResponse;
-import com.xht.cloud.framework.core.constant.StringConstant;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.constant.StringConstant;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.mybatis.convert.IBaseConvert;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
 import com.xht.cloud.framework.mybatis.wrapper.EntityWrapper;
-import com.xht.cloud.framework.utils.support.ObjectUtils;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.ObjectUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

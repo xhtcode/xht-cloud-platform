@@ -1,7 +1,7 @@
 package com.xht.cloud.framework.log.aspect;
 
 import com.xht.cloud.framework.log.annotation.MethodTimeLogAnnotation;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

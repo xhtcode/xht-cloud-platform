@@ -5,7 +5,7 @@ import com.xht.cloud.admin.enums.MenuTypeEnums;
 import com.xht.cloud.admin.module.permissions.domain.dataobject.SysMenuDO;
 import com.xht.cloud.admin.module.permissions.mapper.SysMenuMapper;
 import com.xht.cloud.framework.mybatis.dao.BaseDaoImpl;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 

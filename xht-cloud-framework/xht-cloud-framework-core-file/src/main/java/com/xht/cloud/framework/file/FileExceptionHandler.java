@@ -2,7 +2,7 @@ package com.xht.cloud.framework.file;
 
 import com.xht.cloud.framework.file.exception.FileException;
 import com.xht.cloud.framework.file.exception.OssException;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

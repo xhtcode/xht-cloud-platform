@@ -9,7 +9,7 @@ import com.xht.cloud.admin.module.log.domain.request.SysLoginLogQueryRequest;
 import com.xht.cloud.admin.module.log.domain.response.SysLoginLogResponse;
 import com.xht.cloud.admin.module.log.mapper.SysLoginLogMapper;
 import com.xht.cloud.admin.module.log.service.ISysLoginService;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

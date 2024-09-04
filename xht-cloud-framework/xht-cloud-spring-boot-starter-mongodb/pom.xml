@@ -26,10 +26,6 @@
         </dependency>
         <dependency>
             <groupId>com.xht.cloud.framework</groupId>
-            <artifactId>xht-cloud-framework-utils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.xht.cloud.framework</groupId>
             <artifactId>xht-cloud-framework-core-file</artifactId>
         </dependency>
     </dependencies>

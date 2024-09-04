@@ -1,6 +1,6 @@
 package com.xht.cloud.generate.module.table.domain.request;
 
-import com.xht.cloud.framework.core.domain.request.CreateRequest;
+import com.xht.cloud.framework.domain.request.CreateRequest;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

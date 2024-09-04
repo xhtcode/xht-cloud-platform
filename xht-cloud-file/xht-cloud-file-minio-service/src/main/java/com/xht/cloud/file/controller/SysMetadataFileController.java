@@ -4,15 +4,15 @@ import com.xht.cloud.file.domain.request.SysMetadataFileQueryRequest;
 import com.xht.cloud.file.domain.response.SysMetadataFileResponse;
 import com.xht.cloud.file.enums.FileStatusEnums;
 import com.xht.cloud.file.service.ISysMetadataFileService;
-import com.xht.cloud.framework.core.R;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.R;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import static com.xht.cloud.framework.core.R.ok;
+import static com.xht.cloud.framework.domain.R.ok;
 
 /**
  * 描述 ：文件元数据信息

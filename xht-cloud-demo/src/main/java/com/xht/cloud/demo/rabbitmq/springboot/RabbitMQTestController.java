@@ -5,7 +5,7 @@ import com.xht.cloud.demo.rabbitmq.springboot.listener.ConsumerMessageListener2;
 import com.xht.cloud.demo.rabbitmq.springboot.listener.ConsumerMessageListener3;
 import com.xht.cloud.demo.rabbitmq.springboot.listener.ConsumerMessageListener4;
 import com.xht.cloud.demo.rabbitmq.springboot.message_reliability.RabbitTemplateAckConfig;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

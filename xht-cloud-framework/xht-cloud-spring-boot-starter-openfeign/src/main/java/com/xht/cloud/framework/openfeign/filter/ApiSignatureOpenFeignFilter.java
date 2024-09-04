@@ -1,6 +1,6 @@
 package com.xht.cloud.framework.openfeign.filter;
 
-import com.xht.cloud.framework.core.domain.KeyValue;
+import com.xht.cloud.framework.domain.KeyValue;
 import com.xht.cloud.framework.openfeign.client.ApiSignatureClient;
 import com.xht.cloud.framework.starter.exception.ApiSignatureErrorStatusCode;
 import com.xht.cloud.framework.starter.exception.ApiSignatureException;
@@ -8,8 +8,8 @@ import com.xht.cloud.framework.starter.signature.ApiSignatureBuilder;
 import com.xht.cloud.framework.starter.signature.ApiSignatureFilter;
 import com.xht.cloud.framework.starter.signature.ApiSignatureProperties;
 import com.xht.cloud.framework.starter.signature.ApiSignatureType;
-import com.xht.cloud.framework.core.R;
-import com.xht.cloud.framework.core.ROptional;
+import com.xht.cloud.framework.domain.R;
+import com.xht.cloud.framework.utils.ROptional;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 

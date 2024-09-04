@@ -3,7 +3,7 @@ package com.xht.cloud.framework.security.handler;
 import com.xht.cloud.framework.exception.constant.GlobalErrorStatusCode;
 import com.xht.cloud.framework.security.exception.OAuth2Exception;
 import com.xht.cloud.framework.security.exception.PassWordException;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -31,7 +31,7 @@ public class SecurityExceptionHandler {
         String msg = SpringSecurityMessageSource.getAccessor()
                 .getMessage("AbstractAccessDecisionManager.accessDenied", e.getMessage());
         log.warn("拒绝授权异常信息：{}", msg);
-        return R.failed(GlobalErrorStatusCode.FORBIDDEN);
+        return R.failed(GlobalErrorStatusCode.UNAUTHORIZED);
     }
 
 
@@ -42,7 +42,7 @@ public class SecurityExceptionHandler {
     @ExceptionHandler(OAuth2Exception.class)
     public R<String> handler(OAuth2Exception e) {
         log.warn("拒绝授权异常信息：{}", e.getMessage());
-        return R.failed(GlobalErrorStatusCode.FORBIDDEN);
+        return R.failed(GlobalErrorStatusCode.UNAUTHORIZED);
     }
 
     /**
@@ -54,7 +54,7 @@ public class SecurityExceptionHandler {
         String msg = SpringSecurityMessageSource.getAccessor()
                 .getMessage("AbstractAccessDecisionManager.accessDenied", e.getMessage());
         log.warn("密码错误：{}", msg);
-        return R.failed(GlobalErrorStatusCode.FORBIDDEN);
+        return R.failed(GlobalErrorStatusCode.UNAUTHORIZED);
     }
 
 }

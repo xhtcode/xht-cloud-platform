@@ -1,7 +1,7 @@
 package com.xht.cloud.framework.web.handler;
 
 
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.exception.GlobalException;
 import com.xht.cloud.framework.exception.SysException;
@@ -9,7 +9,7 @@ import com.xht.cloud.framework.exception.constant.GlobalErrorStatusCode;
 import com.xht.cloud.framework.exception.user.UserException;
 import com.xht.cloud.framework.starter.exception.ApiSignatureErrorStatusCode;
 import com.xht.cloud.framework.starter.exception.ApiSignatureException;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import com.xht.cloud.framework.web.validation.exception.ValidationException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -64,7 +64,7 @@ public class DefaultGlobalExceptionHandler implements Serializable {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public R<String> handle(Exception e) {
         log.error("系统异常: {}", e.getMessage(), e);
-        return R.<String>failed(GlobalErrorStatusCode.INTERNAL_SERVER_ERROR).setMsg(e.getMessage());
+        return R.<String>failed(GlobalErrorStatusCode.ERROR).setMsg(e.getMessage());
     }
 
     /**
@@ -74,7 +74,7 @@ public class DefaultGlobalExceptionHandler implements Serializable {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public R<String> handleThrowable(Throwable e) {
         log.error("未知异常: {}", e.getMessage(), e);
-        return R.<String>failed(GlobalErrorStatusCode.INTERNAL_SERVER_ERROR).setMsg(e.getMessage());
+        return R.<String>failed(GlobalErrorStatusCode.ERROR).setMsg(e.getMessage());
     }
 
     /**
@@ -102,7 +102,7 @@ public class DefaultGlobalExceptionHandler implements Serializable {
     @ResponseStatus(HttpStatus.OK)
     public R<String> handleIllegalArgumentException(IllegalArgumentException exception) {
         log.error("非法参数,message = {}", exception.getMessage(), exception);
-        return R.failed(GlobalErrorStatusCode.PARAMS_ERROR);
+        return R.failed(GlobalErrorStatusCode.PARAM_INVALID);
     }
 
 
@@ -171,12 +171,12 @@ public class DefaultGlobalExceptionHandler implements Serializable {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
             if (!CollectionUtils.isEmpty(fieldErrors)) {
                 for (FieldError fieldError : fieldErrors) {
-                    resultMap.put(fieldError.getField(), StringUtils.emptyToDefault(fieldError.getDefaultMessage(), GlobalErrorStatusCode.PARAMS_ERROR.getMessage()));
+                    resultMap.put(fieldError.getField(), StringUtils.emptyToDefault(fieldError.getDefaultMessage(), GlobalErrorStatusCode.PARAM_INVALID.getMessage()));
                 }
             }
         }
         log.warn("请求地址:{}参数检验失败,请求方式：{} ,data={}", requestURI, request.getMethod(), resultMap, e);
-        return R.failed(GlobalErrorStatusCode.PARAMS_ERROR, resultMap);
+        return R.failed(GlobalErrorStatusCode.PARAM_INVALID, resultMap);
     }
 
     /**
@@ -193,6 +193,6 @@ public class DefaultGlobalExceptionHandler implements Serializable {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put(e.getFiledName(), e.getMessage());
         log.warn("请求地址:{}参数检验失败,请求方式：{} ,data={}", requestURI, request.getMethod(), resultMap, e);
-        return R.failed(GlobalErrorStatusCode.PARAMS_ERROR, resultMap);
+        return R.failed(GlobalErrorStatusCode.PARAM_INVALID, resultMap);
     }
 }

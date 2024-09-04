@@ -1,8 +1,7 @@
 package com.xht.cloud.admin.api.log.feign;
 
 import com.xht.cloud.admin.api.log.dto.SysLoginLogDTO;
-import com.xht.cloud.framework.core.R;
-import com.xht.cloud.framework.core.server.ServerConstants;
+import com.xht.cloud.framework.domain.R;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  *
  * @author : 小糊涂
  **/
-@FeignClient(value = ServerConstants.XHT_CLOUD_ADMIN, contextId = "sysLoginLogClient")
+@FeignClient(value = "xht-cloud-admin-service", contextId = "sysLoginLogClient")
 public interface SysLoginLogClient {
 
     /**

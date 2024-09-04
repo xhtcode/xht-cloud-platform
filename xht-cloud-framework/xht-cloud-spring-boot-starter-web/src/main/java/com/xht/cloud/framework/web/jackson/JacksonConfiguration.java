@@ -3,7 +3,7 @@ package com.xht.cloud.framework.web.jackson;
 import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.xht.cloud.framework.utils.jackson.CustomJacksonModule;
+import com.xht.cloud.framework.jackson.CustomJacksonModule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;

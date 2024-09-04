@@ -5,9 +5,9 @@ import com.xht.cloud.admin.module.config.domain.request.SysConfigQueryRequest;
 import com.xht.cloud.admin.module.config.domain.request.SysConfigUpdateRequest;
 import com.xht.cloud.admin.module.config.domain.response.SysConfigResponse;
 import com.xht.cloud.admin.module.config.service.ISysConfigService;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.redis.idempotent.annotation.Idempotent;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.xht.cloud.framework.core.R.ok;
+import static com.xht.cloud.framework.domain.R.ok;
 
 /**
  * 描述 ：系统配置信息

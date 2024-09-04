@@ -38,23 +38,4 @@ public final class DeveloperTool {
         return Objects.equals(DeveloperConstant.PROD_ACTIVE_PROFILE, activeProfile);
     }
 
-    /**
-     * 判断是不是系统变量
-     *
-     * @param systemStatus {@link SuperSystemStatus}
-     * @return true 是
-     */
-    public static boolean isSystemStatus(SuperSystemStatus systemStatus) {
-        return Objects.equals(systemStatus, SuperSystemStatus.YES);
-    }
-
-    /**
-     * 判断是不是系统变量
-     *
-     * @param systemStatusValue {@link SuperSystemStatus#getValue()}
-     * @return true 是
-     */
-    public static boolean isSystemStatus(Integer systemStatusValue) {
-        return Objects.equals(SuperSystemStatus.YES.getValue(), systemStatusValue);
-    }
 }

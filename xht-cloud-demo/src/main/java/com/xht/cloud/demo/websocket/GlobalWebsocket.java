@@ -1,7 +1,7 @@
 package com.xht.cloud.demo.websocket;
 
 import com.xht.cloud.demo.pojo.MessageVo;
-import com.xht.cloud.framework.utils.jackson.JsonUtils;
+import com.xht.cloud.framework.jackson.JsonUtils;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;

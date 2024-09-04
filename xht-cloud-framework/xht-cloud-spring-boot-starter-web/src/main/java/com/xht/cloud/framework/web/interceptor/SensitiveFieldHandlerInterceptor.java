@@ -1,6 +1,6 @@
 package com.xht.cloud.framework.web.interceptor;
 
-import com.xht.cloud.framework.utils.jackson.desensitization.SkipSensitiveThreadLocal;
+import com.xht.cloud.framework.jackson.desensitization.SkipSensitiveThreadLocal;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;

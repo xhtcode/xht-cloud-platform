@@ -2,7 +2,7 @@ package com.xht.cloud.framework.security.authorization.granttype;
 
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.exception.BizException;
-import com.xht.cloud.framework.utils.web.HttpServletUtils;
+import com.xht.cloud.framework.web.HttpServletUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

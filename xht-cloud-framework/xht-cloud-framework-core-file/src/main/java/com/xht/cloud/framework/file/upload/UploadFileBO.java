@@ -2,12 +2,12 @@ package com.xht.cloud.framework.file.upload;
 
 import cn.hutool.core.io.IoUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.xht.cloud.framework.core.constant.StringConstant;
+import com.xht.cloud.framework.constant.StringConstant;
 import com.xht.cloud.framework.file.domain.FileType;
 import com.xht.cloud.framework.file.domain.cmd.file.OssBaseFileCmd;
 import com.xht.cloud.framework.file.utils.DataSizeUtils;
 import com.xht.cloud.framework.utils.secret.MD5Utils;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import jakarta.servlet.http.Part;
 import lombok.Getter;
 import lombok.Setter;

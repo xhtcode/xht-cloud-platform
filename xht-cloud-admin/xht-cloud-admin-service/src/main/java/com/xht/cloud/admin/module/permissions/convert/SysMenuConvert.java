@@ -9,7 +9,7 @@ import com.xht.cloud.admin.module.permissions.domain.request.SysMenuUpdateReques
 import com.xht.cloud.admin.module.permissions.domain.response.SysMenuResponse;
 import com.xht.cloud.framework.mybatis.convert.IBaseConvert;
 import com.xht.cloud.framework.mybatis.wrapper.EntityWrapper;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import org.mapstruct.Mapper;
 
 import java.util.Objects;

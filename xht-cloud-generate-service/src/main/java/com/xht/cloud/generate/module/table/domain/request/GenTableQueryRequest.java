@@ -1,6 +1,6 @@
 package com.xht.cloud.generate.module.table.domain.request;
 
-import com.xht.cloud.framework.core.domain.request.PageQueryRequest;
+import com.xht.cloud.framework.domain.request.PageQueryRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

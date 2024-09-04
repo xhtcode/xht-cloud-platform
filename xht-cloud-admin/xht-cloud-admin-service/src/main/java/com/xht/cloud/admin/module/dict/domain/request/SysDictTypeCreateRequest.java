@@ -1,7 +1,7 @@
 package com.xht.cloud.admin.module.dict.domain.request;
 
 import com.xht.cloud.admin.api.dict.enums.DictStatusEnums;
-import com.xht.cloud.framework.core.domain.request.CreateRequest;
+import com.xht.cloud.framework.domain.request.CreateRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.xht.cloud.admin.api.user.enums.DeptUserDataScopeEnum;
 import com.xht.cloud.admin.api.user.enums.UserStatusEnums;
 import com.xht.cloud.admin.api.user.enums.UserTypeEnums;
-import com.xht.cloud.framework.core.domain.response.AbstractResponse;
+import com.xht.cloud.framework.domain.response.AbstractResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 package com.xht.cloud.framework.log.annotation;
 
-import com.xht.cloud.framework.core.constant.StringConstant;
+import com.xht.cloud.framework.constant.StringConstant;
 import com.xht.cloud.framework.core.enums.OperateTypeEnums;
 
 import java.lang.annotation.*;

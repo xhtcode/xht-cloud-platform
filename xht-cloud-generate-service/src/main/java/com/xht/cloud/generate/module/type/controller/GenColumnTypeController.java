@@ -1,7 +1,7 @@
 package com.xht.cloud.generate.module.type.controller;
 
-import com.xht.cloud.framework.core.R;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.R;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.generate.module.type.domain.request.GenColumnTypeCreateRequest;
 import com.xht.cloud.generate.module.type.domain.request.GenColumnTypeQueryRequest;
 import com.xht.cloud.generate.module.type.domain.request.GenColumnTypeUpdateRequest;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.xht.cloud.framework.core.R.ok;
+import static com.xht.cloud.framework.domain.R.ok;
 
 /**
  * 描述 ：代码生成器-字段类型对应

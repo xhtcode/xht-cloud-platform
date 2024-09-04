@@ -2,8 +2,8 @@ package com.xht.cloud.framework.web.convert;
 
 import com.google.common.collect.Maps;
 import com.xht.cloud.framework.core.enums.IEnum;
-import com.xht.cloud.framework.exception.SysException;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.exception.BizException;
+import com.xht.cloud.framework.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 
@@ -29,7 +29,7 @@ public class IEnumsStringConvert implements Converter<String, IEnum<Serializable
                 if (StringUtils.hasText(value)) {
                     ENUM_MAP.put(value, e);
                 } else {
-                    throw new SysException("系统配置错误 com.xht.cloud.framework.core.enums.IEnum.getValue is null!");
+                    throw new BizException("系统配置错误 com.xht.cloud.framework.core.enums.IEnum.getValue is null!");
                 }
                 ENUM_NAME_MAP.put(e.name(), e);
             } catch (Exception exception) {

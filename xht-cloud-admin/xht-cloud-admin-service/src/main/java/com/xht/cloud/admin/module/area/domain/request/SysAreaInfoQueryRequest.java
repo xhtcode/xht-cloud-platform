@@ -1,9 +1,9 @@
 package com.xht.cloud.admin.module.area.domain.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.xht.cloud.framework.core.constant.TreeConstant;
-import com.xht.cloud.framework.core.domain.request.PageQueryRequest;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.constant.TreeConstant;
+import com.xht.cloud.framework.domain.request.PageQueryRequest;
+import com.xht.cloud.framework.utils.StringUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

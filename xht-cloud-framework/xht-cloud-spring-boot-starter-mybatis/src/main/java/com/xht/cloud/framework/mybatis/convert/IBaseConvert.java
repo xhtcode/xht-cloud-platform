@@ -1,11 +1,11 @@
 package com.xht.cloud.framework.mybatis.convert;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.xht.cloud.framework.core.domain.request.IUpdateRequestFun;
-import com.xht.cloud.framework.core.domain.request.PageQueryRequest;
-import com.xht.cloud.framework.core.domain.request.Request;
-import com.xht.cloud.framework.core.domain.response.AbstractResponse;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.request.IUpdateRequestFun;
+import com.xht.cloud.framework.domain.request.PageQueryRequest;
+import com.xht.cloud.framework.domain.request.Request;
+import com.xht.cloud.framework.domain.response.AbstractResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.mybatis.dataobject.AbstractDO;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
 import org.mapstruct.Named;

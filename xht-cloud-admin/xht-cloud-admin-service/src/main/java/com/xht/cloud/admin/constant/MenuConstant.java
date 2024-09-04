@@ -1,7 +1,7 @@
 package com.xht.cloud.admin.constant;
 
 
-import com.xht.cloud.framework.core.constant.StringConstant;
+import com.xht.cloud.framework.constant.StringConstant;
 
 /**
  * 描述 ：菜单常量

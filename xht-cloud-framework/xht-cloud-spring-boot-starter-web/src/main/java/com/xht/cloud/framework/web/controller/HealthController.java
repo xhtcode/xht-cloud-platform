@@ -1,10 +1,10 @@
 package com.xht.cloud.framework.web.controller;
 
 import com.xht.cloud.framework.core.developer.DeveloperTool;
-import com.xht.cloud.framework.core.domain.KeyValue;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.KeyValue;
+import com.xht.cloud.framework.domain.R;
 import com.xht.cloud.framework.utils.spring.SpringContextUtil;
-import com.xht.cloud.framework.utils.support.ClassUtils;
+import com.xht.cloud.framework.utils.ClassUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

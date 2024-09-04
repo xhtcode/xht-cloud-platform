@@ -10,7 +10,7 @@ import com.xht.cloud.admin.module.dict.domain.request.SysDictItemUpdateRequest;
 import com.xht.cloud.admin.module.dict.domain.response.SysDictItemResponse;
 import com.xht.cloud.framework.mybatis.convert.IBaseConvert;
 import com.xht.cloud.framework.mybatis.wrapper.EntityWrapper;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
 import org.springframework.util.CollectionUtils;

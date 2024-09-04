@@ -1,7 +1,7 @@
 package com.xht.cloud.generate.support;
 
 import com.xht.cloud.framework.exception.Assert;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import com.xht.cloud.generate.exception.GenerateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

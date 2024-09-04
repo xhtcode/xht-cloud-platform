@@ -1,6 +1,6 @@
 package com.xht.cloud.framework.security.utils;
 
-import com.xht.cloud.framework.exception.constant.UserErrorStatusCode;
+import com.xht.cloud.framework.exception.constant.IErrorStatusCode;
 import com.xht.cloud.framework.security.constant.OAuth2ErrorStatusCode;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
@@ -23,7 +23,7 @@ public final class OAuth2ExceptionUtils {
      *
      * @param errorStatusCode {@link OAuth2ErrorStatusCode}
      */
-    public static OAuth2AuthenticationException throwError(UserErrorStatusCode errorStatusCode) {
+    public static OAuth2AuthenticationException throwError(IErrorStatusCode errorStatusCode) {
         OAuth2Error error = new OAuth2Error(errorStatusCode.getCode().toString(), errorStatusCode.getMessage(), DEFAULT_ERROR_URI);
         return new OAuth2AuthorizationCodeRequestAuthenticationException(error, null);
     }

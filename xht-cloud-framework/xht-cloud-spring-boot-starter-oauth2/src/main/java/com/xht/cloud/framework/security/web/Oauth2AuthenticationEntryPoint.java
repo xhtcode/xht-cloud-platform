@@ -1,8 +1,8 @@
 package com.xht.cloud.framework.security.web;
 
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import com.xht.cloud.framework.exception.constant.UserErrorStatusCode;
-import com.xht.cloud.framework.utils.web.HttpServletUtils;
+import com.xht.cloud.framework.web.HttpServletUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,7 +30,7 @@ public class Oauth2AuthenticationEntryPoint implements AuthenticationEntryPoint 
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         String localizedMessage = authException.getLocalizedMessage();
         log.debug("请求未认证：{}", localizedMessage, authException);
-        HttpServletUtils.writeString(response, R.failed(UserErrorStatusCode.NO_LOGIN));
+        HttpServletUtils.writeString(response, R.failed(UserErrorStatusCode.USER_CREDENTIALS_EXPIRED));
     }
 
 }

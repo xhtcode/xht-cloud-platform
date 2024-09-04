@@ -1,6 +1,6 @@
 package com.xht.cloud.generate.module.type.service;
 
- import com.xht.cloud.framework.core.domain.response.PageResponse;
+ import com.xht.cloud.framework.domain.response.PageResponse;
  import com.xht.cloud.generate.module.type.domain.request.GenColumnTypeCreateRequest;
  import com.xht.cloud.generate.module.type.domain.request.GenColumnTypeQueryRequest;
  import com.xht.cloud.generate.module.type.domain.request.GenColumnTypeUpdateRequest;

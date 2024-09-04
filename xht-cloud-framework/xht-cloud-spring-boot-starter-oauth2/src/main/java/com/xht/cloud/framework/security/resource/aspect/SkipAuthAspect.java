@@ -2,11 +2,10 @@ package com.xht.cloud.framework.security.resource.aspect;
 
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.exception.BizException;
-import com.xht.cloud.framework.exception.SysException;
 import com.xht.cloud.framework.exception.constant.GlobalErrorStatusCode;
 import com.xht.cloud.framework.security.core.SecurityConfigProperties;
 import com.xht.cloud.framework.security.resource.annotaion.SkipAuthentication;
-import com.xht.cloud.framework.utils.web.HttpServletUtils;
+import com.xht.cloud.framework.web.HttpServletUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -44,13 +43,13 @@ public class SkipAuthAspect {
         if (Objects.nonNull(skipAuthentication)) {
             HttpServletRequest request = HttpServletUtils.getRequest();
             if (Objects.isNull(request)){
-                throw new SysException(GlobalErrorStatusCode.BAD_REQUEST);
+                throw new BizException(GlobalErrorStatusCode.BAD_REQUEST);
             }
             String securityHeaderValue = oauth2Properties.getSecurityHeaderValue();
             String requestHeaderValue = request.getHeader(skipAuthentication.headerKey());
             if (Objects.equals(INNER, skipAuthentication.value()) && !Objects.equals(securityHeaderValue, requestHeaderValue)) {
                 log.error("外部访问接口 {} 没有权限 requestHeaderValue:{}", joinPoint.getSignature().getName(), requestHeaderValue);
-                Assert.hasText(securityHeaderValue, () -> new SysException(GlobalErrorStatusCode.ERROR_CONFIGURATION));
+                Assert.hasText(securityHeaderValue, () -> new BizException(GlobalErrorStatusCode.FORBIDDEN));
                 throw new BizException(FORBIDDEN);
             }
         }

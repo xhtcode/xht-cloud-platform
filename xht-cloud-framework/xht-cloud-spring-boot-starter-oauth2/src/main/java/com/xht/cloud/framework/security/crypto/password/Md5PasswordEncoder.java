@@ -2,7 +2,7 @@ package com.xht.cloud.framework.security.crypto.password;
 
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.utils.secret.MD5Utils;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**

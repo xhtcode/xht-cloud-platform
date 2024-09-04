@@ -5,7 +5,7 @@ import com.xht.cloud.admin.enums.GenerateIdType;
 import com.xht.cloud.admin.exceptions.SequenceException;
 import com.xht.cloud.admin.module.sequence.domain.request.IdRequest;
 import com.xht.cloud.admin.module.sequence.generate.GenerateIdFactory;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

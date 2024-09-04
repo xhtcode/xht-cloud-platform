@@ -1,7 +1,7 @@
 package com.xht.cloud.framework.web.signature;
 
 import com.xht.cloud.framework.starter.signature.ApiSignatureBuilder;
-import com.xht.cloud.framework.utils.web.HttpServletUtils;
+import com.xht.cloud.framework.web.HttpServletUtils;
 import com.xht.cloud.framework.web.constant.ApiSignatureConstant;
 import com.xht.cloud.framework.web.signature.chain.ApiSignatureChain;
 import jakarta.annotation.Resource;

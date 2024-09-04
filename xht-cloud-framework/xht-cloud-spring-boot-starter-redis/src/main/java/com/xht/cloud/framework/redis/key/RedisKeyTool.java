@@ -3,7 +3,7 @@ package com.xht.cloud.framework.redis.key;
 import cn.hutool.core.text.StrFormatter;
 import cn.hutool.core.util.ArrayUtil;
 import com.xht.cloud.framework.redis.constant.RedisConstant;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import org.springframework.lang.NonNull;
 
 /**

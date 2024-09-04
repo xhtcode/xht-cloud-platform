@@ -1,6 +1,6 @@
 package com.xht.cloud.file.controller;
 
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import com.xht.cloud.framework.file.domain.cmd.bucket.BaseBucketCmd;
 import com.xht.cloud.framework.file.domain.dto.BucketDTO;
 import com.xht.cloud.framework.file.utils.FileSizeFormat;

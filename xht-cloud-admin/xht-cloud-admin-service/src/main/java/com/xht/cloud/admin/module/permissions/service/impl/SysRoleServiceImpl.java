@@ -21,7 +21,7 @@ import com.xht.cloud.admin.module.permissions.domain.response.SysRoleResponse;
 import com.xht.cloud.admin.module.permissions.mapper.SysRoleMapper;
 import com.xht.cloud.admin.module.permissions.mapper.SysUserRoleMapper;
 import com.xht.cloud.admin.module.permissions.service.ISysRoleService;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.mybatis.tool.PageTool;

@@ -15,14 +15,12 @@
     <packaging>pom</packaging>
     <modules>
         <module>xht-cloud-framework-core</module>
-        <module>xht-cloud-framework-utils</module>
         <module>xht-cloud-spring-boot-starter-web</module>
         <module>xht-cloud-spring-boot-starter-mybatis</module>
         <module>xht-cloud-spring-boot-starter-redis</module>
         <module>xht-cloud-spring-boot-starter-log</module>
         <module>xht-cloud-framework-core-file</module>
         <module>xht-cloud-spring-boot-starter-minio</module>
-        <module>xht-cloud-framework-exception</module>
         <module>xht-cloud-spring-boot-starter-swagger</module>
         <module>xht-cloud-spring-boot-starter-openfeign</module>
         <module>xht-cloud-spring-boot-starter-oauth2</module>

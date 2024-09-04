@@ -5,7 +5,7 @@ import com.xht.cloud.admin.api.dict.enums.DictStatusEnums;
 import com.xht.cloud.admin.api.dict.feign.SysDictClient;
 import com.xht.cloud.admin.module.dict.service.ISysDictItemService;
 import com.xht.cloud.framework.security.resource.annotaion.SkipAuthentication;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.xht.cloud.framework.core.R.ok;
+import static com.xht.cloud.framework.domain.R.ok;
 
 /**
  * 描述 ：字典信息查询内部专用

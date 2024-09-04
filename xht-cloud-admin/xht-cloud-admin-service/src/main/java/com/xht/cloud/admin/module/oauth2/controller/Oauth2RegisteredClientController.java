@@ -5,10 +5,10 @@ import com.xht.cloud.admin.module.oauth2.domain.request.Oauth2RegisteredClientQu
 import com.xht.cloud.admin.module.oauth2.domain.request.Oauth2RegisteredClientUpdateRequest;
 import com.xht.cloud.admin.module.oauth2.domain.response.Oauth2RegisteredClientResponse;
 import com.xht.cloud.admin.module.oauth2.service.IOauth2RegisteredClientService;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.redis.idempotent.annotation.Idempotent;
 import com.xht.cloud.framework.security.resource.annotaion.SkipAuthentication;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.xht.cloud.framework.core.R.ok;
+import static com.xht.cloud.framework.domain.R.ok;
 
 /**
  * 描述 ：oauth2 客户端信息

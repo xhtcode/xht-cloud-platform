@@ -3,7 +3,7 @@ package com.xht.cloud.admin.module.log.feign;
 import com.xht.cloud.admin.api.log.dto.OperationLogDTO;
 import com.xht.cloud.admin.api.log.feign.OperationLogClient;
 import com.xht.cloud.admin.module.log.service.ISysOperationLogService;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import com.xht.cloud.framework.security.resource.annotaion.SkipAuthentication;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

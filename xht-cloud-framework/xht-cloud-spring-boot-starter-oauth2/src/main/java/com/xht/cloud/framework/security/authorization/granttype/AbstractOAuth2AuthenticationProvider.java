@@ -2,7 +2,7 @@ package com.xht.cloud.framework.security.authorization.granttype;
 
 import cn.hutool.core.util.IdUtil;
 import com.xht.cloud.admin.api.user.enums.UserTypeEnums;
-import com.xht.cloud.framework.exception.constant.UserErrorStatusCode;
+import com.xht.cloud.framework.exception.constant.GlobalErrorStatusCode;
 import com.xht.cloud.framework.security.domain.RequestUserBO;
 import com.xht.cloud.framework.security.userdetails.IUserDetailsService;
 import com.xht.cloud.framework.security.utils.OAuth2AuthenticationProviderUtils;
@@ -117,7 +117,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
                 .stream()
                 .filter(service -> service.support(this.authorizationGrantType.getValue(), userType)).findFirst().orElse(null);
         if (Objects.isNull(iUserDetailsService)) {
-            throw OAuth2ExceptionUtils.throwError(UserErrorStatusCode.SYSTEM_ERROR);
+            throw OAuth2ExceptionUtils.throwError(GlobalErrorStatusCode.ERROR);
         }
         return iUserDetailsService;
     }

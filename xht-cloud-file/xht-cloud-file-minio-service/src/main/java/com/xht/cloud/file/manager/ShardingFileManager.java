@@ -14,7 +14,7 @@ import com.xht.cloud.framework.file.upload.UploadFileBO;
 import com.xht.cloud.framework.minio.service.MinioOssTemplate;
 import com.xht.cloud.framework.mybatis.tool.SqlHelper;
 import com.xht.cloud.framework.utils.secret.MD5Utils;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import io.minio.messages.ListPartsResult;
 import io.minio.messages.Part;
 import lombok.RequiredArgsConstructor;

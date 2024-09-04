@@ -2,7 +2,7 @@ package com.xht.cloud.admin.module.sequence.domain.request;
 
 import com.xht.cloud.admin.enums.SeqLoopEnum;
 import com.xht.cloud.admin.enums.SeqResetFlagEnum;
-import com.xht.cloud.framework.core.domain.request.CreateRequest;
+import com.xht.cloud.framework.domain.request.CreateRequest;
 import com.xht.cloud.framework.web.validation.group.Create;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;

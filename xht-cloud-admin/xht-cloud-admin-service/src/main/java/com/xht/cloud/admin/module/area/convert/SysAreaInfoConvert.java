@@ -9,7 +9,7 @@ import com.xht.cloud.admin.module.area.domain.request.SysAreaInfoUpdateRequest;
 import com.xht.cloud.admin.module.area.domain.response.SysAreaInfoResponse;
 import com.xht.cloud.framework.mybatis.convert.IBaseConvert;
 import com.xht.cloud.framework.mybatis.wrapper.EntityWrapper;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

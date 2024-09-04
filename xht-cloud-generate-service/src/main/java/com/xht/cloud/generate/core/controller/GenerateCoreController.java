@@ -2,7 +2,7 @@ package com.xht.cloud.generate.core.controller;
 
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.IdUtil;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import com.xht.cloud.framework.utils.treenode.INode;
 import com.xht.cloud.generate.core.controller.request.GenCodeRequest;
 import com.xht.cloud.generate.core.service.IGenerateCoreService;

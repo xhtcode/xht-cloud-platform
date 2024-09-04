@@ -1,8 +1,8 @@
 package com.xht.cloud.framework.security.authorization.token;
 
 import com.xht.cloud.framework.security.convert.OAuth2ErrorParametersConverter;
-import com.xht.cloud.framework.core.R;
-import com.xht.cloud.framework.utils.web.HttpServletUtils;
+import com.xht.cloud.framework.domain.R;
+import com.xht.cloud.framework.web.HttpServletUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

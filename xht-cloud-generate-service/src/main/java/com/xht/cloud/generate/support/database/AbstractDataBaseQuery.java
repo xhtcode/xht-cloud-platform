@@ -1,7 +1,7 @@
 package com.xht.cloud.generate.support.database;
 
 import cn.hutool.core.convert.Convert;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import com.xht.cloud.generate.module.column.domain.dataobject.GenTableColumnDO;
 import com.xht.cloud.generate.module.table.domain.dataobject.GenTableDO;
 import org.springframework.jdbc.core.RowMapper;

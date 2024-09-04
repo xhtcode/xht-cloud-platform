@@ -1,7 +1,7 @@
 package com.xht.cloud.generate.module.database.controller;
 
-import com.xht.cloud.framework.core.R;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.R;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.generate.module.database.domain.request.GenDatabaseCreateRequest;
 import com.xht.cloud.generate.module.database.domain.request.GenDatabaseQueryRequest;
 import com.xht.cloud.generate.module.database.domain.request.GenDatabaseUpdateRequest;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.xht.cloud.framework.core.R.ok;
+import static com.xht.cloud.framework.domain.R.ok;
 
 /**
  * 描述 ：代码生成器-数据源管理

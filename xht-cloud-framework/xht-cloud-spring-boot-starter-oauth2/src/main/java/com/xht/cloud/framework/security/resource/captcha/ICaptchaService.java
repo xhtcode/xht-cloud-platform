@@ -2,7 +2,7 @@ package com.xht.cloud.framework.security.resource.captcha;
 
 
 import com.xht.cloud.framework.security.exception.CaptchaException;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 
 /**
  * 描述 ：验证码

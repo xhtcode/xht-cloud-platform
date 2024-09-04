@@ -5,11 +5,11 @@ import com.xht.cloud.admin.module.user.domain.request.SysUserStaffCreateRequest;
 import com.xht.cloud.admin.module.user.domain.request.SysUserStaffUpdateRequest;
 import com.xht.cloud.admin.module.user.domain.response.SysUserStaffResponse;
 import com.xht.cloud.admin.module.user.service.ISysUserStaffService;
-import com.xht.cloud.framework.core.R;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.R;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.redis.idempotent.annotation.Idempotent;
 import com.xht.cloud.framework.security.core.PermissionCheckService;
-import com.xht.cloud.framework.utils.jackson.desensitization.SkipSensitiveThreadLocal;
+import com.xht.cloud.framework.jackson.desensitization.SkipSensitiveThreadLocal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.xht.cloud.framework.core.R.ok;
+import static com.xht.cloud.framework.domain.R.ok;
 
 /**
  * 描述 ：工作人员

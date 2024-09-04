@@ -1,7 +1,7 @@
 package com.xht.cloud.file.domain.request;
 
 import com.xht.cloud.file.enums.FileStatusEnums;
-import com.xht.cloud.framework.core.domain.request.PageQueryRequest;
+import com.xht.cloud.framework.domain.request.PageQueryRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

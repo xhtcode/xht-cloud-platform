@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.xht.cloud.framework.redis.service.RedisService;
 import com.xht.cloud.framework.redis.service.RedisServiceImpl;
-import com.xht.cloud.framework.utils.jackson.CustomJacksonModule;
+import com.xht.cloud.framework.jackson.CustomJacksonModule;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;

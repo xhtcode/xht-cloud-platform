@@ -4,7 +4,7 @@ import com.xht.cloud.admin.module.permissions.domain.request.SysRoleCreateReques
 import com.xht.cloud.admin.module.permissions.domain.request.SysRoleQueryRequest;
 import com.xht.cloud.admin.module.permissions.domain.request.SysRoleUpdateRequest;
 import com.xht.cloud.admin.module.permissions.domain.response.SysRoleResponse;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 
 import java.util.List;
 

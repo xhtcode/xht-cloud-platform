@@ -1,6 +1,6 @@
 package com.xht.cloud.admin.module.permissions.domain.request;
 
-import com.xht.cloud.framework.core.domain.request.IUpdateRequestFun;
+import com.xht.cloud.framework.domain.request.IUpdateRequestFun;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

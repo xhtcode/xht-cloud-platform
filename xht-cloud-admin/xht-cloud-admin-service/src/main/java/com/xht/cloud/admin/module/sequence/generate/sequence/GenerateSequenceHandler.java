@@ -11,7 +11,7 @@ import com.xht.cloud.admin.module.sequence.generate.GenerateIdHandler;
 import com.xht.cloud.admin.module.sequence.mapper.SysSequenceMapper;
 import com.xht.cloud.admin.tool.SequenceFormat;
 import com.xht.cloud.framework.exception.Assert;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 描述 ：自定义序列生成器

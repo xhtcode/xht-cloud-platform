@@ -1,7 +1,7 @@
 package com.xht.cloud.generate.module.config.service;
 
-import com.xht.cloud.framework.core.domain.KeyValue;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.KeyValue;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigCreateRequest;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigQueryRequest;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigUpdateRequest;

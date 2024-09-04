@@ -1,8 +1,6 @@
 package com.xht.cloud.admin.exceptions;
 
 import com.xht.cloud.framework.exception.BizException;
-import com.xht.cloud.framework.exception.constant.GlobalErrorStatusCode;
-import com.xht.cloud.framework.exception.constant.IErrorStatusCode;
 
 /**
  * 描述 ：权限异常
@@ -18,10 +16,4 @@ public class PermissionException extends BizException {
         super(message);
     }
 
-    /**
-     * @param statusCode 业务异常状态码 {@link GlobalErrorStatusCode}
-     */
-    public PermissionException(IErrorStatusCode statusCode) {
-        super(statusCode);
-    }
 }

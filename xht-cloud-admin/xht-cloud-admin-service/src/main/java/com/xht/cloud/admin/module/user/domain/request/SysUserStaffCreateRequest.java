@@ -3,7 +3,7 @@ package com.xht.cloud.admin.module.user.domain.request;
 import com.xht.cloud.admin.api.user.enums.DeptUserDataScopeEnum;
 import com.xht.cloud.admin.api.user.enums.UserSexEnums;
 import com.xht.cloud.admin.api.user.enums.UserStatusEnums;
-import com.xht.cloud.framework.core.domain.request.CreateRequest;
+import com.xht.cloud.framework.domain.request.CreateRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

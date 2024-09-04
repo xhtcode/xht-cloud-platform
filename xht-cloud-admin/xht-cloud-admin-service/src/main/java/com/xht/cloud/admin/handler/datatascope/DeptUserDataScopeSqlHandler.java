@@ -17,7 +17,7 @@ import com.xht.cloud.framework.mybatis.handler.dto.DataScopeDTO;
 import com.xht.cloud.framework.mybatis.tool.SqlGenerator;
 import com.xht.cloud.framework.security.domain.UserDetailsBO;
 import com.xht.cloud.framework.security.utils.SecurityContextUtil;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 

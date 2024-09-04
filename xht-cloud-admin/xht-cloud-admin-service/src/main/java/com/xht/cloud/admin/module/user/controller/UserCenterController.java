@@ -4,7 +4,7 @@ import com.xht.cloud.admin.api.user.dto.UserCenterResponse;
 import com.xht.cloud.admin.module.log.domain.response.SysLoginLogResponse;
 import com.xht.cloud.admin.module.user.domain.PassWordBO;
 import com.xht.cloud.admin.module.user.service.IUserCenterService;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import com.xht.cloud.framework.utils.treenode.INode;
 import com.xht.cloud.framework.utils.treenode.TreeNode;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.xht.cloud.framework.core.R.ok;
+import static com.xht.cloud.framework.domain.R.ok;
 
 /**
  * 描述 ：用户中心

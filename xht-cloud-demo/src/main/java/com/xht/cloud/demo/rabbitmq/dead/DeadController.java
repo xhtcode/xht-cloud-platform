@@ -1,7 +1,7 @@
 package com.xht.cloud.demo.rabbitmq.dead;
 
 import cn.hutool.core.date.DateUtil;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

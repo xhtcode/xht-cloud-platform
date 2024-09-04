@@ -8,7 +8,7 @@ import com.xht.cloud.framework.redis.service.RedisService;
 import com.xht.cloud.framework.security.exception.CaptchaException;
 import com.xht.cloud.framework.security.resource.captcha.CaptchaResult;
 import com.xht.cloud.framework.security.resource.captcha.ICaptchaService;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
@@ -48,11 +48,11 @@ public class CaptchaServiceImpl implements ICaptchaService {
     public void checkCaptcha(String uuid, String captcha) throws CaptchaException {
         String codeRedisKey = getCodeRedisKey(uuid);
         if (redisService.getExpire(codeRedisKey) < 0) {
-            throw new CaptchaException("验证码错误！");
+            throw new CaptchaException();
         }
         String o = (String) redisService.get(codeRedisKey);
         if (!Objects.equals(captcha, o)) {
-            throw new CaptchaException("验证码错误！");
+            throw new CaptchaException();
         }
     }
 

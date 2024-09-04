@@ -1,6 +1,6 @@
 package com.xht.cloud.auth.controller;
 
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import com.xht.cloud.framework.security.resource.captcha.CaptchaResult;
 import com.xht.cloud.framework.security.resource.captcha.ICaptchaService;
 import io.swagger.v3.oas.annotations.media.Schema;

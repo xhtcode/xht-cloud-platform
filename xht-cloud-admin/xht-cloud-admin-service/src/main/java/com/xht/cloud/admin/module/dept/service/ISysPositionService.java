@@ -4,7 +4,7 @@ import com.xht.cloud.admin.module.dept.domain.request.SysPositionCreateRequest;
 import com.xht.cloud.admin.module.dept.domain.request.SysPositionQueryRequest;
 import com.xht.cloud.admin.module.dept.domain.request.SysPositionUpdateRequest;
 import com.xht.cloud.admin.module.dept.domain.response.SysPositionResponse;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 
 import java.util.List;
 

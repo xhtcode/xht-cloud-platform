@@ -3,7 +3,7 @@ package com.xht.cloud.generate.module.table.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
 import com.xht.cloud.generate.constant.GenerateConstant;

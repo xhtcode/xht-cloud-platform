@@ -2,11 +2,11 @@ package com.xht.cloud.generate.module.filedisk.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.xht.cloud.framework.core.constant.StringConstant;
+import com.xht.cloud.framework.constant.StringConstant;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.mybatis.tool.SqlHelper;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import com.xht.cloud.generate.exception.GenerateException;
 import com.xht.cloud.generate.module.config.domain.dataobject.GenCodeConfigDO;
 import com.xht.cloud.generate.module.config.mapper.GenCodeConfigMapper;

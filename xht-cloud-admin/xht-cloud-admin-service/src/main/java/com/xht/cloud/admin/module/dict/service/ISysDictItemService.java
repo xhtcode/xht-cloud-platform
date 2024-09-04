@@ -6,7 +6,7 @@ import com.xht.cloud.admin.module.dict.domain.request.SysDictItemCreateRequest;
 import com.xht.cloud.admin.module.dict.domain.request.SysDictItemQueryRequest;
 import com.xht.cloud.admin.module.dict.domain.request.SysDictItemUpdateRequest;
 import com.xht.cloud.admin.module.dict.domain.response.SysDictItemResponse;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 
 import java.util.List;
 

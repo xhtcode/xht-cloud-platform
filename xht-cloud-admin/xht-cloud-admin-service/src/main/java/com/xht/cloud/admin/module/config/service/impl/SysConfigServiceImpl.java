@@ -10,7 +10,7 @@ import com.xht.cloud.admin.module.config.domain.request.SysConfigUpdateRequest;
 import com.xht.cloud.admin.module.config.domain.response.SysConfigResponse;
 import com.xht.cloud.admin.module.config.mapper.SysConfigMapper;
 import com.xht.cloud.admin.module.config.service.ISysConfigService;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.mybatis.tool.PageTool;

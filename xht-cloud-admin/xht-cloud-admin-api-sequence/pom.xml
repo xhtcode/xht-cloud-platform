@@ -27,7 +27,7 @@
         <!-- 核心工具类模块 -->
         <dependency>
             <groupId>com.xht.cloud.framework</groupId>
-            <artifactId>xht-cloud-framework-utils</artifactId>
+            <artifactId>xht-cloud-framework-core</artifactId>
         </dependency>
     </dependencies>
 </project>

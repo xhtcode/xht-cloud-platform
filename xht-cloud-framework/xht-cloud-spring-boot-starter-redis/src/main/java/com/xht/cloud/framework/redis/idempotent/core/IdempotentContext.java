@@ -1,8 +1,8 @@
 package com.xht.cloud.framework.redis.idempotent.core;
 
 import cn.hutool.core.collection.CollUtil;
-import com.google.common.collect.Maps;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -28,7 +28,7 @@ public class IdempotentContext {
     public static void put(String key, Object val) {
         Map<String, Object> context = get();
         if (CollUtil.isEmpty(context)) {
-            context = Maps.newHashMap();
+            context = new HashMap<>();
         }
         context.put(key, val);
         putContext(context);

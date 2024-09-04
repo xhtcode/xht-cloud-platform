@@ -1,6 +1,5 @@
 package com.xht.cloud.admin.api.log;
 
-import com.xht.cloud.framework.core.server.ServerConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -17,6 +16,5 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class LogClientAutoConfiguration {
 
     public LogClientAutoConfiguration() {
-        log.debug("[系统管理模块:{}]  日志 外部模块调用 注入", ServerConstants.XHT_CLOUD_ADMIN);
     }
 }

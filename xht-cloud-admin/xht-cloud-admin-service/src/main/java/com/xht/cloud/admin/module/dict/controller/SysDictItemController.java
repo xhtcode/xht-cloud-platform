@@ -8,9 +8,9 @@ import com.xht.cloud.admin.module.dict.domain.response.SysDictTypeResponse;
 import com.xht.cloud.admin.exceptions.DictException;
 import com.xht.cloud.admin.module.dict.service.ISysDictItemService;
 import com.xht.cloud.admin.module.dict.service.ISysDictTypeService;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.redis.idempotent.annotation.Idempotent;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import com.xht.cloud.framework.web.validation.group.Query;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 
-import static com.xht.cloud.framework.core.R.ok;
+import static com.xht.cloud.framework.domain.R.ok;
 
 /**
  * 描述 ：字典数据

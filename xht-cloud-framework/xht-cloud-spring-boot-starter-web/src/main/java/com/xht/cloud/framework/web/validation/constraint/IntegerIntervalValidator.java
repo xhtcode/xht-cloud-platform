@@ -1,6 +1,6 @@
 package com.xht.cloud.framework.web.validation.constraint;
 
-import com.xht.cloud.framework.exception.SysException;
+import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.web.validation.IntegerInterval;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -45,7 +45,7 @@ public class IntegerIntervalValidator implements ConstraintValidator<IntegerInte
 
     private void validateParameters() {
         if (max <= min) {
-            throw new SysException("【编码异常】 min 应该比 max 小");
+            throw new BizException("【编码异常】 min 应该比 max 小");
         }
     }
 }

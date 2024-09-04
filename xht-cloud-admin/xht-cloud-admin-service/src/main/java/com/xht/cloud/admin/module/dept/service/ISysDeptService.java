@@ -5,7 +5,7 @@ import com.xht.cloud.admin.module.dept.domain.request.SysDeptQueryRequest;
 import com.xht.cloud.admin.module.dept.domain.request.SysDeptUpdateRequest;
 import com.xht.cloud.admin.module.dept.domain.response.SysDeptResponse;
 import com.xht.cloud.admin.module.permissions.domain.dataobject.SysMenuDO;
-import com.xht.cloud.framework.core.domain.request.Request;
+import com.xht.cloud.framework.domain.request.Request;
 import com.xht.cloud.framework.utils.treenode.INode;
 
 import java.util.List;

@@ -12,14 +12,14 @@ import com.xht.cloud.admin.module.oauth2.domain.request.Oauth2RegisteredClientUp
 import com.xht.cloud.admin.module.oauth2.domain.response.Oauth2RegisteredClientResponse;
 import com.xht.cloud.admin.module.oauth2.mapper.Oauth2RegisteredClientMapper;
 import com.xht.cloud.admin.module.oauth2.service.IOauth2RegisteredClientService;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.mybatis.enums.DelFlagEnum;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
 import com.xht.cloud.framework.security.constant.SuperClientAutoApproveEnums;
 import com.xht.cloud.framework.security.utils.SecurityContextUtil;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;

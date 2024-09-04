@@ -21,7 +21,7 @@ import com.xht.cloud.admin.module.user.domain.response.RouterVo;
 import com.xht.cloud.admin.tool.ExceptionTool;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.security.utils.SecurityContextUtil;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import com.xht.cloud.framework.utils.treenode.INode;
 import com.xht.cloud.framework.utils.treenode.TreeNode;
 import com.xht.cloud.framework.utils.treenode.TreeUtils;

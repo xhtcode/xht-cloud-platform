@@ -20,7 +20,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import static com.xht.cloud.framework.exception.constant.UserErrorStatusCode.NO_LOGIN;
+import static com.xht.cloud.framework.exception.constant.UserErrorStatusCode.USER_CREDENTIALS_EXPIRED;
 
 /**
  * 描述 ：提供自定义OpaqueTokenIntrospector
@@ -52,7 +52,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
         }
         OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
         if (ObjectUtil.isNull(authorization)) {
-            throw OAuth2ExceptionUtils.throwError(NO_LOGIN);
+            throw OAuth2ExceptionUtils.throwError(USER_CREDENTIALS_EXPIRED);
         }
         OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
         Instant expiresAt = accessToken.getToken().getExpiresAt();
@@ -67,7 +67,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
             redisTemplate.opsForValue().set(userInfoKey, userDetail, expireTime - 5, TimeUnit.SECONDS);
             return userDetail;
         }
-        throw OAuth2ExceptionUtils.throwError(NO_LOGIN);
+        throw OAuth2ExceptionUtils.throwError(USER_CREDENTIALS_EXPIRED);
     }
 
 }

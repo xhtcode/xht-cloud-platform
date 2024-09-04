@@ -4,7 +4,7 @@ import com.xht.cloud.admin.module.config.domain.request.SysConfigCreateRequest;
 import com.xht.cloud.admin.module.config.domain.request.SysConfigQueryRequest;
 import com.xht.cloud.admin.module.config.domain.request.SysConfigUpdateRequest;
 import com.xht.cloud.admin.module.config.domain.response.SysConfigResponse;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 
 import java.util.List;
 

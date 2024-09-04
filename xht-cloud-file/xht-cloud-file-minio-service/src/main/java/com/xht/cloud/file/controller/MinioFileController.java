@@ -5,7 +5,7 @@ import com.xht.cloud.file.domain.request.ShardingUploadInitRequest;
 import com.xht.cloud.file.domain.request.ShardingUploadMergeRequest;
 import com.xht.cloud.file.domain.response.ShardingUploadResponse;
 import com.xht.cloud.file.service.IMinioFileService;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

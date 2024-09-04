@@ -1,6 +1,6 @@
 package com.xht.cloud.generate.module.database.service;
 
- import com.xht.cloud.framework.core.domain.response.PageResponse;
+ import com.xht.cloud.framework.domain.response.PageResponse;
  import com.xht.cloud.generate.module.database.domain.request.GenDatabaseCreateRequest;
  import com.xht.cloud.generate.module.database.domain.request.GenDatabaseQueryRequest;
  import com.xht.cloud.generate.module.database.domain.request.GenDatabaseUpdateRequest;

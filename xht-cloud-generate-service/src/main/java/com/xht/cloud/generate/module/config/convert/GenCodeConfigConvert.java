@@ -1,7 +1,7 @@
 package com.xht.cloud.generate.module.config.convert;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigCreateRequest;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigQueryRequest;

@@ -6,13 +6,13 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.xht.cloud.framework.core.domain.KeyValue;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.KeyValue;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.file.upload.UploadFileBO;
 import com.xht.cloud.framework.file.upload.helper.MultipartFileHelper;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import com.xht.cloud.generate.exception.GenerateException;
 import com.xht.cloud.generate.module.config.convert.GenCodeConfigConvert;
 import com.xht.cloud.generate.module.config.domain.dataobject.GenCodeConfigDO;
@@ -44,7 +44,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-import static com.xht.cloud.framework.core.constant.StringConstant.EMPTY_STR;
+import static com.xht.cloud.framework.constant.StringConstant.EMPTY_STR;
 import static com.xht.cloud.generate.constant.GenerateConstant.*;
 /**
  * 描述 ：代码生成器-配置中心
@@ -96,6 +96,7 @@ public class GenCodeConfigServiceImpl implements IGenCodeConfigService {
     @Transactional(rollbackFor = Exception.class)
     public void remove(List<String> ids) {
         genCodeConfigMapper.deleteBatchIds(ids);
+        fileDiskMapper.remove(fileDiskMapper.lambdaQuery().in(GenFileDiskDO::getConfigId,ids));
     }
 
     /**
@@ -177,13 +178,20 @@ public class GenCodeConfigServiceImpl implements IGenCodeConfigService {
         ZipInputStream zipInputStream = new ZipInputStream(inputStream);
         List<GenFileDiskDO> result = new ArrayList<>();
         Map<String, GenFileDiskDO> resultMap = new HashMap<>();
+        String rootPath = File.separator;
         try {
+            boolean first = true;
             ZipEntry nextEntry;
             while ((nextEntry = zipInputStream.getNextEntry()) != null) {
+
                 GenFileDiskDO genFileDiskDO = new GenFileDiskDO();
                 genFileDiskDO.setConfigId(codeConfigDO.getId());
                 String filePath = StrUtil.removeSuffix(StrUtil.addPrefixIfNot(nextEntry.getName(), PATH_SEPARATOR), PATH_SEPARATOR);
                 String codePath = getCodePath(filePath);
+                if (first) {
+                    rootPath = Paths.get(filePath).toString();
+                    first = false;
+                }
                 genFileDiskDO.setFileName(StringUtils.replace(FileUtil.getName(filePath), TEMPLATE_SUFFIX, EMPTY_STR));
                 genFileDiskDO.setFileDesc("暂无");
                 genFileDiskDO.setFileCodePath(StrUtil.removeSuffix(codePath, PATH_SEPARATOR + FileUtil.getName(filePath)));
@@ -199,8 +207,8 @@ public class GenCodeConfigServiceImpl implements IGenCodeConfigService {
             }
             Set<String> keys = resultMap.keySet();
             Map<String, List<Path>> pathListMap = buildHierarchy(keys);
-            genFileId(ROOT_FOLDER, File.separator, result, resultMap, pathListMap);
-            if (CollectionUtils.isEmpty(resultMap)) {
+            genFileId(ROOT_FOLDER, rootPath, result, resultMap, pathListMap);
+            if (CollectionUtils.isEmpty(result)) {
                 throw new GenerateException("文件列表解析错误，请确保根目录有两个文件以上！");
             }
             fileDiskMapper.saveBatch(result);

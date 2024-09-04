@@ -1,7 +1,7 @@
 package com.xht.cloud.generate.module.database.convert;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
 import com.xht.cloud.generate.module.database.domain.request.GenDatabaseCreateRequest;
 import com.xht.cloud.generate.module.database.domain.request.GenDatabaseQueryRequest;

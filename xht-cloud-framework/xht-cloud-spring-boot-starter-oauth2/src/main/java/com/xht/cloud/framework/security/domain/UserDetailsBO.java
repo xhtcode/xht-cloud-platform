@@ -6,7 +6,7 @@ import com.xht.cloud.admin.api.user.enums.DeptUserDataScopeEnum;
 import com.xht.cloud.admin.api.user.enums.SuperAdminUserEnums;
 import com.xht.cloud.admin.api.user.enums.UserStatusEnums;
 import com.xht.cloud.admin.api.user.enums.UserTypeEnums;
-import com.xht.cloud.framework.core.domain.Identifier;
+import com.xht.cloud.framework.domain.Identifier;
 import com.xht.cloud.framework.security.constant.SecurityConstant;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

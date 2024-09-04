@@ -1,7 +1,7 @@
 package com.xht.cloud.admin.module.dict.domain.response;
 
 import com.xht.cloud.admin.api.dict.enums.DictStatusEnums;
-import com.xht.cloud.framework.core.domain.response.Response;
+import com.xht.cloud.framework.domain.response.Response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

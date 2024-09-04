@@ -1,7 +1,7 @@
 package com.xht.cloud.admin.module.dept.domain.response;
 
 import com.xht.cloud.admin.enums.DeptStatusEnums;
-import com.xht.cloud.framework.core.domain.response.Response;
+import com.xht.cloud.framework.domain.response.Response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

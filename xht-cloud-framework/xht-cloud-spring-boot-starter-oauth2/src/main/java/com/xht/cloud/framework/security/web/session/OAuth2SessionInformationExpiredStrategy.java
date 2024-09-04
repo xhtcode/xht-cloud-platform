@@ -1,7 +1,7 @@
 package com.xht.cloud.framework.security.web.session;
 
-import com.xht.cloud.framework.core.R;
-import com.xht.cloud.framework.utils.web.HttpServletUtils;
+import com.xht.cloud.framework.domain.R;
+import com.xht.cloud.framework.web.HttpServletUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;

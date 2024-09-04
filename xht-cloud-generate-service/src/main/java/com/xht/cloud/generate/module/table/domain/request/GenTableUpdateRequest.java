@@ -1,7 +1,7 @@
 package com.xht.cloud.generate.module.table.domain.request;
 
 
-import com.xht.cloud.framework.core.domain.request.IUpdateRequestFun;
+import com.xht.cloud.framework.domain.request.IUpdateRequestFun;
 import com.xht.cloud.generate.module.column.domain.request.GenTableColumnUpdateRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

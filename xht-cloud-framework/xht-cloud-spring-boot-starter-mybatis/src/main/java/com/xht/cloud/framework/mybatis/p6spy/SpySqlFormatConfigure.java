@@ -1,7 +1,7 @@
 package com.xht.cloud.framework.mybatis.p6spy;
 
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
-import com.xht.cloud.framework.core.trace.TraceIdUtils;
+import com.xht.cloud.framework.utils.trace.TraceIdUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**

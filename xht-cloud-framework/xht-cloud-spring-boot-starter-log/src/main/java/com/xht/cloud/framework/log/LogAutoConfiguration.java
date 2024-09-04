@@ -1,12 +1,10 @@
 package com.xht.cloud.framework.log;
 
 import com.xht.cloud.admin.api.log.feign.OperationLogClient;
-import com.xht.cloud.framework.core.constant.SpringPropertiesNameConstant;
 import com.xht.cloud.framework.log.aspect.OperationLogAspect;
 import com.xht.cloud.framework.log.filter.LogHttpFilter;
 import jakarta.servlet.DispatcherType;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -36,7 +34,7 @@ public class LogAutoConfiguration {
 
     @Bean
     @ConditionalOnBean(value = OperationLogClient.class)
-    public OperationLogAspect operationLogAspect(@Value(value = SpringPropertiesNameConstant.SPRING_APPLICATION_KEY_SPEL) String applicationName, OperationLogClient operationLogClient) {
-        return new OperationLogAspect(applicationName, operationLogClient);
+    public OperationLogAspect operationLogAspect(OperationLogClient operationLogClient) {
+        return new OperationLogAspect(operationLogClient);
     }
 }

@@ -1,7 +1,7 @@
 package com.xht.cloud.generate.module.filedisk.controller;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import com.xht.cloud.framework.utils.treenode.INode;
 import com.xht.cloud.framework.utils.treenode.TreeNode;
 import com.xht.cloud.framework.utils.treenode.TreeUtils;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.xht.cloud.framework.core.R.ok;
+import static com.xht.cloud.framework.domain.R.ok;
 
 /**
  * 文件管理

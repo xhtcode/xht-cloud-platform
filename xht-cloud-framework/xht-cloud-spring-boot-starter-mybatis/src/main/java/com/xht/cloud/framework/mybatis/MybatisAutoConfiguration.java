@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import com.xht.cloud.framework.core.developer.SuperSystemStatus;
 import com.xht.cloud.framework.mybatis.enums.DelFlagEnum;
 import com.xht.cloud.framework.security.utils.SecurityContextUtil;
 import lombok.RequiredArgsConstructor;
@@ -62,7 +61,6 @@ public class MybatisAutoConfiguration {
                 this.strictInsertFill(metaObject, "updateTime", LocalDateTime::now, LocalDateTime.class);
                 this.strictInsertFill(metaObject, "updateBy", SecurityContextUtil::getUserAccount, String.class);
                 this.strictInsertFill(metaObject, "delFlag", () -> DelFlagEnum.NORMAL, DelFlagEnum.class);
-                this.strictInsertFill(metaObject, "system_status", () -> SuperSystemStatus.NO, SuperSystemStatus.class);
             }
 
 
@@ -86,7 +84,6 @@ public class MybatisAutoConfiguration {
                 this.strictInsertFill(metaObject, "updateTime", LocalDateTime::now, LocalDateTime.class);
                 this.strictInsertFill(metaObject, "updateBy", () -> "anonymity", String.class);
                 this.strictInsertFill(metaObject, "delFlag", () -> DelFlagEnum.NORMAL, DelFlagEnum.class);
-                this.strictInsertFill(metaObject, "system_status", () -> SuperSystemStatus.NO, SuperSystemStatus.class);
             }
 
             @Override

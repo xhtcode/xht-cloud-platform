@@ -5,6 +5,7 @@ package com.xht.cloud.framework.core;
  *
  * @author : 小糊涂
  **/
+@SuppressWarnings("unused")
 public interface Ordered {
 
     /**

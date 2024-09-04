@@ -7,7 +7,7 @@ import com.xht.cloud.framework.file.constant.FileTypeConstant;
 import com.xht.cloud.framework.file.domain.FileType;
 import com.xht.cloud.framework.file.factory.FileTypeFactory;
 import com.xht.cloud.framework.file.utils.DataSizeUtils;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import jakarta.servlet.http.Part;
 import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;

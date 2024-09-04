@@ -9,7 +9,7 @@ import com.xht.cloud.admin.module.user.mapper.SysUserAdminMapper;
 import com.xht.cloud.framework.mybatis.dao.BaseDaoImpl;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
 import com.xht.cloud.framework.mybatis.tool.SqlHelper;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 

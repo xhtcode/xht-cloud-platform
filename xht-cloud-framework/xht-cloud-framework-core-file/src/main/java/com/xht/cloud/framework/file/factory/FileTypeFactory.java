@@ -3,7 +3,7 @@ package com.xht.cloud.framework.file.factory;
 import com.xht.cloud.framework.exception.SysException;
 import com.xht.cloud.framework.file.constant.FileTypeConstant;
 import com.xht.cloud.framework.file.domain.FileType;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

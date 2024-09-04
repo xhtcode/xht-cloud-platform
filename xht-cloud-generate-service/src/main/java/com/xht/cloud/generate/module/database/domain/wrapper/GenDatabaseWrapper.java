@@ -3,7 +3,7 @@ package com.xht.cloud.generate.module.database.domain.wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.xht.cloud.framework.mybatis.wrapper.EntityWrapper;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import com.xht.cloud.generate.module.database.domain.dataobject.GenDatabaseDO;
 import org.springframework.util.ObjectUtils;
 

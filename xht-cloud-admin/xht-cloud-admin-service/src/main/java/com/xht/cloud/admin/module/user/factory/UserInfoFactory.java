@@ -4,7 +4,6 @@ import com.xht.cloud.admin.api.user.enums.UserTypeEnums;
 import com.xht.cloud.admin.module.user.strategy.AbstractUserInfoStrategy;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.exception.constant.GlobalErrorStatusCode;
-import com.xht.cloud.framework.exception.constant.UserErrorStatusCode;
 import com.xht.cloud.framework.mybatis.dataobject.BaseDO;
 
 import java.util.HashMap;
@@ -40,9 +39,9 @@ public final class UserInfoFactory {
      * @return 策略执行器
      */
     public static AbstractUserInfoStrategy<? extends BaseDO> getStrategyNoNull(UserTypeEnums userTypeEnums) {
-        Assert.notNull(userTypeEnums, GlobalErrorStatusCode.PARAMS_ERROR);
+        Assert.notNull(userTypeEnums, GlobalErrorStatusCode.PARAM_INVALID);
         AbstractUserInfoStrategy<? extends BaseDO> strategy = USER_INFO_STRATEGY_MAP.get(userTypeEnums.getValue());
-        Assert.notNull(strategy, UserErrorStatusCode.SYSTEM_ERROR);
+        Assert.notNull(strategy, GlobalErrorStatusCode.ERROR);
         return strategy;
     }
 }

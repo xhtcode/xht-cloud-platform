@@ -8,7 +8,7 @@ import com.xht.cloud.demo.pojo.vo.PersonalInfoVo;
 import com.xht.cloud.demo.service.SegmentService;
 import com.xht.cloud.demo.websocket.GlobalWebsocket;
 import com.xht.cloud.demo.websocket.WebSocket;
-import com.xht.cloud.framework.core.R;
+import com.xht.cloud.framework.domain.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

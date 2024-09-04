@@ -1,6 +1,6 @@
 package com.xht.cloud.generate.module.database.domain.request;
 
-import com.xht.cloud.framework.core.domain.request.CreateRequest;
+import com.xht.cloud.framework.domain.request.CreateRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

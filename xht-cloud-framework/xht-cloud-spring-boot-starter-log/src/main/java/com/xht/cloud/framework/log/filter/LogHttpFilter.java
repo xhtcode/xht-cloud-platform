@@ -1,9 +1,9 @@
 package com.xht.cloud.framework.log.filter;
 
-import com.xht.cloud.framework.core.constant.LogConstant;
+import com.xht.cloud.framework.constant.LogConstant;
 import com.xht.cloud.framework.core.rpc.RpcConstants;
-import com.xht.cloud.framework.core.trace.TraceIdUtils;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.trace.TraceIdUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpFilter;

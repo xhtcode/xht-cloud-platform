@@ -3,9 +3,8 @@ package com.xht.cloud.admin.api.dict.feign;
 import com.xht.cloud.admin.api.dict.dto.SysDictItemDTO;
 import com.xht.cloud.admin.api.dict.enums.CommonDictTypeEnums;
 import com.xht.cloud.admin.api.dict.enums.DictStatusEnums;
-import com.xht.cloud.framework.core.server.ServerConstants;
+import com.xht.cloud.framework.domain.R;
 import com.xht.cloud.framework.exception.Assert;
-import com.xht.cloud.framework.core.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +16,7 @@ import java.util.List;
  *
  * @author 小糊涂
  **/
-@FeignClient(value = ServerConstants.XHT_CLOUD_ADMIN, contextId = "sysDictClient")
+@FeignClient(value = "xht-cloud-admin-service", contextId = "sysDictClient")
 public interface SysDictClient {
 
     default R<List<SysDictItemDTO>> getSysDictByDictType(CommonDictTypeEnums commonDictType) {

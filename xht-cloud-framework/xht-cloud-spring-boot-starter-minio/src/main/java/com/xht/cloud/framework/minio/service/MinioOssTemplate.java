@@ -21,7 +21,7 @@ import com.xht.cloud.framework.file.upload.UploadFileBO;
 import com.xht.cloud.framework.minio.client.CustomMinioClient;
 import com.xht.cloud.framework.minio.convert.MethodConvert;
 import com.xht.cloud.framework.minio.convert.MinioBucketConvertImpl;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;

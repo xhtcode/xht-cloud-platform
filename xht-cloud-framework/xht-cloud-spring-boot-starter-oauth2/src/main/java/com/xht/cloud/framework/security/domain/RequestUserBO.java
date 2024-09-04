@@ -9,7 +9,7 @@ import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.security.constant.SecurityConstant;
 import com.xht.cloud.framework.security.resource.captcha.ICaptchaService;
 import com.xht.cloud.framework.utils.spring.SpringContextUtil;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

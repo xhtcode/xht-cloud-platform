@@ -1,7 +1,7 @@
 package com.xht.cloud.generate.module.column.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
 import com.xht.cloud.generate.module.column.convert.GenTableColumnConvert;
 import com.xht.cloud.generate.module.column.domain.dataobject.GenTableColumnDO;

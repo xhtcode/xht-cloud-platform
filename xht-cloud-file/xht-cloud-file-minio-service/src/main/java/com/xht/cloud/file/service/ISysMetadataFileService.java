@@ -3,7 +3,7 @@ package com.xht.cloud.file.service;
 import com.xht.cloud.file.domain.request.SysMetadataFileQueryRequest;
 import com.xht.cloud.file.domain.response.SysMetadataFileResponse;
 import com.xht.cloud.file.enums.FileStatusEnums;
-import com.xht.cloud.framework.core.domain.response.PageResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 
 /**
  * 描述 ：文件元数据信息

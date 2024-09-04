@@ -1,7 +1,7 @@
 package com.xht.cloud.admin.module.permissions.domain.request;
 
 import com.xht.cloud.admin.api.user.enums.DeptUserDataScopeEnum;
-import com.xht.cloud.framework.core.domain.request.PageQueryRequest;
+import com.xht.cloud.framework.domain.request.PageQueryRequest;
 import com.xht.cloud.framework.web.validation.IntegerInterval;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

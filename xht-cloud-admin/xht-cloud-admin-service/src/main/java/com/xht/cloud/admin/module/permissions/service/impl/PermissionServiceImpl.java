@@ -16,7 +16,7 @@ import com.xht.cloud.admin.module.permissions.service.IPermissionService;
 import com.xht.cloud.admin.module.user.domain.dataobject.SysUserStaffDO;
 import com.xht.cloud.admin.module.user.mapper.SysUserStaffMapper;
 import com.xht.cloud.admin.tool.ExceptionTool;
-import com.xht.cloud.framework.utils.support.StringUtils;
+import com.xht.cloud.framework.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

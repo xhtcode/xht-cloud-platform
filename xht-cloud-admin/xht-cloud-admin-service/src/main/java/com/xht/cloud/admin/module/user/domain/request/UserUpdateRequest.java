@@ -2,7 +2,7 @@ package com.xht.cloud.admin.module.user.domain.request;
 
 import com.xht.cloud.admin.api.user.enums.UserSexEnums;
 import com.xht.cloud.admin.api.user.enums.UserStatusEnums;
-import com.xht.cloud.framework.core.domain.request.IUpdateRequestFun;
+import com.xht.cloud.framework.domain.request.IUpdateRequestFun;
 import com.xht.cloud.framework.web.validation.TelephoneNumber;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
