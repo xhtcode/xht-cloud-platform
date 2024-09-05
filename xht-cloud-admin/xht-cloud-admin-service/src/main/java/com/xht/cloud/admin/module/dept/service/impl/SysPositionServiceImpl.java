@@ -2,15 +2,14 @@ package com.xht.cloud.admin.module.dept.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.admin.module.dept.convert.SysPositionConvert;
+import com.xht.cloud.admin.module.dept.dao.SysPositionDao;
 import com.xht.cloud.admin.module.dept.domain.dataobject.SysPositionDO;
 import com.xht.cloud.admin.module.dept.domain.request.SysPositionCreateRequest;
 import com.xht.cloud.admin.module.dept.domain.request.SysPositionQueryRequest;
 import com.xht.cloud.admin.module.dept.domain.request.SysPositionUpdateRequest;
 import com.xht.cloud.admin.module.dept.domain.response.SysPositionResponse;
-import com.xht.cloud.admin.module.dept.mapper.SysPositionMapper;
 import com.xht.cloud.admin.module.dept.service.ISysPositionService;
 import com.xht.cloud.framework.domain.response.PageResponse;
-import com.xht.cloud.framework.mybatis.tool.PageTool;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SysPositionServiceImpl implements ISysPositionService {
 
-    private final SysPositionMapper sysPositionMapper;
+    private final SysPositionDao sysPositionDao;
 
     private final SysPositionConvert sysPositionConvert;
 
@@ -42,7 +41,7 @@ public class SysPositionServiceImpl implements ISysPositionService {
     @Transactional(rollbackFor = Exception.class)
     public String create(SysPositionCreateRequest createRequest) {
         SysPositionDO entity = sysPositionConvert.toDO(createRequest);
-        sysPositionMapper.insert(entity);
+        sysPositionDao.save(entity);
         return entity.getId();
     }
 
@@ -54,7 +53,7 @@ public class SysPositionServiceImpl implements ISysPositionService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(SysPositionUpdateRequest updateRequest) {
-        sysPositionMapper.updateById(sysPositionConvert.toDO(updateRequest));
+        sysPositionDao.updateById(sysPositionConvert.toDO(updateRequest));
     }
 
     /**
@@ -65,7 +64,7 @@ public class SysPositionServiceImpl implements ISysPositionService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void remove(List<String> ids) {
-        sysPositionMapper.deleteBatchIds(ids);
+        sysPositionDao.removeBatchByIds(ids);
     }
 
     /**
@@ -76,7 +75,7 @@ public class SysPositionServiceImpl implements ISysPositionService {
      */
     @Override
     public SysPositionResponse findById(String id) {
-        return sysPositionConvert.toResponse(sysPositionMapper.findById(id).orElse(null));
+        return sysPositionConvert.toResponse(sysPositionDao.getById(id));
     }
 
     /**
@@ -87,8 +86,7 @@ public class SysPositionServiceImpl implements ISysPositionService {
      */
     @Override
     public PageResponse<SysPositionResponse> findPage(SysPositionQueryRequest queryRequest) {
-        IPage<SysPositionDO> sysPositionIPage = sysPositionMapper.selectPage(PageTool.getPage(queryRequest),
-                sysPositionConvert.lambdaQuery(sysPositionConvert.toDO(queryRequest)));
+        IPage<SysPositionDO> sysPositionIPage = sysPositionDao.pageQueryRequest(queryRequest);
         return sysPositionConvert.toPageResponse(sysPositionIPage);
     }
 

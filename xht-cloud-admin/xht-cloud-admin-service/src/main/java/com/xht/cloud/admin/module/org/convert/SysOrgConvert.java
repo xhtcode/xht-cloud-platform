@@ -14,6 +14,6 @@ import org.mapstruct.Mapper;
  * @author 小糊涂
  */
 @Mapper(componentModel = "spring")
-public interface SysOrgConvert extends IBaseConvert<SysOrgCreateRequest, SysOrgUpdateRequest, SysOrgQueryRequest, SysOrgResponse, SysOrgDO> {
+public interface SysOrgConvert extends IBaseConvert<SysOrgCreateRequest, SysOrgUpdateRequest, SysOrgResponse, SysOrgDO> {
 
 }

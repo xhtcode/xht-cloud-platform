@@ -1,6 +1,5 @@
 package com.xht.cloud.admin.module.dict.domain.request;
 
-import com.xht.cloud.framework.domain.request.IUpdateRequestFun;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -12,7 +11,7 @@ import lombok.Data;
  **/
 @Data
 @Schema(name = "SysDictRequest(字典-修改请求信息)")
-public class SysDictTypeUpdateRequest extends SysDictTypeCreateRequest implements IUpdateRequestFun<String> {
+public class SysDictTypeUpdateRequest extends SysDictTypeCreateRequest  {
 
     /**
      * Id
@@ -21,12 +20,4 @@ public class SysDictTypeUpdateRequest extends SysDictTypeCreateRequest implement
     @NotBlank(message = "Id `id` 不能为空")
     private String id;
 
-
-    /**
-     * 获取主键
-     */
-    @Override
-    public String getPkId() {
-        return this.id;
-    }
 }

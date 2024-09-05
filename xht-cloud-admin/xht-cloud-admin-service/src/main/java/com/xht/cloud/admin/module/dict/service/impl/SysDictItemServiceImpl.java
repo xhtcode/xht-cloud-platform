@@ -1,26 +1,22 @@
 package com.xht.cloud.admin.module.dict.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.admin.api.dict.dto.SysDictItemDTO;
 import com.xht.cloud.admin.api.dict.enums.DictStatusEnums;
 import com.xht.cloud.admin.exceptions.DictException;
 import com.xht.cloud.admin.module.dict.convert.SysDictItemConvert;
 import com.xht.cloud.admin.module.dict.convert.SysDictTypeConvert;
+import com.xht.cloud.admin.module.dict.dao.SysDictItemDao;
+import com.xht.cloud.admin.module.dict.dao.SysDictTypeDao;
 import com.xht.cloud.admin.module.dict.domain.dataobject.SysDictItemDO;
 import com.xht.cloud.admin.module.dict.domain.dataobject.SysDictTypeDO;
 import com.xht.cloud.admin.module.dict.domain.request.SysDictItemCreateRequest;
 import com.xht.cloud.admin.module.dict.domain.request.SysDictItemQueryRequest;
 import com.xht.cloud.admin.module.dict.domain.request.SysDictItemUpdateRequest;
 import com.xht.cloud.admin.module.dict.domain.response.SysDictItemResponse;
-import com.xht.cloud.admin.module.dict.mapper.SysDictItemMapper;
-import com.xht.cloud.admin.module.dict.mapper.SysDictTypeMapper;
 import com.xht.cloud.admin.module.dict.service.ISysDictItemService;
 import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
-import com.xht.cloud.framework.exception.BizException;
-import com.xht.cloud.framework.mybatis.tool.PageTool;
-import com.xht.cloud.framework.mybatis.tool.SqlHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -39,11 +35,11 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class SysDictItemServiceImpl implements ISysDictItemService {
 
+    private final SysDictTypeDao sysDictTypeDao;
+
+    private final SysDictItemDao sysDictItemDao;
+
     private final SysDictTypeConvert sysDictTypeConvert;
-
-    private final SysDictTypeMapper sysDictTypeMapper;
-
-    private final SysDictItemMapper sysDictItemMapper;
 
     private final SysDictItemConvert sysDictItemConvert;
 
@@ -56,23 +52,16 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public String create(SysDictItemCreateRequest createRequest) {
-        // @formatter:off
         Assert.notNull(createRequest, "字典数据添加信息不能为空");
         Assert.notNull(createRequest.getDictId(), "字典数据添加类型id不能为空");
         SysDictTypeDO dictTypeByDictId = getDictTypeByDictId(createRequest.getDictId());
-        LambdaQueryWrapper<SysDictItemDO> wrapper = sysDictItemConvert
-                .lambdaQuery()
-                .eq(SysDictItemDO::getDictId, createRequest.getDictId())
-                .eq(SysDictItemDO::getDictCode, createRequest.getDictCode());
-        Long selectCount = sysDictItemMapper.selectCount(wrapper);
-        if (Objects.nonNull(selectCount)) {
-            throw new DictException(String.format("字典编码`%s`已存在，添加失败", createRequest.getDictCode()));
+        if (sysDictItemDao.exists(createRequest.getDictId(), createRequest.getDictCode())) {
+            throw new DictException("字典编码`%s`已存在，添加失败", createRequest.getDictCode());
         }
         SysDictItemDO entity = sysDictItemConvert.toDO(createRequest);
         entity.setDictType(dictTypeByDictId.getDictType());
-        sysDictItemMapper.insert(entity);
+        sysDictItemDao.save(entity);
         return entity.getId();
-        // @formatter:on
     }
 
     /**
@@ -86,37 +75,26 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
         // @formatter:off
         Assert.notNull(updateRequest, "字典数据修改信息不能为空");
         Assert.notNull(updateRequest.getDictId(), "字典数据添加类型id不能为空");
-        Assert.notNull(updateRequest.getPkId(), "字典数据修改信息id不能为空");
+        Assert.notNull(updateRequest.getId(), "字典数据修改信息id不能为空");
         SysDictTypeDO dictTypeByDictId = getDictTypeByDictId(updateRequest.getDictId());
-        LambdaQueryWrapper<SysDictItemDO> lambdaQueryWrapper = sysDictItemConvert.lambdaQuery()
-                .select(
-                        SysDictItemDO::getId
-                )
-                .eq(SysDictItemDO::getId, updateRequest.getId());
-        SysDictItemDO sysDictItemDO = sysDictItemMapper.selectOne(lambdaQueryWrapper);
-        if (Objects.isNull(sysDictItemDO)) {
-            throw new BizException("字典数据息查询不到");
-        }
-        LambdaQueryWrapper<SysDictItemDO> wrapper = sysDictItemConvert
-                .lambdaQuery()
+        LambdaQueryWrapper<SysDictItemDO> wrapper =new  LambdaQueryWrapper<SysDictItemDO>()
                 .eq(SysDictItemDO::getDictId, updateRequest.getDictId())
                 .eq(SysDictItemDO::getDictCode, updateRequest.getDictCode())
                 .ne(SysDictItemDO::getId, updateRequest.getId());
-        Long dictCount = sysDictItemMapper.selectCount(wrapper);
-        if (dictCount > 1) {
+        if (sysDictItemDao.exists(wrapper)) {
             throw new DictException(String.format("字典编码`%s`已存在，添加失败", updateRequest.getDictCode()));
         }
         SysDictItemDO itemDO = sysDictItemConvert.toDO(updateRequest);
         itemDO.setDictType(dictTypeByDictId.getDictType());
-        sysDictItemMapper.updateById(itemDO);
+        sysDictItemDao.updateById(itemDO);
         // @formatter:on
     }
 
     private SysDictTypeDO getDictTypeByDictId(String dictId) {
-        LambdaQueryWrapper<SysDictTypeDO> queryWrapper = sysDictTypeConvert.lambdaQuery()
+        LambdaQueryWrapper<SysDictTypeDO> queryWrapper = new  LambdaQueryWrapper<SysDictTypeDO>()
                 .select(SysDictTypeDO::getId, SysDictTypeDO::getDictType)
                 .eq(SysDictTypeDO::getId, dictId);
-        SysDictTypeDO sysDictTypeDO = sysDictTypeMapper.selectOne(queryWrapper);
+        SysDictTypeDO sysDictTypeDO = sysDictTypeDao.getOne(queryWrapper);
         if (Objects.isNull(sysDictTypeDO)) {
             throw new DictException("查询不到相对应的字典类型");
         }
@@ -131,10 +109,8 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void remove(List<String> ids) {
-        // @formatter:off
-        Assert.notEmpty(ids, "系统配置信息ids不能为空");
-        sysDictItemMapper.deleteBatchIds(ids);
-        // @formatter:on
+        Assert.notEmpty(ids, "删除信息错误!");
+        sysDictItemDao.removeBatchByIds(ids);
     }
 
     /**
@@ -145,7 +121,7 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
      */
     @Override
     public SysDictItemResponse findById(String id) {
-        return sysDictItemConvert.toResponse(sysDictItemMapper.findById(id).orElse(null));
+        return sysDictItemConvert.toResponse(sysDictItemDao.getById(id));
     }
 
     /**
@@ -156,9 +132,7 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
      */
     @Override
     public PageResponse<SysDictItemResponse> findPage(SysDictItemQueryRequest queryRequest) {
-        IPage<SysDictItemDO> sysDictItemIPage = sysDictItemMapper
-                .selectPage(PageTool.getPage(queryRequest), sysDictItemConvert.lambdaQuery(sysDictItemConvert.toDO(queryRequest)));
-        return sysDictItemConvert.toPageResponse(sysDictItemIPage);
+        return sysDictItemConvert.toPageResponse(sysDictItemDao.pageQueryRequest(queryRequest));
     }
 
     /**
@@ -169,8 +143,7 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
      */
     @Override
     public List<SysDictItemResponse> findByDictId(String dictId) {
-        LambdaQueryWrapper<SysDictItemDO> wrapper = sysDictItemConvert.lambdaQuery().eq(SysDictItemDO::getDictId, dictId);
-        return sysDictItemConvert.toResponse(sysDictItemMapper.selectList(wrapper));
+        return sysDictItemConvert.toResponse(sysDictItemDao.selectListByDictId(dictId));
     }
 
     /**
@@ -184,14 +157,13 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
     public List<SysDictItemDTO> findByDictType(String dictType, DictStatusEnums dictStatus) {
         Assert.hasText(dictType, "字典类型不能为空");
         Assert.notNull(dictStatus, "字典状态不能为空");
-        if (!SqlHelper.exist(sysDictTypeMapper.selectCount(SysDictTypeDO::getDictType, dictType))) {
-            throw new DictException("查询不到相对应的字典类型");
+        if (sysDictTypeDao.existByDictType(dictType, null)) {
+            throw new DictException("查询不到相对应的字典类型:{}", dictType);
         }
-        LambdaQueryWrapper<SysDictItemDO> wrapper =
-                sysDictItemConvert.lambdaQuery()
-                        .eq(SysDictItemDO::getDictType, dictType)
-                        .eq(!Objects.equals(DictStatusEnums.ALL, dictStatus), SysDictItemDO::getDictStatus, dictStatus);
-        List<SysDictItemDO> sysDictItemDOS = sysDictItemMapper.selectList(wrapper);
+        LambdaQueryWrapper<SysDictItemDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysDictItemDO::getDictType, dictType)
+                .eq(!Objects.equals(DictStatusEnums.ALL, dictStatus), SysDictItemDO::getDictStatus, dictStatus);
+        List<SysDictItemDO> sysDictItemDOS = sysDictItemDao.list(wrapper);
         return sysDictItemConvert.toDTO(sysDictItemDOS);
     }
 

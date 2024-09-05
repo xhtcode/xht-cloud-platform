@@ -10,6 +10,6 @@ import java.io.Serializable;
  * @author 小糊涂
  **/
 @Schema(description = "公共修改请求实体")
-public abstract class UpdateRequest<T extends Serializable> extends Request implements IUpdateRequestFun<T>, Serializable {
+public abstract class UpdateRequest extends Request implements Serializable {
 
 }

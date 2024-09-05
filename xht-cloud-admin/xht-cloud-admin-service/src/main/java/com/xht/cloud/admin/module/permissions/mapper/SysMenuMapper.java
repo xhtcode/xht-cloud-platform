@@ -1,6 +1,7 @@
 package com.xht.cloud.admin.module.permissions.mapper;
 
 import com.xht.cloud.admin.module.permissions.domain.dataobject.SysMenuDO;
+import com.xht.cloud.admin.module.permissions.domain.response.SysMenuResponse;
 import com.xht.cloud.framework.mybatis.mapper.BaseMapperX;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,6 +27,13 @@ public interface SysMenuMapper extends BaseMapperX<SysMenuDO> {
      */
     List<SysMenuDO> findChildByMenuIdAndMenuStatus(@Param("menuId") String menuId, @Param("menuStatus") String menuStatus);
 
+    /**
+     * 根据用户名还有菜单类型查询菜单
+     *
+     * @param userId        用户id
+     * @param list 菜单类型
+     * @return {@link SysMenuResponse} 菜单数据
+     */
     List<SysMenuDO> selectByUserIdAndMenuType(@Param("userId") String userId, @Param("menuTypes") List<String> menuTypeEnums);
 
     Set<String> selectMenuAuthorityByUserId(@Param("userId") Serializable userId);

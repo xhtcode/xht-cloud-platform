@@ -1,8 +1,6 @@
 package com.xht.cloud.framework.mybatis.convert;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.xht.cloud.framework.domain.request.IUpdateRequestFun;
-import com.xht.cloud.framework.domain.request.PageQueryRequest;
 import com.xht.cloud.framework.domain.request.Request;
 import com.xht.cloud.framework.domain.response.AbstractResponse;
 import com.xht.cloud.framework.domain.response.PageResponse;
@@ -21,7 +19,7 @@ import java.util.Objects;
  *
  * @author 小糊涂
  **/
-public interface IBaseConvert<CreateReq extends Request, UpdateReq extends IUpdateRequestFun<?>, PageReq extends PageQueryRequest, Res extends AbstractResponse, DO extends AbstractDO> {
+public interface IBaseConvert<CreateReq extends Request, UpdateReq extends Object, Res extends AbstractResponse, DO extends AbstractDO> {
 
     /**
      * {@link CreateReq} to {@link DO}
@@ -36,13 +34,7 @@ public interface IBaseConvert<CreateReq extends Request, UpdateReq extends IUpda
     DO toDO(UpdateReq updateRequest);
 
     /**
-     * {@link PageReq} to {@link DO}
-     */
-    @Named(value = "queryRequestToDo")
-    DO toDO(PageReq queryRequest);
-
-    /**
-     * {@link DO} to {@link PageReq}
+     * {@link DO} to {@link Res}
      */
     @Named(value = "DoToResponse")
     Res toResponse(DO dataBaseDO);

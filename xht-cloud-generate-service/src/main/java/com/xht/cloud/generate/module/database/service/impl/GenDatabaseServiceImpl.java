@@ -2,15 +2,13 @@ package com.xht.cloud.generate.module.database.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.framework.domain.response.PageResponse;
-import com.xht.cloud.framework.mybatis.tool.PageTool;
 import com.xht.cloud.generate.module.database.convert.GenDatabaseConvert;
+import com.xht.cloud.generate.module.database.dao.GenDatabaseDao;
 import com.xht.cloud.generate.module.database.domain.dataobject.GenDatabaseDO;
 import com.xht.cloud.generate.module.database.domain.request.GenDatabaseCreateRequest;
 import com.xht.cloud.generate.module.database.domain.request.GenDatabaseQueryRequest;
 import com.xht.cloud.generate.module.database.domain.request.GenDatabaseUpdateRequest;
 import com.xht.cloud.generate.module.database.domain.response.GenDatabaseResponse;
-import com.xht.cloud.generate.module.database.domain.wrapper.GenDatabaseWrapper;
-import com.xht.cloud.generate.module.database.mapper.GenDatabaseMapper;
 import com.xht.cloud.generate.module.database.service.IGenDatabaseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GenDatabaseServiceImpl implements IGenDatabaseService {
 
-    private final GenDatabaseMapper genDatabaseMapper;
+    private final GenDatabaseDao genDatabaseDao;
 
     private final GenDatabaseConvert genDatabaseConvert;
 
@@ -43,7 +41,7 @@ public class GenDatabaseServiceImpl implements IGenDatabaseService {
     @Transactional(rollbackFor = Exception.class)
     public Long create(GenDatabaseCreateRequest createRequest) {
         GenDatabaseDO entity = genDatabaseConvert.toDO(createRequest);
-        genDatabaseMapper.insert(entity);
+        genDatabaseDao.save(entity);
         return entity.getId();
     }
 
@@ -55,7 +53,7 @@ public class GenDatabaseServiceImpl implements IGenDatabaseService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(GenDatabaseUpdateRequest updateRequest) {
-        genDatabaseMapper.updateById(genDatabaseConvert.toDO(updateRequest));
+        genDatabaseDao.updateById(genDatabaseConvert.toDO(updateRequest));
     }
 
     /**
@@ -66,7 +64,7 @@ public class GenDatabaseServiceImpl implements IGenDatabaseService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void remove(List<String> ids) {
-        genDatabaseMapper.deleteBatchIds(ids);
+        genDatabaseDao.removeBatchByIds(ids);
     }
 
     /**
@@ -77,7 +75,7 @@ public class GenDatabaseServiceImpl implements IGenDatabaseService {
      */
     @Override
     public GenDatabaseResponse findById(String id) {
-        return genDatabaseConvert.toResponse(genDatabaseMapper.findById(id).orElse(null));
+        return genDatabaseConvert.toResponse(genDatabaseDao.getById(id));
     }
 
     /**
@@ -88,7 +86,7 @@ public class GenDatabaseServiceImpl implements IGenDatabaseService {
      */
     @Override
     public PageResponse<GenDatabaseResponse> findPage(GenDatabaseQueryRequest queryRequest) {
-        IPage<GenDatabaseDO> genDatabaseIPage = genDatabaseMapper.selectPage(PageTool.getPage(queryRequest), GenDatabaseWrapper.getInstance().lambdaQuery(genDatabaseConvert.toDO(queryRequest)));
+        IPage<GenDatabaseDO> genDatabaseIPage = genDatabaseDao.pageQueryRequest(queryRequest);
         return genDatabaseConvert.toPageResponse(genDatabaseIPage);
     }
 
@@ -100,7 +98,7 @@ public class GenDatabaseServiceImpl implements IGenDatabaseService {
      */
     @Override
     public List<GenDatabaseResponse> list(GenDatabaseQueryRequest queryRequest) {
-        List<GenDatabaseDO> genDatabaseIPage = genDatabaseMapper.selectList(GenDatabaseWrapper.getInstance().lambdaQuery(genDatabaseConvert.toDO(queryRequest)));
+        List<GenDatabaseDO> genDatabaseIPage = genDatabaseDao.listQueryRequest(queryRequest);
         return genDatabaseConvert.toResponse(genDatabaseIPage);
     }
 

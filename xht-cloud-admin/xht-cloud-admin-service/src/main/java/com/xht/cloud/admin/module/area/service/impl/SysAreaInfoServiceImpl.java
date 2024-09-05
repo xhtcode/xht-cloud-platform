@@ -1,14 +1,13 @@
 package com.xht.cloud.admin.module.area.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.xht.cloud.admin.module.area.convert.SysAreaInfoConvert;
+import com.xht.cloud.admin.module.area.dao.SysAreaInfoDao;
 import com.xht.cloud.admin.module.area.domain.dataobject.SysAreaInfoDO;
 import com.xht.cloud.admin.module.area.domain.request.SysAreaInfoCreateRequest;
 import com.xht.cloud.admin.module.area.domain.request.SysAreaInfoQueryRequest;
 import com.xht.cloud.admin.module.area.domain.request.SysAreaInfoUpdateRequest;
 import com.xht.cloud.admin.module.area.domain.response.SysAreaInfoResponse;
-import com.xht.cloud.admin.module.area.mapper.SysAreaInfoMapper;
 import com.xht.cloud.admin.module.area.service.ISysAreaInfoService;
 import com.xht.cloud.framework.constant.TreeConstant;
 import com.xht.cloud.framework.exception.Assert;
@@ -36,7 +35,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SysAreaInfoServiceImpl implements ISysAreaInfoService {
 
-    private final SysAreaInfoMapper sysAreaInfoMapper;
+    private final SysAreaInfoDao sysAreaInfoDao;
 
     private final SysAreaInfoConvert sysAreaInfoConvert;
 
@@ -49,10 +48,9 @@ public class SysAreaInfoServiceImpl implements ISysAreaInfoService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public String create(SysAreaInfoCreateRequest createRequest) {
+    public Boolean create(SysAreaInfoCreateRequest createRequest) {
         SysAreaInfoDO entity = sysAreaInfoConvert.toDO(createRequest);
-        sysAreaInfoMapper.insert(entity);
-        return entity.getId();
+        return sysAreaInfoDao.save(entity);
     }
 
     /**
@@ -63,7 +61,7 @@ public class SysAreaInfoServiceImpl implements ISysAreaInfoService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(SysAreaInfoUpdateRequest updateRequest) {
-        sysAreaInfoMapper.updateById(sysAreaInfoConvert.toDO(updateRequest));
+        sysAreaInfoDao.updateById(sysAreaInfoConvert.toDO(updateRequest));
     }
 
     /**
@@ -74,9 +72,9 @@ public class SysAreaInfoServiceImpl implements ISysAreaInfoService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void remove(List<String> ids) {
-        List<SysAreaInfoDO> sysAreaInfoDOS = sysAreaInfoMapper.selectList(sysAreaInfoConvert.lambdaQuery().in(SysAreaInfoDO::getParentId, ids));
-        Assert.isTrue(!CollectionUtils.isEmpty(sysAreaInfoDOS), "删除数据中含有下级城市数据，禁止删除！");
-        sysAreaInfoMapper.deleteBatchIds(ids);
+        boolean existsChild = sysAreaInfoDao.existsChild(ids);
+        Assert.isTrue(existsChild, "删除数据中含有下级城市数据，禁止删除！");
+        sysAreaInfoDao.removeBatchByIds(ids);
     }
 
     /**
@@ -87,7 +85,7 @@ public class SysAreaInfoServiceImpl implements ISysAreaInfoService {
      */
     @Override
     public SysAreaInfoResponse findById(String id) {
-        return sysAreaInfoConvert.toResponse(sysAreaInfoMapper.findById(id).orElse(null));
+        return sysAreaInfoConvert.toResponse(sysAreaInfoDao.getById(id));
     }
 
     /**
@@ -98,11 +96,13 @@ public class SysAreaInfoServiceImpl implements ISysAreaInfoService {
      */
     @Override
     public List<SysAreaInfoResponse> list(SysAreaInfoQueryRequest queryRequest) {
+        Assert.notNull(queryRequest, "地区查询条件不能为空");
         if (!StringUtils.hasText(queryRequest.getParentId()) && !StringUtils.hasText(queryRequest.getAreaNo()) &&
                 !StringUtils.hasText(queryRequest.getAreaNo())) {
             queryRequest.setParentId(TreeConstant.TREE_PARENT_DEFAULT);
         }
-        return sysAreaInfoConvert.toResponse(sysAreaInfoMapper.selectListByRequest(queryRequest));
+        List<SysAreaInfoDO> sysAreaInfoDOS = sysAreaInfoDao.selectListByRequest(queryRequest);
+        return sysAreaInfoConvert.toResponse(sysAreaInfoDOS);
     }
 
     /**
@@ -113,17 +113,14 @@ public class SysAreaInfoServiceImpl implements ISysAreaInfoService {
      */
     @Override
     public List<INode<String>> convert(SysAreaInfoQueryRequest queryRequest) {
-        Assert.notNull(queryRequest, "地区查询条件为空");
-        SysAreaInfoConvert instance = sysAreaInfoConvert;
-        SysAreaInfoDO sysAreaInfoDO = instance.toDO(queryRequest);
-        LambdaQueryWrapper<SysAreaInfoDO> lambdaQuery =  instance.lambdaQuery(sysAreaInfoDO);
-        List<SysAreaInfoResponse> areaInfoResponses = instance.toResponse(sysAreaInfoMapper.selectList(lambdaQuery));
-        if (CollectionUtils.isEmpty(areaInfoResponses)) {
+        Assert.notNull(queryRequest, "地区查询条件不能为空");
+        List<SysAreaInfoDO> sysAreaInfoDOS = sysAreaInfoDao.selectListByRequest(queryRequest);
+        if (CollectionUtils.isEmpty(sysAreaInfoDOS)) {
             return Collections.emptyList();
         }
-        List<INode<String>> result = new ArrayList<>(areaInfoResponses.size());
-        for (int i = 0; i < areaInfoResponses.size(); i++) {
-            SysAreaInfoResponse item = areaInfoResponses.get(i);
+        List<INode<String>> result = new ArrayList<>(sysAreaInfoDOS.size());
+        for (int i = 0; i < sysAreaInfoDOS.size(); i++) {
+            SysAreaInfoDO item = sysAreaInfoDOS.get(i);
             result.add(new TreeNode<>(item.getId(), item.getParentId(), i).setExtra(BeanUtil.beanToMap(item)));
         }
         return TreeUtils.buildList(result);

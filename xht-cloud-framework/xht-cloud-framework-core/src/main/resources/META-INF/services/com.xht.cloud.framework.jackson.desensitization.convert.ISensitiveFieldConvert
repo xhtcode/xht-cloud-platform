@@ -1,0 +1,8 @@
+com.xht.cloud.framework.jackson.desensitization.convert.AddressSensitiveFieldConvert
+com.xht.cloud.framework.jackson.desensitization.convert.BankCardSensitiveFieldConvert
+com.xht.cloud.framework.jackson.desensitization.convert.EmailSensitiveFieldConvert
+com.xht.cloud.framework.jackson.desensitization.convert.FixedPhoneBankCardSensitiveFieldConvert
+com.xht.cloud.framework.jackson.desensitization.convert.IdCardSensitiveFieldConvert
+com.xht.cloud.framework.jackson.desensitization.convert.NameSensitiveFieldConvert
+com.xht.cloud.framework.jackson.desensitization.convert.PasswordSensitiveFieldConvert
+com.xht.cloud.framework.jackson.desensitization.convert.PhoneSensitiveFieldConvert

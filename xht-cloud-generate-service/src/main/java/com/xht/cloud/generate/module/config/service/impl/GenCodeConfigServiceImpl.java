@@ -4,24 +4,22 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.xht.cloud.framework.domain.KeyValue;
 import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.file.upload.UploadFileBO;
 import com.xht.cloud.framework.file.upload.helper.MultipartFileHelper;
-import com.xht.cloud.framework.mybatis.tool.PageTool;
 import com.xht.cloud.framework.utils.StringUtils;
 import com.xht.cloud.generate.exception.GenerateException;
 import com.xht.cloud.generate.module.config.convert.GenCodeConfigConvert;
+import com.xht.cloud.generate.module.config.dao.GenCodeConfigDao;
 import com.xht.cloud.generate.module.config.domain.dataobject.GenCodeConfigDO;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigCreateRequest;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigQueryRequest;
 import com.xht.cloud.generate.module.config.domain.request.GenCodeConfigUpdateRequest;
 import com.xht.cloud.generate.module.config.domain.response.GenCodeConfigResponse;
-import com.xht.cloud.generate.module.config.domain.wrapper.GenCodeConfigWrapper;
-import com.xht.cloud.generate.module.config.mapper.GenCodeConfigMapper;
 import com.xht.cloud.generate.module.config.service.IGenCodeConfigService;
 import com.xht.cloud.generate.module.filedisk.dao.GenFileDiskDao;
 import com.xht.cloud.generate.module.filedisk.domain.dataobject.GenFileDiskDO;
@@ -56,11 +54,11 @@ import static com.xht.cloud.generate.constant.GenerateConstant.*;
 @RequiredArgsConstructor
 public class GenCodeConfigServiceImpl implements IGenCodeConfigService {
 
-    private final GenCodeConfigMapper genCodeConfigMapper;
+    private final GenCodeConfigDao genCodeConfigDao;
 
     private final GenCodeConfigConvert genCodeConfigConvert;
 
-    private final GenFileDiskDao fileDiskMapper;
+    private final GenFileDiskDao genFileDiskDao;
 
     /**
      * 创建
@@ -72,7 +70,7 @@ public class GenCodeConfigServiceImpl implements IGenCodeConfigService {
     @Transactional(rollbackFor = Exception.class)
     public Long create(GenCodeConfigCreateRequest createRequest) {
         GenCodeConfigDO entity = genCodeConfigConvert.toDO(createRequest);
-        genCodeConfigMapper.insert(entity);
+        genCodeConfigDao.save(entity);
         return entity.getId();
     }
 
@@ -84,7 +82,7 @@ public class GenCodeConfigServiceImpl implements IGenCodeConfigService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(GenCodeConfigUpdateRequest updateRequest) {
-        genCodeConfigMapper.updateById(genCodeConfigConvert.toDO(updateRequest));
+        genCodeConfigDao.updateById(genCodeConfigConvert.toDO(updateRequest));
     }
 
     /**
@@ -95,8 +93,8 @@ public class GenCodeConfigServiceImpl implements IGenCodeConfigService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void remove(List<String> ids) {
-        genCodeConfigMapper.deleteBatchIds(ids);
-        fileDiskMapper.remove(fileDiskMapper.lambdaQuery().in(GenFileDiskDO::getConfigId,ids));
+        genCodeConfigDao.removeBatchByIds(ids);
+        genFileDiskDao.remove(genFileDiskDao.lambdaQuery().in(GenFileDiskDO::getConfigId, ids));
     }
 
     /**
@@ -107,7 +105,7 @@ public class GenCodeConfigServiceImpl implements IGenCodeConfigService {
      */
     @Override
     public GenCodeConfigResponse findById(String id) {
-        return genCodeConfigConvert.toResponse(genCodeConfigMapper.findById(id).orElse(null));
+        return genCodeConfigConvert.toResponse(genCodeConfigDao.getOptById(id).orElse(null));
     }
 
     /**
@@ -118,13 +116,14 @@ public class GenCodeConfigServiceImpl implements IGenCodeConfigService {
      */
     @Override
     public PageResponse<GenCodeConfigResponse> findPage(GenCodeConfigQueryRequest queryRequest) {
-        IPage<GenCodeConfigDO> genCodeConfigIPage = genCodeConfigMapper.selectPage(PageTool.getPage(queryRequest), GenCodeConfigWrapper.getInstance().lambdaQuery(genCodeConfigConvert.toDO(queryRequest)));
+        IPage<GenCodeConfigDO> genCodeConfigIPage = genCodeConfigDao.pageQueryRequest(queryRequest);
         return genCodeConfigConvert.toPageResponse(genCodeConfigIPage);
     }
 
     @Override
     public List<GenCodeConfigResponse> list() {
-        List<GenCodeConfigDO> genCodeConfigDOS = genCodeConfigMapper.selectList(new LambdaQueryWrapper<GenCodeConfigDO>().select(GenCodeConfigDO::getId, GenCodeConfigDO::getConfigName, GenCodeConfigDO::getConfigDesc));
+        LambdaQueryChainWrapper<GenCodeConfigDO> select = genCodeConfigDao.lambdaQuery().select(GenCodeConfigDO::getId, GenCodeConfigDO::getConfigName, GenCodeConfigDO::getConfigDesc);
+        List<GenCodeConfigDO> genCodeConfigDOS = genCodeConfigDao.list(select);
         return genCodeConfigConvert.toResponse(genCodeConfigDOS);
     }
 
@@ -136,8 +135,8 @@ public class GenCodeConfigServiceImpl implements IGenCodeConfigService {
      */
     @Override
     public KeyValue<String, byte[]> exportZip(Long configId) {
-        GenCodeConfigDO codeConfigDO = genCodeConfigMapper.findById(configId).orElseThrow(() -> new GenerateException("查询不到相关配置"));
-        List<GenFileDiskDO> genFileDiskDOS = fileDiskMapper.selectList(GenFileDiskDO::getConfigId, codeConfigDO.getId());
+        GenCodeConfigDO codeConfigDO = genCodeConfigDao.getOptById(configId).orElseThrow(() -> new GenerateException("查询不到相关配置"));
+        List<GenFileDiskDO> genFileDiskDOS = genFileDiskDao.selectList(GenFileDiskDO::getConfigId, codeConfigDO.getId());
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ZipOutputStream zip = new ZipOutputStream(outputStream, StandardCharsets.UTF_8);
         for (GenFileDiskDO genFileDiskDO : genFileDiskDOS) {
@@ -173,7 +172,7 @@ public class GenCodeConfigServiceImpl implements IGenCodeConfigService {
         codeConfigDO.setConfigName(uploadFileBO.getFilePrefix());
         codeConfigDO.setConfigDesc(uploadFileBO.getOriginalFileName());
         codeConfigDO.setConfigSort(0);
-        genCodeConfigMapper.insert(codeConfigDO);
+        genCodeConfigDao.save(codeConfigDO);
         InputStream inputStream = uploadFileBO.getInputStream();
         ZipInputStream zipInputStream = new ZipInputStream(inputStream);
         List<GenFileDiskDO> result = new ArrayList<>();
@@ -211,7 +210,7 @@ public class GenCodeConfigServiceImpl implements IGenCodeConfigService {
             if (CollectionUtils.isEmpty(result)) {
                 throw new GenerateException("文件列表解析错误，请确保根目录有两个文件以上！");
             }
-            fileDiskMapper.saveBatch(result);
+            genFileDiskDao.saveBatch(result);
         } catch (IOException e) {
             throw new GenerateException("模板解析错误", e);
         }

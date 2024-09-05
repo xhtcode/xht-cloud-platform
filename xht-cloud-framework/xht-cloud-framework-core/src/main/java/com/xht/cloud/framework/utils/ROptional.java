@@ -30,7 +30,7 @@ public final class ROptional<T> implements Serializable {
      * @return this
      */
     public static <T> ROptional<T> of(R<T> value) {
-        Assert.notNull(value, "original is value empty!");
+        Assert.notNull(value, "original is suffix empty!");
         return new ROptional<>(value);
     }
 

@@ -1,6 +1,5 @@
 package com.xht.cloud.admin.module.org.domain.request;
 
-import com.xht.cloud.framework.domain.request.IUpdateRequestFun;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -11,7 +10,7 @@ import lombok.Data;
  */
 @Data
 @Schema(name = "SysOrgUpdateRequest", description = "组织机构")
-public class SysOrgUpdateRequest extends SysOrgCreateRequest implements IUpdateRequestFun<Long> {
+public class SysOrgUpdateRequest extends SysOrgCreateRequest {
 
     /**
      * id

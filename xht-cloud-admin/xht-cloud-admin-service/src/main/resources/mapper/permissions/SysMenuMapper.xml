@@ -50,6 +50,7 @@
             and t.menu_status = #{menuStatus}
         </if>
     </select>
+
     <select id="selectByUserIdAndMenuType" resultMap="BaseResultMap">
         SELECT t1.id,
         t1.parent_id,

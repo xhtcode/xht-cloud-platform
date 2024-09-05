@@ -1,12 +1,16 @@
 package com.xht.cloud.admin.module.permissions.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.admin.module.permissions.domain.dataobject.SysRoleDO;
+import com.xht.cloud.admin.module.permissions.domain.request.SysRoleQueryRequest;
 import com.xht.cloud.admin.module.permissions.mapper.SysRoleMapper;
 import com.xht.cloud.framework.mybatis.dao.BaseDaoImpl;
+import com.xht.cloud.framework.mybatis.tool.PageTool;
 import com.xht.cloud.framework.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.ObjectUtils;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -54,5 +58,60 @@ public class SysRoleDao extends BaseDaoImpl<SysRoleMapper, SysRoleDO> {
         LambdaQueryWrapper<SysRoleDO> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.select(SysRoleDO::getRoleCode).isNotNull(SysRoleDO::getRoleCode);
         return list(lambdaQueryWrapper).stream().map(SysRoleDO::getRoleCode).filter(StringUtils::hasText).collect(Collectors.toSet());
+    }
+
+    /**
+     * 判断角色编码是否存在
+     *
+     * @param roleCode 角色编码
+     * @return 存在true
+     */
+    public boolean existsRoleCode(String roleCode) {
+        return exists(lambdaQuery().eq(SysRoleDO::getRoleCode, roleCode));
+    }
+
+    /**
+     * 判断角色编码是否存在 不包括自身
+     *
+     * @param roleId   角色id
+     * @param roleCode 角色编码
+     * @return 存在true
+     */
+    public boolean existsRoleCode(String roleId, String roleCode) {
+        return exists(lambdaQuery().ne(SysRoleDO::getId, roleId).eq(SysRoleDO::getRoleCode, roleCode));
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param queryRequest 查询参数
+     * @return 分页数据
+     */
+    public IPage<SysRoleDO> pageQueryRequest(SysRoleQueryRequest queryRequest) {
+        LambdaQueryWrapper<SysRoleDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper
+                .like(StringUtils.hasText(queryRequest.getRoleName()), SysRoleDO::getRoleName, queryRequest.getRoleName())
+                .like(StringUtils.hasText(queryRequest.getRoleCode()), SysRoleDO::getRoleCode, queryRequest.getRoleCode())
+                .eq(!ObjectUtils.isEmpty(queryRequest.getRoleSort()), SysRoleDO::getRoleSort, queryRequest.getRoleSort())
+                .eq(StringUtils.hasText(queryRequest.getStatus()), SysRoleDO::getStatus, queryRequest.getStatus())
+                .eq(StringUtils.hasText(queryRequest.getRoleDesc()), SysRoleDO::getRoleDesc, queryRequest.getRoleDesc());
+        return page(PageTool.getPage(queryRequest), wrapper);
+    }
+
+    /**
+     * 查询全部
+     *
+     * @param queryRequest 查询参数
+     * @return 分页数据
+     */
+    public List<SysRoleDO> listQueryRequest(SysRoleQueryRequest queryRequest) {
+        LambdaQueryWrapper<SysRoleDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper
+                .like(StringUtils.hasText(queryRequest.getRoleName()), SysRoleDO::getRoleName, queryRequest.getRoleName())
+                .like(StringUtils.hasText(queryRequest.getRoleCode()), SysRoleDO::getRoleCode, queryRequest.getRoleCode())
+                .eq(!ObjectUtils.isEmpty(queryRequest.getRoleSort()), SysRoleDO::getRoleSort, queryRequest.getRoleSort())
+                .eq(StringUtils.hasText(queryRequest.getStatus()), SysRoleDO::getStatus, queryRequest.getStatus())
+                .eq(StringUtils.hasText(queryRequest.getRoleDesc()), SysRoleDO::getRoleDesc, queryRequest.getRoleDesc());
+        return list(wrapper);
     }
 }

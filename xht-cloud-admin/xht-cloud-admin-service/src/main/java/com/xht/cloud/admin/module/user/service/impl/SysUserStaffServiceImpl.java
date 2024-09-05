@@ -91,7 +91,7 @@ public class SysUserStaffServiceImpl implements ISysUserStaffService {
         if (SecurityContextUtil.hasAnyAuthority(UPDATE_USER_DEPT_ID)) {
             sysUserStaffDO.setDeptId(null);
         }
-        return sysUserStaffDao.update(sysUserStaffDO);
+        return sysUserStaffDao.updateById(sysUserStaffDO);
     }
 
     /**

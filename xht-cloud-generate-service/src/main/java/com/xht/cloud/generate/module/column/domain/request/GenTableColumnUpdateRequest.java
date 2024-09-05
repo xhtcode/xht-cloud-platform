@@ -15,7 +15,7 @@ import lombok.Data;
  **/
 @Data
 @Schema(name = "GenTableColumnRequest(代码生成业务字段-修改请求信息)", description = "代码生成业务字段-修改请求信息")
-public class GenTableColumnUpdateRequest extends UpdateRequest<Long> {
+public class GenTableColumnUpdateRequest extends UpdateRequest {
 
     /**
      * 字段名字
@@ -101,11 +101,4 @@ public class GenTableColumnUpdateRequest extends UpdateRequest<Long> {
     @Schema(description = "字段排序")
     private Integer columnSort;
 
-    /**
-     * 获取主键
-     */
-    @Override
-    public Long getPkId() {
-        return this.id;
-    }
 }

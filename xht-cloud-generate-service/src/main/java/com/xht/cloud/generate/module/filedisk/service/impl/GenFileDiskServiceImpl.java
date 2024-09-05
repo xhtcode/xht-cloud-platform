@@ -8,8 +8,8 @@ import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.mybatis.tool.SqlHelper;
 import com.xht.cloud.framework.utils.StringUtils;
 import com.xht.cloud.generate.exception.GenerateException;
+import com.xht.cloud.generate.module.config.dao.GenCodeConfigDao;
 import com.xht.cloud.generate.module.config.domain.dataobject.GenCodeConfigDO;
-import com.xht.cloud.generate.module.config.mapper.GenCodeConfigMapper;
 import com.xht.cloud.generate.module.filedisk.convert.GenFileDiskConvert;
 import com.xht.cloud.generate.module.filedisk.dao.GenFileDiskDao;
 import com.xht.cloud.generate.module.filedisk.domain.dataobject.GenFileDiskDO;
@@ -42,13 +42,13 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
 
     private final GenFileDiskDao genFileDiskDao;
 
-    private final GenCodeConfigMapper genCodeConfigMapper;
+    private final GenCodeConfigDao genCodeConfigDao;
 
     private final GenFileDiskConvert fileDiskConvert;
 
     public GenFileDiskDO findParentId(String parentId) {
         GenFileDiskDO parentGenFileDiskDO = new GenFileDiskDO();
-        if (!Objects.equals(-1L, parentId)) {
+        if (!Objects.equals("-1", parentId)) {
             parentGenFileDiskDO = genFileDiskDao.getOne(new LambdaQueryWrapper<GenFileDiskDO>().select(
                                     GenFileDiskDO::getId,
                                     GenFileDiskDO::getFileType,
@@ -75,7 +75,7 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
     public void create(GenFileDiskCreateRequest createRequest) {
         Assert.notNull(createRequest, "createRequest 文件信息不能为空");
         Long configId = createRequest.getConfigId();
-        if (!SqlHelper.exist(genCodeConfigMapper.selectCount(GenCodeConfigDO::getId, configId))) {
+        if (!SqlHelper.exist(genCodeConfigDao.selectCount(GenCodeConfigDO::getId, configId))) {
             throw new BizException("配置信息查询不到，文件创建失败");
         }
         String parentId = createRequest.getParentId();
@@ -117,7 +117,7 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
     @Transactional(rollbackFor = Exception.class)
     public void update(GenFileDiskUpdateRequest updateRequest) {
         Assert.notNull(updateRequest, "updateRequest 文件信息不能为空");
-        if (!SqlHelper.exist(genCodeConfigMapper.selectCount(GenCodeConfigDO::getId, updateRequest.getConfigId()))) {
+        if (!SqlHelper.exist(genCodeConfigDao.selectCount(GenCodeConfigDO::getId, updateRequest.getConfigId()))) {
             throw new GenerateException("配置信息查询不到，文件创建失败");
         }
         String parentId = updateRequest.getParentId();
@@ -161,7 +161,7 @@ public class GenFileDiskServiceImpl implements IGenFileDiskService {
                 .set(GenFileDiskDO::getFileSort, fileSort)
                 .set(GenFileDiskDO::getIgnoreField, ignoreField)
                 .set(GenFileDiskDO::getFileCodePath, fileCodePath)
-                .eq(GenFileDiskDO::getId, updateRequest.getPkId());
+                .eq(GenFileDiskDO::getId, updateRequest.getId());
         // @formatter:on
         genFileDiskDao.update(updateWrapper);
     }

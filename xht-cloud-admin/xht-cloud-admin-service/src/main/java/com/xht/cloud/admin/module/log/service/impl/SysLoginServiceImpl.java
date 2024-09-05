@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.admin.api.log.dto.SysLoginLogDTO;
 import com.xht.cloud.admin.module.log.convert.SysLoginLogConvert;
+import com.xht.cloud.admin.module.log.dao.SysLoginLogDao;
 import com.xht.cloud.admin.module.log.domain.dataobject.SysLoginLogDO;
 import com.xht.cloud.admin.module.log.domain.request.SysLoginLogQueryRequest;
 import com.xht.cloud.admin.module.log.domain.response.SysLoginLogResponse;
-import com.xht.cloud.admin.module.log.mapper.SysLoginLogMapper;
 import com.xht.cloud.admin.module.log.service.ISysLoginService;
 import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SysLoginServiceImpl implements ISysLoginService {
 
-    private final SysLoginLogMapper sysLoginLogMapper;
+    private final SysLoginLogDao sysLoginLogDao;
 
     private final SysLoginLogConvert sysLoginLogConvert;
 
@@ -38,7 +38,7 @@ public class SysLoginServiceImpl implements ISysLoginService {
      */
     @Override
     public SysLoginLogResponse findById(Long id) {
-        return sysLoginLogConvert.convert(sysLoginLogMapper.findById(id).orElse(null));
+        return sysLoginLogConvert.convert(sysLoginLogDao.getById(id));
     }
 
     /**
@@ -50,7 +50,7 @@ public class SysLoginServiceImpl implements ISysLoginService {
     @Override
     public PageResponse<SysLoginLogResponse> findPage(SysLoginLogQueryRequest queryRequest) {
         LambdaQueryWrapper<SysLoginLogDO> queryWrapper = sysLoginLogConvert.lambdaQuery(queryRequest);
-        IPage<SysLoginLogDO> sysLogIPage = sysLoginLogMapper.selectPage(PageTool.getPage(queryRequest), queryWrapper);
+        IPage<SysLoginLogDO> sysLogIPage = sysLoginLogDao.page(PageTool.getPage(queryRequest), queryWrapper);
         return sysLoginLogConvert.convert(sysLogIPage);
     }
 
@@ -63,7 +63,7 @@ public class SysLoginServiceImpl implements ISysLoginService {
     @Override
     public void saveOperationLog(SysLoginLogDTO loginLogDTO) {
         try {
-            sysLoginLogMapper.insert(sysLoginLogConvert.dtoToDo(loginLogDTO));
+            sysLoginLogDao.save(sysLoginLogConvert.dtoToDo(loginLogDTO));
         } catch (Exception e) {
             log.info("[登录日志]存储错误 {}", e.getMessage(), e);
         }

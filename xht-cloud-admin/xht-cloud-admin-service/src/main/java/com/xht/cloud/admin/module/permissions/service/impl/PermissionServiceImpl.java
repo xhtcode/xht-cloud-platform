@@ -1,21 +1,18 @@
 package com.xht.cloud.admin.module.permissions.service.impl;
 
-import com.xht.cloud.admin.module.permissions.convert.SysMenuConvert;
-import com.xht.cloud.admin.module.permissions.convert.SysRoleConvert;
-import com.xht.cloud.admin.module.permissions.convert.SysRoleMenuConvert;
-import com.xht.cloud.admin.module.permissions.convert.SysUserRoleConvert;
-import com.xht.cloud.admin.module.permissions.domain.dataobject.SysMenuDO;
+import com.xht.cloud.admin.exceptions.PermissionException;
+import com.xht.cloud.admin.module.permissions.dao.SysRoleDao;
+import com.xht.cloud.admin.module.permissions.dao.SysRoleMenuDao;
+import com.xht.cloud.admin.module.permissions.dao.SysUserRoleDao;
 import com.xht.cloud.admin.module.permissions.domain.dataobject.SysRoleDO;
 import com.xht.cloud.admin.module.permissions.domain.dataobject.SysRoleMenuDO;
 import com.xht.cloud.admin.module.permissions.domain.dataobject.SysUserRoleDO;
-import com.xht.cloud.admin.module.permissions.mapper.SysMenuMapper;
-import com.xht.cloud.admin.module.permissions.mapper.SysRoleMapper;
-import com.xht.cloud.admin.module.permissions.mapper.SysRoleMenuMapper;
-import com.xht.cloud.admin.module.permissions.mapper.SysUserRoleMapper;
 import com.xht.cloud.admin.module.permissions.service.IPermissionService;
+import com.xht.cloud.admin.module.user.dao.SysUserStaffDao;
 import com.xht.cloud.admin.module.user.domain.dataobject.SysUserStaffDO;
-import com.xht.cloud.admin.module.user.mapper.SysUserStaffMapper;
 import com.xht.cloud.admin.tool.ExceptionTool;
+import com.xht.cloud.framework.exception.BizException;
+import com.xht.cloud.framework.mybatis.tool.SqlHelper;
 import com.xht.cloud.framework.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,23 +36,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PermissionServiceImpl implements IPermissionService {
 
-    private final SysUserStaffMapper sysUserStaffMapper;
+    private final SysUserStaffDao sysUserStaffDao;
 
-    private final SysRoleMapper sysRoleMapper;
+    private final SysRoleDao sysRoleDao;
 
-    private final SysMenuMapper sysMenuMapper;
+    private final SysRoleMenuDao sysRoleMenuDao;
 
-    private final SysRoleMenuMapper sysRoleMenuMapper;
+    private final SysUserRoleDao sysUserRoleDao;
 
-    private final SysUserRoleMapper sysUserRoleMapper;
-
-    private final SysRoleMenuConvert sysRoleMenuConvert;
-
-    private final SysMenuConvert sysMenuConvert;
-
-    private final SysUserRoleConvert sysUserRoleConvert;
-    
-    private final SysRoleConvert sysRoleConvert;
 
     /**
      * 角色授权菜单
@@ -68,12 +56,10 @@ public class PermissionServiceImpl implements IPermissionService {
     @Transactional(rollbackFor = Exception.class)
     public boolean roleAuthorizationMenu(String roleId, List<String> menuIds) {
         ExceptionTool.permissionValidation(!StringUtils.hasText(roleId), "roleId is must  not null!");
-        SysRoleDO sysRoleDO = sysRoleMapper.findById(roleId).orElse(null);
+        SysRoleDO sysRoleDO = sysRoleDao.getById(roleId);
         ExceptionTool.permissionValidation(Objects.isNull(sysRoleDO), "查询不到相关角色信息!");
-        sysRoleMenuMapper.delete(sysRoleMenuConvert.lambdaQuery().eq(SysRoleMenuDO::getRoleId, roleId));
+        sysRoleMenuDao.deleteByRoleId(sysRoleDO.getId());
         if (!CollectionUtils.isEmpty(menuIds)) {
-            long sysMenuDOCount = sysMenuMapper.selectCount(sysMenuConvert.lambdaQuery().in(SysMenuDO::getId, menuIds));
-            ExceptionTool.permissionValidation(menuIds.size() != sysMenuDOCount, "查询不到相关菜单信息!");
             List<SysRoleMenuDO> menuDOList = new ArrayList<>(menuIds.size());
             SysRoleMenuDO sysRoleMenuDO;
             for (String item : menuIds) {
@@ -82,7 +68,7 @@ public class PermissionServiceImpl implements IPermissionService {
                 sysRoleMenuDO.setMenuId(item);
                 menuDOList.add(sysRoleMenuDO);
             }
-            sysRoleMenuMapper.insertBatch(menuDOList);
+            sysRoleMenuDao.saveBatch(menuDOList, 100);
         }
         return Boolean.TRUE;
     }
@@ -95,7 +81,7 @@ public class PermissionServiceImpl implements IPermissionService {
      */
     @Override
     public List<String> selectMenuIdByRoleId(String roleId) {
-        List<SysRoleMenuDO> menuDOList = sysRoleMenuMapper.selectList(sysRoleMenuConvert.lambdaQuery().eq(SysRoleMenuDO::getRoleId, roleId));
+        List<SysRoleMenuDO> menuDOList = sysRoleMenuDao.selectList(SysRoleMenuDO::getRoleId, roleId);
         if (CollectionUtils.isEmpty(menuDOList)) {
             return Collections.emptyList();
         }
@@ -112,12 +98,16 @@ public class PermissionServiceImpl implements IPermissionService {
     @Override
     public boolean userAuthorizationRole(String userId, List<String> roleIds) {
         ExceptionTool.permissionValidation(!StringUtils.hasText(userId), "userId is must  not null!");
-        SysUserStaffDO sysUserStaffDO = sysUserStaffMapper.findById(userId).orElse(null);
-        ExceptionTool.permissionValidation(Objects.isNull(sysUserStaffDO), "查询不到相关用户信息!");
-        sysUserRoleMapper.delete(sysUserRoleConvert.lambdaQuery().eq(SysUserRoleDO::getUserId, userId));
+        long userCount = sysUserStaffDao.selectCount(SysUserStaffDO::getId, userId);
+        if (!SqlHelper.exist(userCount)) {
+            throw new BizException("查询不到相关用户信息!");
+        }
+        sysUserRoleDao.removeByUserId(userId);
         if (!CollectionUtils.isEmpty(roleIds)) {
-            long sysRoleDOCount = sysRoleMapper.selectCount(sysRoleConvert.lambdaQuery().in(SysRoleDO::getId, roleIds));
-            ExceptionTool.permissionValidation(roleIds.size() != sysRoleDOCount, "查询不到相关角色信息!");
+            long roleCount = sysRoleDao.selectCountIn(SysRoleDO::getId, roleIds);
+            if (!SqlHelper.exist(roleCount)) {
+                throw new PermissionException("查询不到相关角色信息!");
+            }
             List<SysUserRoleDO> userRoleDOS = new ArrayList<>(roleIds.size());
             SysUserRoleDO sysUserRoleDO;
             for (String item : roleIds) {
@@ -126,7 +116,7 @@ public class PermissionServiceImpl implements IPermissionService {
                 sysUserRoleDO.setRoleId(item);
                 userRoleDOS.add(sysUserRoleDO);
             }
-            sysUserRoleMapper.insertBatch(userRoleDOS);
+            sysUserRoleDao.saveBatch(userRoleDOS, 100);
         }
         return Boolean.TRUE;
     }
@@ -139,10 +129,6 @@ public class PermissionServiceImpl implements IPermissionService {
      */
     @Override
     public List<String> selectRoleByUserId(String userId) {
-        List<SysUserRoleDO> userRoleDOS = sysUserRoleMapper.selectList(sysUserRoleConvert.lambdaQuery().eq(SysUserRoleDO::getUserId, userId));
-        if (CollectionUtils.isEmpty(userRoleDOS)) {
-            return Collections.emptyList();
-        }
-        return userRoleDOS.stream().map(SysUserRoleDO::getRoleId).collect(Collectors.toList());
+        return sysUserRoleDao.selectRoleIdList(userId);
     }
 }

@@ -5,8 +5,8 @@ import com.xht.cloud.admin.module.area.domain.request.SysAreaInfoQueryRequest;
 import com.xht.cloud.admin.module.area.domain.request.SysAreaInfoUpdateRequest;
 import com.xht.cloud.admin.module.area.domain.response.SysAreaInfoResponse;
 import com.xht.cloud.admin.module.area.service.ISysAreaInfoService;
-import com.xht.cloud.framework.redis.idempotent.annotation.Idempotent;
 import com.xht.cloud.framework.domain.R;
+import com.xht.cloud.framework.redis.idempotent.annotation.Idempotent;
 import com.xht.cloud.framework.utils.treenode.INode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -46,8 +46,7 @@ public class SysAreaInfoController {
     @Idempotent
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:area-info:add')")
     public R<Boolean> create(@Validated @RequestBody SysAreaInfoCreateRequest createRequest) {
-        sysAreaInfoService.create(createRequest);
-        return ok(true);
+        return ok(sysAreaInfoService.create(createRequest));
     }
 
     /**

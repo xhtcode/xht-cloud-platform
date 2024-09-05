@@ -16,4 +16,12 @@ public class DictException extends BizException {
     public DictException(String message) {
         super(message);
     }
+
+    /**
+     * @param message  异常描述
+     * @param argArray 异常描述参数列表
+     */
+    public DictException(String message, Object... argArray) {
+        super(message, argArray);
+    }
 }

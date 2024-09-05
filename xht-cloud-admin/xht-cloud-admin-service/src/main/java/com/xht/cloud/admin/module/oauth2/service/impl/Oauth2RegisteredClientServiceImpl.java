@@ -3,20 +3,18 @@ package com.xht.cloud.admin.module.oauth2.service.impl;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.admin.module.oauth2.convert.Oauth2RegisteredClientConvert;
+import com.xht.cloud.admin.module.oauth2.dao.Oauth2RegisteredClientDao;
 import com.xht.cloud.admin.module.oauth2.domain.dataobject.Oauth2RegisteredClientDO;
 import com.xht.cloud.admin.module.oauth2.domain.request.Oauth2RegisteredClientCreateRequest;
 import com.xht.cloud.admin.module.oauth2.domain.request.Oauth2RegisteredClientQueryRequest;
 import com.xht.cloud.admin.module.oauth2.domain.request.Oauth2RegisteredClientUpdateRequest;
 import com.xht.cloud.admin.module.oauth2.domain.response.Oauth2RegisteredClientResponse;
-import com.xht.cloud.admin.module.oauth2.mapper.Oauth2RegisteredClientMapper;
 import com.xht.cloud.admin.module.oauth2.service.IOauth2RegisteredClientService;
 import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
 import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.mybatis.enums.DelFlagEnum;
-import com.xht.cloud.framework.mybatis.tool.PageTool;
 import com.xht.cloud.framework.security.constant.SuperClientAutoApproveEnums;
 import com.xht.cloud.framework.security.utils.SecurityContextUtil;
 import com.xht.cloud.framework.utils.StringUtils;
@@ -54,7 +52,7 @@ import static com.xht.cloud.framework.security.constant.SecurityConstant.REFRESH
 @RequiredArgsConstructor
 public class Oauth2RegisteredClientServiceImpl implements IOauth2RegisteredClientService {
 
-    private final Oauth2RegisteredClientMapper oauth2RegisteredClientMapper;
+    private final Oauth2RegisteredClientDao oauth2RegisteredClientDao;
 
     private final RegisteredClientRepository registeredClientRepository;
 
@@ -70,10 +68,10 @@ public class Oauth2RegisteredClientServiceImpl implements IOauth2RegisteredClien
     @Transactional(rollbackFor = Exception.class)
     public String create(Oauth2RegisteredClientCreateRequest createRequest) {
         // @formatter:off
-        if (oauth2RegisteredClientMapper.selectCount(Oauth2RegisteredClientDO::getClientId, createRequest.getClientId()) > 0) {
+        if (oauth2RegisteredClientDao.selectCount(Oauth2RegisteredClientDO::getClientId, createRequest.getClientId()) > 0) {
             throw new BizException(String.format("clientId `%s` 重复", createRequest.getClientId()));
         }
-        if (oauth2RegisteredClientMapper.selectCount(Oauth2RegisteredClientDO::getClientSecret, createRequest.getClientSecret()) > 0) {
+        if (oauth2RegisteredClientDao.selectCount(Oauth2RegisteredClientDO::getClientSecret, createRequest.getClientSecret()) > 0) {
             throw new BizException(String.format("clientSecret `%s` 重复 ", createRequest.getClientSecret()));
         }
         RegisteredClient build = build(createRequest, null).build();
@@ -97,26 +95,19 @@ public class Oauth2RegisteredClientServiceImpl implements IOauth2RegisteredClien
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(Oauth2RegisteredClientUpdateRequest updateRequest) {
-        // @formatter:off
         Assert.notNull(updateRequest, "客户端修改信息不能为空");
-        Assert.notNull(updateRequest.getPkId(), "客户端修改信息id不能为空");
-        Oauth2RegisteredClientDO oauth2RegisteredClientDO = oauth2RegisteredClientMapper.selectOne(oauth2RegisteredClientConvert.lambdaQuery()
-                .select(Oauth2RegisteredClientDO::getId)
-                .eq(Oauth2RegisteredClientDO::getId, updateRequest.getId()));
-        if (Objects.isNull(oauth2RegisteredClientDO)) {
-            throw new BizException("修改的对象不存在！");
-        }
-        LambdaQueryWrapper<Oauth2RegisteredClientDO> queryWrapper = oauth2RegisteredClientConvert.lambdaQuery()
+        Assert.notNull(updateRequest.getId(), "客户端修改信息id不能为空");
+        LambdaQueryWrapper<Oauth2RegisteredClientDO> queryWrapper = new LambdaQueryWrapper<Oauth2RegisteredClientDO>()
                 .eq(Oauth2RegisteredClientDO::getClientId, updateRequest.getClientId())
                 .ne(Oauth2RegisteredClientDO::getId, updateRequest.getId());
-        if (oauth2RegisteredClientMapper.selectCount(queryWrapper) > 0) {
-            throw new BizException(String.format("clientId `%s` 重复", updateRequest.getClientId()));
+        if (oauth2RegisteredClientDao.exists(queryWrapper)) {
+            throw new BizException("clientId `{}` 重复", updateRequest.getClientId());
         }
-        LambdaQueryWrapper<Oauth2RegisteredClientDO> lambdaQueryWrapper = oauth2RegisteredClientConvert.lambdaQuery()
+        LambdaQueryWrapper<Oauth2RegisteredClientDO> lambdaQueryWrapper = new LambdaQueryWrapper<Oauth2RegisteredClientDO>()
                 .eq(Oauth2RegisteredClientDO::getClientSecret, updateRequest.getClientSecret())
                 .ne(Oauth2RegisteredClientDO::getId, updateRequest.getId());
-        if (oauth2RegisteredClientMapper.selectCount(lambdaQueryWrapper) > 0) {
-            throw new BizException(String.format("clientSecret `%s` 重复 ", updateRequest.getClientSecret()));
+        if (oauth2RegisteredClientDao.exists(lambdaQueryWrapper)) {
+            throw new BizException("clientSecret `{} 重复 ", updateRequest.getClientSecret());
         }
         RegisteredClient build = build(updateRequest, updateRequest.getId()).build();
         try{
@@ -126,7 +117,6 @@ public class Oauth2RegisteredClientServiceImpl implements IOauth2RegisteredClien
             throw new BizException("请检查clientId和clientSecret是否规范");
         }
         updateOauth2RegisteredClient(updateRequest,updateRequest.getId());
-        // @formatter:on
     }
 
     /**
@@ -137,19 +127,8 @@ public class Oauth2RegisteredClientServiceImpl implements IOauth2RegisteredClien
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void remove(List<String> ids) {
-        // @formatter:off
         Assert.notEmpty(ids, "客户端信息ids不能为空");
-        LambdaQueryWrapper<Oauth2RegisteredClientDO> lambdaQueryWrapper = oauth2RegisteredClientConvert.lambdaQuery()
-                .select(
-                        Oauth2RegisteredClientDO::getId
-                )
-                .in(Oauth2RegisteredClientDO::getId, ids);
-        List<Oauth2RegisteredClientDO> registeredClientDOS = oauth2RegisteredClientMapper.selectList(lambdaQueryWrapper);
-        if (CollectionUtils.isEmpty(registeredClientDOS) || registeredClientDOS.size() != ids.size()) {
-            throw new BizException("删除客户端的对象不存在");
-        }
-        oauth2RegisteredClientMapper.deleteBatchIds(ids);
-        // @formatter:on
+        oauth2RegisteredClientDao.removeBatchByIds(ids);
     }
 
     /**
@@ -161,7 +140,7 @@ public class Oauth2RegisteredClientServiceImpl implements IOauth2RegisteredClien
     @Override
     public Oauth2RegisteredClientResponse findById(String id) {
         Assert.hasText(id, "客户端信息id不能为空");
-        return oauth2RegisteredClientConvert.toResponse(oauth2RegisteredClientMapper.findById(id).orElse(null));
+        return oauth2RegisteredClientConvert.toResponse(oauth2RegisteredClientDao.getById(id));
     }
 
     /**
@@ -172,11 +151,7 @@ public class Oauth2RegisteredClientServiceImpl implements IOauth2RegisteredClien
      */
     @Override
     public PageResponse<Oauth2RegisteredClientResponse> findPage(Oauth2RegisteredClientQueryRequest queryRequest) {
-        IPage<Oauth2RegisteredClientDO> oauth2RegisteredClientIPage =
-                oauth2RegisteredClientMapper.selectPage(PageTool.getPage(queryRequest),
-                        oauth2RegisteredClientConvert.
-                                lambdaQuery(oauth2RegisteredClientConvert.toDO(queryRequest)));
-        return oauth2RegisteredClientConvert.toPageResponse(oauth2RegisteredClientIPage);
+        return oauth2RegisteredClientConvert.toPageResponse(oauth2RegisteredClientDao.pageQueryRequest(queryRequest));
     }
 
 
@@ -221,7 +196,7 @@ public class Oauth2RegisteredClientServiceImpl implements IOauth2RegisteredClien
 
     public void updateOauth2RegisteredClient(Oauth2RegisteredClientCreateRequest createRequest, String id) {
         // @formatter:off
-        LambdaUpdateWrapper<Oauth2RegisteredClientDO> lambdaUpdateWrapper = oauth2RegisteredClientConvert.lambdaUpdate()
+        LambdaUpdateWrapper<Oauth2RegisteredClientDO> lambdaUpdateWrapper = new  LambdaUpdateWrapper<Oauth2RegisteredClientDO>()
                 .set(Oauth2RegisteredClientDO::getAutoApprove, createRequest.getAutoApprove())
                 .set(Oauth2RegisteredClientDO::getAccessTokenValidity, createRequest.getAccessTokenValidity())
                 .set(Oauth2RegisteredClientDO::getRefreshTokenValidity, createRequest.getRefreshTokenValidity())
@@ -232,7 +207,7 @@ public class Oauth2RegisteredClientServiceImpl implements IOauth2RegisteredClien
                 .set(Oauth2RegisteredClientDO::getUpdateTime, LocalDateTime.now())
                 .eq(Oauth2RegisteredClientDO::getId, id)
                 ;
-        oauth2RegisteredClientMapper.update(lambdaUpdateWrapper);
+        oauth2RegisteredClientDao.update(lambdaUpdateWrapper);
         // @formatter:on
     }
 }

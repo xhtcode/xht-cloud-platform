@@ -12,7 +12,7 @@ import lombok.Data;
  **/
 @Data
 @Schema(name = "SysAreaInfoRequest(地区信息-修改请求信息)")
-public class SysAreaInfoUpdateRequest extends UpdateRequest<String> {
+public class SysAreaInfoUpdateRequest extends UpdateRequest {
 
     /**
      * 主键
@@ -62,11 +62,4 @@ public class SysAreaInfoUpdateRequest extends UpdateRequest<String> {
     @Schema(description = "描述")
     private String msg;
 
-    /**
-     * 获取主键
-     */
-    @Override
-    public String getPkId() {
-        return this.id;
-    }
 }

@@ -43,7 +43,7 @@ public class GenColumnTypeDO extends AbstractDO {
     /**
      * 代码类型
      */
-    @TableField(value = "value")
+    @TableField(value = "suffix")
     private String value;
 
 }

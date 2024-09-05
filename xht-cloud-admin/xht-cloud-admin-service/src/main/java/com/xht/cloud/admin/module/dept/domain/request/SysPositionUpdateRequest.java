@@ -13,7 +13,7 @@ import lombok.Data;
  **/
 @Data
 @Schema(name = "SysPositionRequest(岗位信息-修改请求信息)")
-public class SysPositionUpdateRequest extends UpdateRequest<String> {
+public class SysPositionUpdateRequest extends UpdateRequest {
 
     /**
      * id
@@ -68,11 +68,4 @@ public class SysPositionUpdateRequest extends UpdateRequest<String> {
     @Schema(description = "备注")
     private String description;
 
-    /**
-     * 获取主键
-     */
-    @Override
-    public String getPkId() {
-        return this.id;
-    }
 }

@@ -23,7 +23,7 @@ import static com.xht.cloud.framework.domain.R.ok;
  *
  * @author 小糊涂
  */
-@Tag(name = "组织机构", description = "sys")
+@Tag(name = "组织机构")
 @RestController
 @RequestMapping("/sys/org")
 @RequiredArgsConstructor
@@ -38,7 +38,7 @@ public class SysOrgController {
      * @return {@link Boolean} true成功 false失败
      */
     @Operation(summary = "新增")
-    @PostMapping
+    @PostMapping("/operate")
     public R<Boolean> create(@Validated @RequestBody SysOrgCreateRequest createRequest) {
         return ok(sysOrgService.create(createRequest));
     }
@@ -50,9 +50,9 @@ public class SysOrgController {
      * @return {@linkplain Boolean} true成功 false失败
      */
     @Operation(summary = "修改")
-    @PutMapping
-    public R<Boolean> update(@Validated @RequestBody SysOrgUpdateRequest updateRequest) {
-        return ok(sysOrgService.update(updateRequest));
+    @PutMapping("/operate/{id}")
+    public R<Boolean> update(@PathVariable("id") Long id, @Validated @RequestBody SysOrgUpdateRequest updateRequest) {
+        return ok(sysOrgService.update(id, updateRequest));
     }
 
     /**
@@ -62,7 +62,7 @@ public class SysOrgController {
      * @return {@link Boolean} true成功 false失败
      */
     @Operation(summary = "删除")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/operate/{id}")
     public R<Boolean> remove(@PathVariable("id") Long id) {
         return ok(sysOrgService.remove(id));
     }
@@ -74,7 +74,7 @@ public class SysOrgController {
      * @return {@link Boolean} true成功 false失败
      */
     @Operation(summary = "批量删除")
-    @DeleteMapping
+    @DeleteMapping("/operate")
     public R<Boolean> remove(@RequestBody List<Long> ids) {
         return ok(sysOrgService.removeBatch(ids));
     }
@@ -98,7 +98,7 @@ public class SysOrgController {
      * @return 分页详情
      */
     @Operation(summary = "分页查询")
-    @GetMapping
+    @GetMapping("/page")
     public R<PageResponse<SysOrgResponse>> findPage(@Validated SysOrgQueryRequest queryRequest) {
         return R.ok(sysOrgService.findPage(queryRequest));
     }

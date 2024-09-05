@@ -5,16 +5,16 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
-import com.xht.cloud.framework.mybatis.tool.PageTool;
 import com.xht.cloud.generate.constant.GenerateConstant;
 import com.xht.cloud.generate.exception.GenerateException;
 import com.xht.cloud.generate.module.column.convert.GenTableColumnConvert;
+import com.xht.cloud.generate.module.column.dao.GenTableColumnDao;
 import com.xht.cloud.generate.module.column.domain.dataobject.GenTableColumnDO;
 import com.xht.cloud.generate.module.column.domain.request.GenTableColumnUpdateRequest;
-import com.xht.cloud.generate.module.column.mapper.GenTableColumnMapper;
+import com.xht.cloud.generate.module.database.dao.GenDatabaseDao;
 import com.xht.cloud.generate.module.database.domain.dataobject.GenDatabaseDO;
-import com.xht.cloud.generate.module.database.mapper.GenDatabaseMapper;
 import com.xht.cloud.generate.module.table.convert.GenTableConvert;
+import com.xht.cloud.generate.module.table.dao.GenTableDao;
 import com.xht.cloud.generate.module.table.domain.dataobject.GenTableDO;
 import com.xht.cloud.generate.module.table.domain.request.GenTableCreateRequest;
 import com.xht.cloud.generate.module.table.domain.request.GenTableQueryRequest;
@@ -22,8 +22,6 @@ import com.xht.cloud.generate.module.table.domain.request.GenTableUpdateRequest;
 import com.xht.cloud.generate.module.table.domain.request.ImportRequest;
 import com.xht.cloud.generate.module.table.domain.response.GenTableResponse;
 import com.xht.cloud.generate.module.table.domain.response.GenerateVo;
-import com.xht.cloud.generate.module.table.domain.wrapper.GenTableWrapper;
-import com.xht.cloud.generate.module.table.mapper.GenTableMapper;
 import com.xht.cloud.generate.module.table.service.IGenTableService;
 import com.xht.cloud.generate.support.DataBaseQueryFactory;
 import com.xht.cloud.generate.support.IDataBaseQuery;
@@ -50,19 +48,17 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class GenTableServiceImpl implements IGenTableService {
 
-    private final GenTableMapper genTableMapper;
+    private final GenTableDao genTableDao;
 
-    private final GenDatabaseMapper genDatabaseMapper;
+    private final GenDatabaseDao genDatabaseDao;
 
     private final GenTableConvert genTableConvert;
 
     private final DataBaseQueryFactory dataBaseQueryFactory;
 
-    private final GenTableColumnMapper genTableColumnMapper;
+    private final GenTableColumnDao genTableColumnDao;
 
     private final GenTableColumnConvert genTableColumnConvert;
-    private static final GenTableWrapper GEN_TABLE_WRAPPER = new GenTableWrapper();
-
 
     /**
      * 创建
@@ -74,7 +70,7 @@ public class GenTableServiceImpl implements IGenTableService {
     @Transactional(rollbackFor = Exception.class)
     public Long create(GenTableCreateRequest createRequest) {
         GenTableDO entity = genTableConvert.toDO(createRequest);
-        genTableMapper.insert(entity);
+        genTableDao.save(entity);
         return entity.getId();
     }
 
@@ -89,8 +85,8 @@ public class GenTableServiceImpl implements IGenTableService {
         updateRequest.setPathUrl(StrUtil.addPrefixIfNot(updateRequest.getPathUrl(), "/"));
         List<GenTableColumnUpdateRequest> columns = updateRequest.getColumns();
         Assert.notEmpty(columns, "字段信息查询不到!");
-        genTableMapper.updateById(genTableConvert.toDO(updateRequest));
-        columns.forEach(item -> genTableColumnMapper.updateById(genTableColumnConvert.toDO(item)));
+        genTableDao.updateById(genTableConvert.toDO(updateRequest));
+        columns.forEach(item -> genTableColumnDao.updateById(genTableColumnConvert.toDO(item)));
     }
 
     /**
@@ -101,8 +97,8 @@ public class GenTableServiceImpl implements IGenTableService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void remove(List<String> ids) {
-        genTableMapper.deleteBatchIds(ids);
-        genTableColumnMapper.delete(new LambdaQueryWrapper<GenTableColumnDO>().in(GenTableColumnDO::getTableId, ids));
+        genTableDao.removeBatchByIds(ids);
+        genTableColumnDao.remove(new LambdaQueryWrapper<GenTableColumnDO>().in(GenTableColumnDO::getTableId, ids));
     }
 
     /**
@@ -114,10 +110,10 @@ public class GenTableServiceImpl implements IGenTableService {
     @Override
     public GenerateVo findById(String id) {
         GenerateVo generateVo = new GenerateVo();
-        GenTableResponse tableResponse = genTableConvert.toResponse(genTableMapper.findById(id).orElse(null));
+        GenTableResponse tableResponse = genTableConvert.toResponse(genTableDao.getById(id));
         generateVo.setTable(tableResponse);
         if (Objects.nonNull(tableResponse)) {
-            List<GenTableColumnDO> genTableColumnDOS = genTableColumnMapper.selectList(GenTableColumnDO::getTableId, tableResponse.getId());
+            List<GenTableColumnDO> genTableColumnDOS = genTableColumnDao.selectList(GenTableColumnDO::getTableId, tableResponse.getId());
             generateVo.setColumns(genTableColumnConvert.toResponse(genTableColumnDOS));
         }
         return generateVo;
@@ -131,7 +127,7 @@ public class GenTableServiceImpl implements IGenTableService {
      */
     @Override
     public PageResponse<GenTableResponse> findPage(GenTableQueryRequest queryRequest) {
-        IPage<GenTableDO> genTableIPage = genTableMapper.selectPage(PageTool.getPage(queryRequest), GEN_TABLE_WRAPPER.lambdaQuery(genTableConvert.toDO(queryRequest)));
+        IPage<GenTableDO> genTableIPage = genTableDao.pageQueryRequest(queryRequest);
         return genTableConvert.toPageResponse(genTableIPage);
     }
 
@@ -146,7 +142,7 @@ public class GenTableServiceImpl implements IGenTableService {
     @Transactional(rollbackFor = Exception.class)
     public Boolean importTable(final ImportRequest importRequest) {
         Long dbId = importRequest.getDbId();
-        GenDatabaseDO genDatabaseDO = genDatabaseMapper.findById(dbId).orElseThrow(() -> new GenerateException("查询不到数据源信息！"));
+        GenDatabaseDO genDatabaseDO = genDatabaseDao.getOptById(dbId).orElseThrow(() -> new GenerateException("查询不到数据源信息！"));
         List<String> tableNames = importRequest.getTableNames();
         IDataBaseQuery dataBaseQuery = dataBaseQueryFactory.getStrategy(genDatabaseDO.getDbType());
         JDBCUtils jdbcUtils = JDBCUtils.jdbcTemplate(genDatabaseDO);
@@ -174,7 +170,7 @@ public class GenTableServiceImpl implements IGenTableService {
         genTableDO.setAuthorizationPrefix(GenerateTool.getAuthorizationPrefix(genTableDO.getTableName()));
         genTableDO.setPathUrl(GenerateTool.getPathUrl(genTableDO.getTableName()));
         genTableDO.setCodeName(GenerateTool.getClassName(genTableDO.getTableName()));
-        genTableMapper.insert(genTableDO);
+        genTableDao.save(genTableDO);
         if (!CollectionUtils.isEmpty(genTableColumnDOS)) {
             for (GenTableColumnDO genTableColumn : genTableColumnDOS) {
                 genTableColumn.setTableId(genTableDO.getId());
@@ -183,7 +179,7 @@ public class GenTableServiceImpl implements IGenTableService {
                 genTableColumn.setColumnOperation(GenerateTool.findColumnExits(genTableColumn.getColumnName(), GenerateConstant.BASE_COLUMN_BASE_DELETE_NAME_));
                 genTableColumn.setColumnQuery(GenerateTool.findColumnExits(genTableColumn.getColumnName(), GenerateConstant.BASE_COLUMN_BASE_DELETE_NAME_));
             }
-            genTableColumnMapper.insertBatch(genTableColumnDOS);
+            genTableColumnDao.saveBatch(genTableColumnDOS);
         }
     }
 
@@ -197,9 +193,9 @@ public class GenTableServiceImpl implements IGenTableService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean synchronous(final String tableId) {
-        GenTableDO genTableDO = genTableMapper.findById(tableId).orElseThrow(() -> new GenerateException("表不存在，请先导入表!"));
-        genTableMapper.deleteById(tableId);
-        genTableColumnMapper.delete(new LambdaQueryWrapper<GenTableColumnDO>().eq(GenTableColumnDO::getTableId, tableId));
+        GenTableDO genTableDO = genTableDao.getOptById(tableId).orElseThrow(() -> new GenerateException("表不存在，请先导入表!"));
+        genTableDao.removeById(tableId);
+        genTableColumnDao.remove(new LambdaQueryWrapper<GenTableColumnDO>().eq(GenTableColumnDO::getTableId, tableId));
         ImportRequest importRequest = new ImportRequest();
         importRequest.setTableNames(Collections.singletonList(genTableDO.getTableName()));
         importRequest.setTableName(genTableDO.getTableName());
@@ -219,7 +215,7 @@ public class GenTableServiceImpl implements IGenTableService {
     public List<GenTableResponse> syncList(ImportRequest importRequest) {
         Long dbId = importRequest.getDbId();
         String tableName = importRequest.getTableName();
-        GenDatabaseDO genDatabaseDO = genDatabaseMapper.findById(dbId).orElse(null);
+        GenDatabaseDO genDatabaseDO = genDatabaseDao.getById(dbId);
         if (Objects.isNull(genDatabaseDO)) {
             return Collections.emptyList();
         }

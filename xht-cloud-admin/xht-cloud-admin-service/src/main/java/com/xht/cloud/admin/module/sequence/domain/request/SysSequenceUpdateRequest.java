@@ -1,6 +1,5 @@
 package com.xht.cloud.admin.module.sequence.domain.request;
 
-import com.xht.cloud.framework.domain.request.IUpdateRequestFun;
 import com.xht.cloud.framework.web.validation.group.Update;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
@@ -13,7 +12,7 @@ import lombok.Data;
  **/
 @Data
 @Schema(name = "SysSequenceUpdateRequest(序列生成器-公共修改信息)")
-public class SysSequenceUpdateRequest extends SysSequenceCreateRequest implements IUpdateRequestFun<String> {
+public class SysSequenceUpdateRequest extends SysSequenceCreateRequest {
 
     /**
      * id
@@ -21,10 +20,5 @@ public class SysSequenceUpdateRequest extends SysSequenceCreateRequest implement
     @Schema(description = "id")
     @NotEmpty(message = "id", groups = {Update.class})
     private String id;
-
-    @Override
-    public String getPkId() {
-        return this.id;
-    }
 
 }

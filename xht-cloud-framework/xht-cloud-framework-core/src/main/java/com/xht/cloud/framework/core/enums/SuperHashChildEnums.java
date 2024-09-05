@@ -2,7 +2,6 @@ package com.xht.cloud.framework.core.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -19,7 +18,6 @@ public enum SuperHashChildEnums implements IEnum<String> {
 
     YES("1");//不存在,
 
-    @JsonValue
     @EnumValue
     private final String value;
 

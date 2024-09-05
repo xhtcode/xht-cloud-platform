@@ -18,7 +18,7 @@ public class DemoApplication {
         PersonalInfoVo build = PersonalInfoVo.builder()
                 .name("小糊涂")
                 .phone("13112312312")
-                .fixedPhone("021- 65656539")
+                .fixedPhone("021-65656539")
                 .email("123456789@qq.com")
                 .idCard("123456789012345678")
                 .address("四川省成都市郫都区百草路一号")

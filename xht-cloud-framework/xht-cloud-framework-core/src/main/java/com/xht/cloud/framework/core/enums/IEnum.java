@@ -15,4 +15,8 @@ public interface IEnum<T extends Serializable> {
     T getValue();
 
     String name();
+
+    default String desc() {
+        return name();
+    }
 }

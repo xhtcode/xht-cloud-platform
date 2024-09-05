@@ -39,7 +39,7 @@ public class SensitiveFieldJsonSerializable extends JsonSerializer<String> imple
         if (null != jsc) {
             currentName = jsc.getCurrentName();
         }
-        if ( SkipSensitiveThreadLocal.isSkip(currentName)) {
+        if (SkipSensitiveThreadLocal.isSkip(currentName)) {
             jsonGenerator.writeString(source);
             return;
         }

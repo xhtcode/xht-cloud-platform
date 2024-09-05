@@ -13,7 +13,7 @@ import lombok.Data;
  **/
 @Data
 @Schema(name = "GenColumnTypeRequest(代码生成器-字段类型对应-修改请求信息)", description = "代码生成器-字段类型对应-修改请求信息")
-public class GenColumnTypeUpdateRequest extends UpdateRequest<Long> {
+public class GenColumnTypeUpdateRequest extends UpdateRequest {
 
     /**
      * id
@@ -47,11 +47,4 @@ public class GenColumnTypeUpdateRequest extends UpdateRequest<Long> {
     @Schema(description = "代码类型")
     private String value;
 
-    /**
-     * 获取主键
-     */
-    @Override
-    public Long getPkId() {
-        return this.id;
-    }
 }

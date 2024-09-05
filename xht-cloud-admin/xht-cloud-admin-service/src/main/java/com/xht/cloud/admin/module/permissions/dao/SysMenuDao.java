@@ -1,8 +1,10 @@
 package com.xht.cloud.admin.module.permissions.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.xht.cloud.admin.constant.MenuConstant;
 import com.xht.cloud.admin.enums.MenuTypeEnums;
 import com.xht.cloud.admin.module.permissions.domain.dataobject.SysMenuDO;
+import com.xht.cloud.admin.module.permissions.domain.response.SysMenuResponse;
 import com.xht.cloud.admin.module.permissions.mapper.SysMenuMapper;
 import com.xht.cloud.framework.mybatis.dao.BaseDaoImpl;
 import com.xht.cloud.framework.utils.StringUtils;
@@ -72,14 +74,58 @@ public class SysMenuDao extends BaseDaoImpl<SysMenuMapper, SysMenuDO> {
     }
 
     /**
-     * 根据主键修改数据
+     * 根据用户名还有菜单类型查询菜单
      *
-     * @param entity 实体
-     * @return 修改
+     * @param userId        用户id
+     * @param list 菜单类型
+     * @return {@link SysMenuResponse} 菜单数据
      */
-    @Override
-    public boolean update(SysMenuDO entity) {
-        return false;
+    public List<SysMenuDO> selectByUserIdAndMenuType(String userId, List<String> list) {
+        return getBaseMapper().selectByUserIdAndMenuType(userId, list);
     }
 
+    /**
+     * 判断菜单视图名称是否存在
+     *
+     * @param menuViewName 菜单视图名称
+     * @param menuId       菜单id
+     */
+    public boolean existsMenuViewName(String menuViewName, String menuId) {
+        return exists(lambdaQuery()
+                .eq(SysMenuDO::getMenuViewName, menuViewName)
+                .eq(SysMenuDO::getMenuLink, MenuConstant.STATUS_ERROR)
+                .ne(StringUtils.hasText(menuId), SysMenuDO::getId, menuId));
+    }
+
+    /**
+     * 判断菜单路由地址是否存在
+     *
+     * @param menuPath 菜单路由地址
+     */
+    public boolean existsMenuPath(String menuPath) {
+        return exists(lambdaQuery()
+                .eq(SysMenuDO::getMenuViewName, menuPath));
+    }
+
+    /**
+     * 判断是否存在下级菜单
+     *
+     * @param menuId 菜单id
+     * @return true 存在
+     */
+    public boolean existsMenuChild(String menuId) {
+        return exists(lambdaQuery()
+                .eq(SysMenuDO::getParentId, menuId));
+    }
+
+    /**
+     * 判断是否存在下级菜单
+     *
+     * @param menuIds 菜单id
+     * @return true 存在
+     */
+    public boolean existsMenuChild(List<String> menuIds) {
+        return exists(lambdaQuery()
+                .in(SysMenuDO::getParentId, menuIds));
+    }
 }

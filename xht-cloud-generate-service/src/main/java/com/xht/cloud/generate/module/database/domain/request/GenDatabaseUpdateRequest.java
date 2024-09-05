@@ -12,7 +12,7 @@ import lombok.Data;
  **/
 @Data
 @Schema(name = "GenDatabaseRequest(代码生成器-数据源管理-修改请求信息)", description = "代码生成器-数据源管理-修改请求信息")
-public class GenDatabaseUpdateRequest extends UpdateRequest<Long> {
+public class GenDatabaseUpdateRequest extends UpdateRequest {
 
     /**
      * id
@@ -81,11 +81,4 @@ public class GenDatabaseUpdateRequest extends UpdateRequest<Long> {
     @Schema(description = "排序")
     private Integer sort;
 
-    /**
-     * 获取主键
-     */
-    @Override
-    public Long getPkId() {
-        return this.id;
-    }
 }

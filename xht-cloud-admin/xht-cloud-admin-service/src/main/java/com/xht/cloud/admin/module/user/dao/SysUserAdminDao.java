@@ -23,25 +23,6 @@ import org.springframework.stereotype.Repository;
 public class SysUserAdminDao extends BaseDaoImpl<SysUserAdminMapper, SysUserAdminDO> {
 
     /**
-     * 根据主键修改数据
-     *
-     * @param entity 实体
-     * @return 修改
-     */
-    @Override
-    public boolean update(SysUserAdminDO entity) {
-        // @formatter:off
-        LambdaUpdateWrapper<SysUserAdminDO> updateWrapper = new LambdaUpdateWrapper<SysUserAdminDO>()
-                .set(StringUtils.hasText(entity.getUserName()), SysUserAdminDO::getUserName, entity.getUserName())
-                .set(StringUtils.hasText(entity.getUserAvatar()), SysUserAdminDO::getUserAvatar, entity.getUserAvatar())
-                .set(StringUtils.hasText(entity.getContactPhone()), SysUserAdminDO::getContactPhone, entity.getContactPhone())
-                .eq(SysUserAdminDO::getUserName, entity.getUserName())
-                .ne(SysUserAdminDO::getId, entity.getId());
-        return update(updateWrapper);
-        // @formatter:on
-    }
-
-    /**
      * 查询账号是否存在
      *
      * @param userName 账号

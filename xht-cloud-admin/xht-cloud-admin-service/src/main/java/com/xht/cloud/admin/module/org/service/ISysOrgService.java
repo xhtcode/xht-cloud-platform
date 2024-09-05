@@ -29,7 +29,7 @@ public interface ISysOrgService {
      *
      * @param updateRequest {@link SysOrgUpdateRequest} 修改参数
      */
-    boolean update(SysOrgUpdateRequest updateRequest);
+    boolean update(Long id,SysOrgUpdateRequest updateRequest);
 
     /**
      * 根据主键删除{serviceDesc}

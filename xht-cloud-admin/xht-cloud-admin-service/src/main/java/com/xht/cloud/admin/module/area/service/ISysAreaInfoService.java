@@ -21,7 +21,7 @@ public interface ISysAreaInfoService {
      * @param createRequest {@link SysAreaInfoCreateRequest}
      * @return {@link String} 主键
      */
-    String create(SysAreaInfoCreateRequest createRequest);
+    Boolean create(SysAreaInfoCreateRequest createRequest);
 
     /**
      * 根据id修改

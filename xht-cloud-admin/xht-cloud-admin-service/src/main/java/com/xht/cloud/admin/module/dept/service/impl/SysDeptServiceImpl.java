@@ -2,13 +2,14 @@ package com.xht.cloud.admin.module.dept.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.xht.cloud.admin.module.dept.convert.SysDeptConvert;
+import com.xht.cloud.admin.module.dept.dao.SysDeptDao;
 import com.xht.cloud.admin.module.dept.domain.dataobject.SysDeptDO;
 import com.xht.cloud.admin.module.dept.domain.request.SysDeptCreateRequest;
 import com.xht.cloud.admin.module.dept.domain.request.SysDeptQueryRequest;
 import com.xht.cloud.admin.module.dept.domain.request.SysDeptUpdateRequest;
 import com.xht.cloud.admin.module.dept.domain.response.SysDeptResponse;
-import com.xht.cloud.admin.module.dept.mapper.SysDeptMapper;
 import com.xht.cloud.admin.module.dept.service.ISysDeptService;
 import com.xht.cloud.admin.module.permissions.domain.dataobject.SysMenuDO;
 import com.xht.cloud.admin.module.user.dao.SysUserStaffDao;
@@ -19,6 +20,7 @@ import com.xht.cloud.framework.mybatis.core.DataScopeFieldBuilder;
 import com.xht.cloud.framework.mybatis.enums.DataScopeTypeEnums;
 import com.xht.cloud.framework.mybatis.handler.DataScopeSqlFactory;
 import com.xht.cloud.framework.mybatis.tool.SqlHelper;
+import com.xht.cloud.framework.utils.StringUtils;
 import com.xht.cloud.framework.utils.treenode.INode;
 import com.xht.cloud.framework.utils.treenode.TreeNode;
 import com.xht.cloud.framework.utils.treenode.TreeUtils;
@@ -43,7 +45,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class SysDeptServiceImpl implements ISysDeptService {
 
-    private final SysDeptMapper sysDeptMapper;
+    private final SysDeptDao sysDeptDao;
 
     private final SysUserStaffDao sysUserStaffDao;
 
@@ -61,7 +63,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
     @Transactional(rollbackFor = Exception.class)
     public String create(SysDeptCreateRequest createRequest) {
         SysDeptDO entity = sysDeptConvert.toDO(createRequest);
-        sysDeptMapper.insert(entity);
+        sysDeptDao.save(entity);
         return entity.getId();
     }
 
@@ -73,7 +75,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(SysDeptUpdateRequest updateRequest) {
-        sysDeptMapper.updateById(sysDeptConvert.toDO(updateRequest));
+        sysDeptDao.updateById(sysDeptConvert.toDO(updateRequest));
     }
 
     /**
@@ -84,14 +86,14 @@ public class SysDeptServiceImpl implements ISysDeptService {
     @Override
     public void validate(Request request) {
         Assert.isTrue(Objects.isNull(request), "部门信息为空");
-        LambdaQueryWrapper<SysDeptDO> lambdaQuery = sysDeptConvert.lambdaQuery();
+        LambdaQueryChainWrapper<SysDeptDO> lambdaQuery = sysDeptDao.lambdaQuery();
         if (request instanceof SysDeptUpdateRequest re) {
             lambdaQuery.ne(SysDeptDO::getId, re.getId());
             lambdaQuery.eq(SysDeptDO::getDeptCode, re.getDeptCode());
         } else if (request instanceof SysDeptCreateRequest re) {
             lambdaQuery.eq(SysDeptDO::getDeptCode, re.getDeptCode());
         }
-        List<SysDeptDO> sysDeptDOS = sysDeptMapper.selectList(lambdaQuery);
+        List<SysDeptDO> sysDeptDOS = sysDeptDao.list(lambdaQuery);
         Assert.isTrue(!CollectionUtils.isEmpty(sysDeptDOS), "部门编码重复");
     }
 
@@ -103,17 +105,10 @@ public class SysDeptServiceImpl implements ISysDeptService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void remove(List<String> ids) {
-        LambdaQueryWrapper<SysDeptDO> lambdaQueryWrapper = sysDeptConvert.lambdaQuery()
-                .select(
-                        SysDeptDO::getId,
-                        SysDeptDO::getParentId
-                )
-                .in(SysDeptDO::getParentId, ids);
-        List<SysDeptDO> sysDeptDOS = sysDeptMapper.selectList(lambdaQueryWrapper);
-        Assert.isTrue(!CollectionUtils.isEmpty(sysDeptDOS), "选择的部门存在有下级部门禁止删除!");
+        Assert.isTrue(sysDeptDao.existsChild(ids), "选择的部门存在有下级部门禁止删除!");
         long userCount = sysUserStaffDao.selectCountIn(SysUserStaffDO::getDeptId, ids);
         Assert.isTrue(SqlHelper.exist(userCount), "选择的部门中已绑定用户禁止删除!");
-        sysDeptMapper.deleteBatchIds(ids);
+        sysDeptDao.removeBatchByIds(ids);
     }
 
     /**
@@ -124,7 +119,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
      */
     @Override
     public SysDeptResponse findById(String id) {
-        return sysDeptConvert.toResponse(sysDeptMapper.findById(id).orElse(null));
+        return sysDeptConvert.toResponse(sysDeptDao.getById(id));
     }
 
     /**
@@ -135,11 +130,17 @@ public class SysDeptServiceImpl implements ISysDeptService {
      */
     @Override
     public List<SysDeptResponse> findList(SysDeptQueryRequest queryRequest) {
-        LambdaQueryWrapper<SysDeptDO> lambdaQuery = sysDeptConvert.lambdaQuery(sysDeptConvert.toDO(queryRequest));
+        LambdaQueryWrapper<SysDeptDO> lambdaQuery = new LambdaQueryWrapper<>();
+        lambdaQuery
+                .eq(StringUtils.hasText(queryRequest.getParentId()), SysDeptDO::getParentId, queryRequest.getParentId())
+                .like(StringUtils.hasText(queryRequest.getDeptName()), SysDeptDO::getDeptName, queryRequest.getDeptName())
+                .like(StringUtils.hasText(queryRequest.getDeptCode()), SysDeptDO::getDeptCode, queryRequest.getDeptCode())
+                .eq(Objects.nonNull(queryRequest.getDeptStatus()), SysDeptDO::getDeptStatus, queryRequest.getDeptStatus())
+        ;
         dataScopeFactory.getDataScopeHandler(DataScopeTypeEnums.DEPT_USER_TYPE).execute(DataScopeFieldBuilder.<SysDeptDO>builder()
                 .deptField(SysDeptDO::getId)
                 .build(), lambdaQuery);
-        List<SysDeptDO> sysDeptDOS = sysDeptMapper.selectList(lambdaQuery);
+        List<SysDeptDO> sysDeptDOS = sysDeptDao.list(lambdaQuery);
         return sysDeptConvert.toResponse(sysDeptDOS);
     }
 

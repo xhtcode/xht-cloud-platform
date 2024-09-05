@@ -1,6 +1,7 @@
 package com.xht.cloud.framework.exception;
 
 
+import cn.hutool.core.text.StrFormatter;
 import com.xht.cloud.framework.exception.constant.IErrorStatusCode;
 
 import java.io.Serial;
@@ -22,6 +23,14 @@ public class BizException extends GlobalException {
      */
     public BizException(String message) {
         super(DEFAULT_ERROR_CODE, message, null);
+    }
+
+    /**
+     * @param message 异常描述
+     * @param argArray 异常描述参数列表
+     */
+    public BizException(String message, Object... argArray) {
+        super(DEFAULT_ERROR_CODE, StrFormatter.format(message, argArray));
     }
 
     /**

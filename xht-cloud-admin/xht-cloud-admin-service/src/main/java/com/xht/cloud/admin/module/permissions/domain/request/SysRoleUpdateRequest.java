@@ -17,7 +17,7 @@ import java.util.List;
  **/
 @Data
 @Schema(name = "SysRoleRequest(系统角色表-修改请求信息)")
-public class SysRoleUpdateRequest extends UpdateRequest<String> {
+public class SysRoleUpdateRequest extends UpdateRequest {
 
     /**
      * id
@@ -78,11 +78,4 @@ public class SysRoleUpdateRequest extends UpdateRequest<String> {
     @Schema(description = "部门id")
     private List<String> deptIds;
 
-    /**
-     * 获取主键
-     */
-    @Override
-    public String getPkId() {
-        return this.id;
-    }
 }

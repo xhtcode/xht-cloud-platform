@@ -2,7 +2,6 @@ package com.xht.cloud.admin.module.user.domain.request;
 
 import com.xht.cloud.admin.api.user.enums.UserSexEnums;
 import com.xht.cloud.admin.api.user.enums.UserStatusEnums;
-import com.xht.cloud.framework.domain.request.IUpdateRequestFun;
 import com.xht.cloud.framework.web.validation.TelephoneNumber;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
@@ -15,7 +14,7 @@ import lombok.Data;
  **/
 @Data
 @Schema(name = "用户修改对象", description = "用户中心")
-public class UserUpdateRequest implements IUpdateRequestFun<String> {
+public class UserUpdateRequest {
 
     /**
      * 手机号码
@@ -80,11 +79,4 @@ public class UserUpdateRequest implements IUpdateRequestFun<String> {
     @NotEmpty(message = "地址名称不能为空")
     private String addressName;
 
-    /**
-     * 获取主键
-     */
-    @Override
-    public String getPkId() {
-        return null;
-    }
 }

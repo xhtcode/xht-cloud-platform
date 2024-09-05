@@ -7,14 +7,13 @@ import com.xht.cloud.admin.constant.MenuConstant;
 import com.xht.cloud.admin.enums.MenuTypeEnums;
 import com.xht.cloud.admin.exceptions.MenuException;
 import com.xht.cloud.admin.module.permissions.convert.SysMenuConvert;
+import com.xht.cloud.admin.module.permissions.dao.SysMenuDao;
+import com.xht.cloud.admin.module.permissions.dao.SysRoleMenuDao;
 import com.xht.cloud.admin.module.permissions.domain.dataobject.SysMenuDO;
-import com.xht.cloud.admin.module.permissions.domain.dataobject.SysRoleMenuDO;
 import com.xht.cloud.admin.module.permissions.domain.request.SysMenuCreateRequest;
 import com.xht.cloud.admin.module.permissions.domain.request.SysMenuQueryRequest;
 import com.xht.cloud.admin.module.permissions.domain.request.SysMenuUpdateRequest;
 import com.xht.cloud.admin.module.permissions.domain.response.SysMenuResponse;
-import com.xht.cloud.admin.module.permissions.mapper.SysMenuMapper;
-import com.xht.cloud.admin.module.permissions.mapper.SysRoleMenuMapper;
 import com.xht.cloud.admin.module.permissions.service.ISysMenuService;
 import com.xht.cloud.admin.module.user.domain.response.MetaVo;
 import com.xht.cloud.admin.module.user.domain.response.RouterVo;
@@ -32,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * 描述 ：菜单管理
@@ -44,9 +42,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SysMenuServiceImpl implements ISysMenuService {
 
-    private final SysMenuMapper sysMenuMapper;
+    private final SysMenuDao sysMenuDao;
 
-    private final SysRoleMenuMapper sysRoleMenuMapper;
+    private final SysRoleMenuDao sysRoleMenuDao;
 
     private final SysMenuConvert sysMenuConvert;
 
@@ -60,7 +58,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Transactional(rollbackFor = Exception.class)
     public String create(SysMenuCreateRequest createRequest) {
         SysMenuDO entity = sysMenuConvert.toDO(createRequest);
-        sysMenuMapper.insert(entity);
+        sysMenuDao.save(entity);
         return entity.getId();
     }
 
@@ -72,27 +70,13 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(SysMenuUpdateRequest updateRequest) {
-        // @formatter:off
         Assert.notNull(updateRequest, "菜单修改信息不能为空");
-        Assert.hasText(updateRequest.getPkId(), "菜单修改信息id不能为空");
+        Assert.hasText(updateRequest.getId(), "菜单修改信息id不能为空");
         //当状态改为禁用那么他的所有下级都是禁用
-        if (Objects.equals(MenuConstant.STATUS_ERROR, updateRequest.getMenuStatus())) {
-            List<String> menuIds = sysMenuMapper
-                    .findChildByMenuIdAndMenuStatus(updateRequest.getId(), MenuConstant.STATUS_SUCCESS)
-                    .stream()
-                    .map(SysMenuDO::getId)
-                    .filter(id -> !Objects.equals(updateRequest.getId(), id))
-                    .collect(Collectors.toList());
-            if (CollectionUtils.isEmpty(menuIds)){
-                sysMenuMapper.update(
-                        sysMenuConvert.lambdaUpdate()
-                                .set(SysMenuDO::getMenuStatus, MenuConstant.STATUS_ERROR)
-                                .in(SysMenuDO::getId, menuIds)
-                );
-            }
+        if (Objects.equals(MenuConstant.STATUS_ERROR, updateRequest.getMenuStatus()) && sysMenuDao.existsMenuChild(updateRequest.getId())) {
+            throw new MenuException("存在下级菜单禁止变更变态!");
         }
-        sysMenuMapper.updateById(sysMenuConvert.toDO(updateRequest));
-        // @formatter:on
+        sysMenuDao.updateById(sysMenuConvert.toDO(updateRequest));
     }
 
 
@@ -104,21 +88,14 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void remove(List<String> ids) {
-        ExceptionTool.menuValidation(sysMenuMapper.selectCountIn(SysMenuDO::getParentId, ids) > 0, "该菜单有子菜单，禁止删除");
-        ExceptionTool.menuValidation(sysRoleMenuMapper.selectCountIn(SysRoleMenuDO::getMenuId, ids) > 0, "该菜单已绑定菜单，禁止删除");
-        LambdaQueryWrapper<SysMenuDO> lambdaQueryWrapper = sysMenuConvert.lambdaQuery()
-                .select(
-                        SysMenuDO::getId,
-                        SysMenuDO::getParentId,
-                        SysMenuDO::getMenuType,
-                        SysMenuDO::getMenuStatus
-                )
-                .in(SysMenuDO::getId, ids);
-        List<SysMenuDO> sysMenuDOS = sysMenuMapper.selectList(lambdaQueryWrapper);
-        if (CollectionUtils.isEmpty(sysMenuDOS) || sysMenuDOS.size() != ids.size()) {
-            throw new MenuException("参数错误，查询不到菜单!");
+        if (sysMenuDao.existsMenuChild(ids)) {
+            throw new MenuException("该菜单存在子菜单，禁止删除!");
         }
-        sysMenuMapper.deleteBatchIds(ids);
+        if (sysRoleMenuDao.existsByMenuId(ids)) {
+            throw new MenuException("该菜单已绑定角色，禁止删除!");
+
+        }
+        sysMenuDao.removeBatchByIds(ids);
     }
 
     /**
@@ -129,7 +106,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
      */
     @Override
     public SysMenuResponse findById(String id) {
-        return sysMenuConvert.toResponse(sysMenuMapper.findById(id).orElse(null));
+        return sysMenuConvert.toResponse(sysMenuDao.getById(id));
     }
 
     /**
@@ -140,9 +117,15 @@ public class SysMenuServiceImpl implements ISysMenuService {
      */
     @Override
     public List<SysMenuResponse> list(SysMenuQueryRequest queryRequest) {
-        LambdaQueryWrapper<SysMenuDO> lambdaQueryWrapper = sysMenuConvert.lambdaQuery(sysMenuConvert.toDO(queryRequest)).notIn(!CollectionUtils.isEmpty(queryRequest.getNotMenuType()), SysMenuDO::getMenuType, queryRequest.getNotMenuType())
+        LambdaQueryWrapper<SysMenuDO> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper
+                .eq(StringUtils.hasText(queryRequest.getParentId()), SysMenuDO::getParentId, queryRequest.getParentId())
+                .eq(StringUtils.hasText(queryRequest.getMenuType()), SysMenuDO::getMenuType, queryRequest.getMenuType())
+                .like(StringUtils.hasText(queryRequest.getMenuName()), SysMenuDO::getMenuName, queryRequest.getMenuName())
+                .eq(StringUtils.hasText(queryRequest.getMenuStatus()), SysMenuDO::getMenuStatus, queryRequest.getMenuStatus())
+                .notIn(!CollectionUtils.isEmpty(queryRequest.getNotMenuType()), SysMenuDO::getMenuType, queryRequest.getNotMenuType())
                 .orderByAsc(SysMenuDO::getMenuSort);
-        return sysMenuConvert.toResponse(sysMenuMapper.selectList(lambdaQueryWrapper));
+        return sysMenuConvert.toResponse(sysMenuDao.list(lambdaQueryWrapper));
     }
 
     /**
@@ -163,23 +146,20 @@ public class SysMenuServiceImpl implements ISysMenuService {
             parentMenu = new SysMenuDO();
             parentMenu.setMenuType(MenuTypeEnums.M.getValue());
         } else {
-            parentMenu = sysMenuMapper.selectById(menuRequest.getParentId());
+            parentMenu = sysMenuDao.getOptById(menuRequest.getParentId()).orElseThrow(()->new MenuException("查询不到上级菜单!"));
         }
-        ExceptionTool.menuValidation(Objects.isNull(parentMenu), "查询不到上级菜单!");
-        ExceptionTool.menuValidation(MenuTypeEnums.B.getValue().equals(parentMenu.getMenuType()), "上级菜单是按钮!");
-
+        if (Objects.equals(MenuTypeEnums.B.getValue(),parentMenu.getMenuType())){
+             throw new MenuException("上级菜单是按钮!");
+        }
         String menuPath = menuRequest.getMenuPath();
         if (StringUtils.hasText(menuPath)) {
-            long menuPathCount = sysMenuMapper.selectCount(SysMenuDO::getMenuPath, menuPath);
-            ExceptionTool.menuValidation(menuPathCount > 1, "菜单路由地址重复!");
+            if (sysMenuDao.existsMenuPath(menuPath)){
+                throw new MenuException("菜单路由地址重复!");
+            }
         }
-        long menuViewNameCount = sysMenuMapper.selectCount(
-                sysMenuConvert.lambdaQuery()
-                        .eq(SysMenuDO::getMenuViewName, menuRequest.getMenuViewName())
-                        .eq(SysMenuDO::getMenuLink,"0")
-                        .ne(StringUtils.hasText(id), SysMenuDO::getId, id)
-        );
-        ExceptionTool.menuValidation(menuViewNameCount > 0, "组件视图名称重复!");
+        if (sysMenuDao.existsMenuViewName(menuRequest.getMenuViewName(),id)){
+            throw new MenuException("组件视图名称重复!");
+        }
         SysMenuDO result = new SysMenuDO();
         result.setParentId(menuRequest.getParentId());
         result.setMenuType(menuRequest.getMenuType());
@@ -274,9 +254,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
         }
         List<SysMenuDO> sysMenuDOS;
         if (SecurityContextUtil.isAdmin()) {
-            sysMenuDOS = sysMenuMapper.selectListIn(SysMenuDO::getMenuType, Arrays.stream(menuTypeEnums).map(MenuTypeEnums::getValue).toList());
+            sysMenuDOS = sysMenuDao.selectListIn(SysMenuDO::getMenuType, Arrays.stream(menuTypeEnums).map(MenuTypeEnums::getValue).toList());
         } else {
-            sysMenuDOS = sysMenuMapper.selectByUserIdAndMenuType(userId, Arrays.stream(menuTypeEnums).map(MenuTypeEnums::getValue).toList());
+            sysMenuDOS = sysMenuDao.selectByUserIdAndMenuType(userId, Arrays.stream(menuTypeEnums).map(MenuTypeEnums::getValue).toList());
         }
         return sysMenuConvert.toResponse(sysMenuDOS);
     }

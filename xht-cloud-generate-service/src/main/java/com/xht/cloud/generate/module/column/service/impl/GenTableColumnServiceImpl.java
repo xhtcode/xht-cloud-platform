@@ -1,16 +1,13 @@
 package com.xht.cloud.generate.module.column.service.impl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.framework.domain.response.PageResponse;
-import com.xht.cloud.framework.mybatis.tool.PageTool;
 import com.xht.cloud.generate.module.column.convert.GenTableColumnConvert;
+import com.xht.cloud.generate.module.column.dao.GenTableColumnDao;
 import com.xht.cloud.generate.module.column.domain.dataobject.GenTableColumnDO;
 import com.xht.cloud.generate.module.column.domain.request.GenTableColumnCreateRequest;
 import com.xht.cloud.generate.module.column.domain.request.GenTableColumnQueryRequest;
 import com.xht.cloud.generate.module.column.domain.request.GenTableColumnUpdateRequest;
 import com.xht.cloud.generate.module.column.domain.response.GenTableColumnResponse;
-import com.xht.cloud.generate.module.column.domain.wrapper.GenTableColumnWrapper;
-import com.xht.cloud.generate.module.column.mapper.GenTableColumnMapper;
 import com.xht.cloud.generate.module.column.service.IGenTableColumnService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GenTableColumnServiceImpl implements IGenTableColumnService {
 
-    private final GenTableColumnMapper genTableColumnMapper;
+    private final GenTableColumnDao genTableColumnDao;
 
     private final GenTableColumnConvert genTableColumnConvert;
 
@@ -43,7 +40,7 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
     @Transactional(rollbackFor = Exception.class)
     public Long create(GenTableColumnCreateRequest createRequest) {
         GenTableColumnDO entity = genTableColumnConvert.toDO(createRequest);
-        genTableColumnMapper.insert(entity);
+        genTableColumnDao.save(entity);
         return entity.getId();
     }
 
@@ -55,7 +52,7 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(GenTableColumnUpdateRequest updateRequest) {
-        genTableColumnMapper.updateById(genTableColumnConvert.toDO(updateRequest));
+        genTableColumnDao.updateById(genTableColumnConvert.toDO(updateRequest));
     }
 
     /**
@@ -66,7 +63,7 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void remove(List<String> ids) {
-        genTableColumnMapper.deleteBatchIds(ids);
+        genTableColumnDao.removeBatchByIds(ids);
     }
 
     /**
@@ -77,7 +74,7 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
      */
     @Override
     public GenTableColumnResponse findById(String id) {
-        return genTableColumnConvert.toResponse(genTableColumnMapper.findById(id).orElse(null));
+        return genTableColumnConvert.toResponse(genTableColumnDao.getById(id));
     }
 
     /**
@@ -88,8 +85,7 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
      */
     @Override
     public PageResponse<GenTableColumnResponse> findPage(GenTableColumnQueryRequest queryRequest) {
-        IPage<GenTableColumnDO> genTableColumnIPage = genTableColumnMapper.selectPage(PageTool.getPage(queryRequest), GenTableColumnWrapper.getInstance().lambdaQuery(genTableColumnConvert.toDO(queryRequest)));
-        return genTableColumnConvert.toPageResponse(genTableColumnIPage);
+        return genTableColumnConvert.toPageResponse(genTableColumnDao.pageQueryRequest(queryRequest));
     }
 
 }

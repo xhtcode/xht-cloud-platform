@@ -3,10 +3,10 @@ package com.xht.cloud.admin.module.log.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.admin.api.log.dto.OperationLogDTO;
 import com.xht.cloud.admin.module.log.convert.SysOperationLogConvert;
+import com.xht.cloud.admin.module.log.dao.SysOperationLogDao;
 import com.xht.cloud.admin.module.log.domain.dataobject.SysOperationLogDO;
 import com.xht.cloud.admin.module.log.domain.request.SysOperationLogQueryRequest;
 import com.xht.cloud.admin.module.log.domain.response.SysOperationLogResponse;
-import com.xht.cloud.admin.module.log.mapper.SysOperationLogMapper;
 import com.xht.cloud.admin.module.log.service.ISysOperationLogService;
 import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SysOperationLogServiceImpl implements ISysOperationLogService {
 
-    private final SysOperationLogMapper sysOperationLogMapper;
+    private final SysOperationLogDao sysOperationLogDao;
 
     private final SysOperationLogConvert sysOperationLogConvert;
 
@@ -38,7 +38,7 @@ public class SysOperationLogServiceImpl implements ISysOperationLogService {
      */
     @Override
     public SysOperationLogResponse findById(String id) {
-        return sysOperationLogConvert.convert(sysOperationLogMapper.findById(id).orElse(null));
+        return sysOperationLogConvert.convert(sysOperationLogDao.getById(id));
     }
 
     /**
@@ -49,7 +49,7 @@ public class SysOperationLogServiceImpl implements ISysOperationLogService {
      */
     @Override
     public PageResponse<SysOperationLogResponse> findPage(SysOperationLogQueryRequest queryRequest) {
-        IPage<SysOperationLogDO> sysLogIPage = sysOperationLogMapper.selectPage(PageTool.getPage(queryRequest),
+        IPage<SysOperationLogDO> sysLogIPage = sysOperationLogDao.page(PageTool.getPage(queryRequest),
                 sysOperationLogConvert.lambdaQuery(queryRequest));
         return sysOperationLogConvert.convert(sysLogIPage);
     }
@@ -65,7 +65,7 @@ public class SysOperationLogServiceImpl implements ISysOperationLogService {
         try {
             SysOperationLogDO sysLogDO = sysOperationLogConvert.dtoToDo(operationLogDTO);
             sysLogDO.setOperateName(SecurityContextUtil.getUserAccount());
-            sysOperationLogMapper.insert(sysLogDO);
+            sysOperationLogDao.save(sysLogDO);
         } catch (Exception e) {
             log.info("[操作日志]存储错误 {}", e.getMessage(), e);
         }

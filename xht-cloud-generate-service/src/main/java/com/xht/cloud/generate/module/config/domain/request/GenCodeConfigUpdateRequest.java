@@ -16,7 +16,7 @@ import lombok.Data;
  **/
 @Data
 @Schema(name = "GenCodeConfigRequest(代码生成器-配置中心-修改请求信息)", description = "代码生成器-配置中心-修改请求信息")
-public class GenCodeConfigUpdateRequest extends UpdateRequest<Long> {
+public class GenCodeConfigUpdateRequest extends UpdateRequest {
 
     /**
      * id
@@ -45,11 +45,4 @@ public class GenCodeConfigUpdateRequest extends UpdateRequest<Long> {
     @IntegerInterval(message = "排序 `sort` 字段值在0到999之间")
     private Integer configSort;
 
-    /**
-     * 获取主键
-     */
-    @Override
-    public Long getPkId() {
-        return this.id;
-    }
 }

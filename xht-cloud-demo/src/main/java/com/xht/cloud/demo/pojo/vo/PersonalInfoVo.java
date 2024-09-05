@@ -2,8 +2,10 @@ package com.xht.cloud.demo.pojo.vo;
 
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.xht.cloud.framework.core.enums.SuperHashChildEnums;
 import com.xht.cloud.framework.jackson.desensitization.annotation.SensitiveField;
 import com.xht.cloud.framework.jackson.desensitization.constant.SensitiveFieldConstant;
+import com.xht.cloud.framework.jackson.enums.annotation.TransEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +24,12 @@ import java.io.Serializable;
 public class PersonalInfoVo implements Serializable {
 
     @Serial private static final long serialVersionUID = 1L;
+
+    @TransEnum(suffix = "Text")
+    private SuperHashChildEnums a;
+
+    @TransEnum
+    private SuperHashChildEnums b;
 
     @SensitiveField(type = SensitiveFieldConstant.PHONE)
     @Schema(description = "手机号")private String phone;

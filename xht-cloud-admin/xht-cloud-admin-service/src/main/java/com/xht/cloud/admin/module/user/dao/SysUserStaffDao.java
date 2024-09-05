@@ -78,30 +78,6 @@ public class SysUserStaffDao extends BaseDaoImpl<SysUserStaffMapper, SysUserStaf
     }
 
     /**
-     * 根据主键修改数据
-     *
-     * @param requestUser 实体
-     * @return 修改
-     */
-    @Override
-    public boolean update(SysUserStaffDO requestUser) {
-        LambdaUpdateWrapper<SysUserStaffDO> wrapper = new LambdaUpdateWrapper<>();
-        wrapper
-                .set(StringUtils.hasText(requestUser.getNickName()), SysUserStaffDO::getNickName, requestUser.getNickName())
-                .set(StringUtils.hasText(requestUser.getDeptId()), SysUserStaffDO::getDeptId, requestUser.getDeptId())
-                .set(Objects.nonNull(requestUser.getUserStatus()), SysUserStaffDO::getUserStatus, requestUser.getUserStatus())
-                .set(StringUtils.hasText(requestUser.getIdentityCard()), SysUserStaffDO::getIdentityCard, requestUser.getIdentityCard())
-                .set(Objects.nonNull(requestUser.getUserSex()), SysUserStaffDO::getUserSex, requestUser.getUserSex())
-                .set(StringUtils.hasText(requestUser.getUserAge()), SysUserStaffDO::getUserAge, requestUser.getUserAge())
-                .set(StringUtils.hasText(requestUser.getContactMobile()), SysUserStaffDO::getContactMobile, requestUser.getContactMobile())
-                .set(StringUtils.hasText(requestUser.getAddressId()), SysUserStaffDO::getAddressId, requestUser.getAddressId())
-                .set(StringUtils.hasText(requestUser.getAddressName()), SysUserStaffDO::getAddressName, requestUser.getAddressName())
-                .set(StringUtils.hasText(requestUser.getUserSignature()), SysUserStaffDO::getUserSignature, requestUser.getUserSignature())
-                .eq(SysUserStaffDO::getId, requestUser.getId());
-        return update(wrapper);
-    }
-
-    /**
      * 根据用户id修改密码
      *
      * @param userId       用户id
