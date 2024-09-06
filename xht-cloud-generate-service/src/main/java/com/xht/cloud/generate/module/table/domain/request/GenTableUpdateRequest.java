@@ -1,6 +1,7 @@
 package com.xht.cloud.generate.module.table.domain.request;
 
 
+import com.xht.cloud.framework.domain.request.UpdateRequest;
 import com.xht.cloud.generate.module.column.domain.request.GenTableColumnUpdateRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -17,7 +18,7 @@ import java.util.List;
  **/
 @Data
 @Schema(name = "GenTableRequest(代码生成器-数据库信息-修改请求信息)", description = "代码生成器-数据库信息-修改请求信息")
-public class GenTableUpdateRequest {
+public class GenTableUpdateRequest extends UpdateRequest {
 
     /**
      * id

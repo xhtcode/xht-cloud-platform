@@ -50,9 +50,9 @@ public class SysOrgController {
      * @return {@linkplain Boolean} true成功 false失败
      */
     @Operation(summary = "修改")
-    @PutMapping("/operate/{id}")
-    public R<Boolean> update(@PathVariable("id") Long id, @Validated @RequestBody SysOrgUpdateRequest updateRequest) {
-        return ok(sysOrgService.update(id, updateRequest));
+    @PutMapping("/operate")
+    public R<Boolean> update(@Validated @RequestBody SysOrgUpdateRequest updateRequest) {
+        return ok(sysOrgService.update(updateRequest));
     }
 
     /**

@@ -13,14 +13,7 @@ import lombok.Data;
  **/
 @Data
 @Schema(name = "SysPositionRequest(岗位信息-修改请求信息)")
-public class SysPositionUpdateRequest extends UpdateRequest {
-
-    /**
-     * id
-     */
-    @Schema(description = "id")
-    @NotBlank(message = "id `id` 校验不通过")
-    private String id;
+public class SysPositionUpdateRequest extends UpdateRequest<String> {
 
     /**
      * 父id

@@ -1,11 +1,11 @@
 package com.xht.cloud.admin.module.org.service;
 
 import cn.hutool.core.lang.tree.Tree;
-import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.admin.module.org.domain.request.SysOrgCreateRequest;
 import com.xht.cloud.admin.module.org.domain.request.SysOrgQueryRequest;
 import com.xht.cloud.admin.module.org.domain.request.SysOrgUpdateRequest;
 import com.xht.cloud.admin.module.org.domain.response.SysOrgResponse;
+import com.xht.cloud.framework.domain.response.PageResponse;
 
 import java.util.List;
 
@@ -23,13 +23,12 @@ public interface ISysOrgService {
      */
     boolean create(SysOrgCreateRequest createRequest);
 
-
     /**
      * 根据主键修改组织机构
      *
      * @param updateRequest {@link SysOrgUpdateRequest} 修改参数
      */
-    boolean update(Long id,SysOrgUpdateRequest updateRequest);
+    boolean update(SysOrgUpdateRequest updateRequest);
 
     /**
      * 根据主键删除{serviceDesc}

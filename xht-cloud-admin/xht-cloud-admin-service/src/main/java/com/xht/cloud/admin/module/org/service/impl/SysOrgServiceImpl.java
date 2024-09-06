@@ -69,7 +69,7 @@ public class SysOrgServiceImpl implements ISysOrgService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean update(Long id, SysOrgUpdateRequest updateRequest) {
+    public boolean update(SysOrgUpdateRequest updateRequest) {
         Assert.notNull(updateRequest, "updateRequest 组织机构修改信息不能为空");
         sysOrgDao.getOptById(updateRequest.getId()).orElseThrow(() -> new BizException("上级组织机构不存在"));
         boolean parentExists = sysOrgDao.existsOrgParentId(updateRequest.getParentId());
@@ -80,9 +80,7 @@ public class SysOrgServiceImpl implements ISysOrgService {
         if (orgCodExists) {
             throw new BizException("组织机构编码已重复");
         }
-        SysOrgDO sysOrgDO = sysOrgConvert.toDO(updateRequest);
-        sysOrgDO.setId(id);
-        return sysOrgDao.updateById(sysOrgDO);
+        return sysOrgDao.updateRequest(updateRequest);
     }
 
     /**

@@ -63,7 +63,7 @@ public class SysSequenceServiceImpl implements ISysSequenceService {
         if (sysSequenceDao.existsSeqCodeNoId(updateRequest.getId(), updateRequest.getSeqCode())) {
             throw new SequenceException(String.format("序列编码`%s`不能重复", updateRequest.getSeqCode()));
         }
-        sysSequenceDao.updateById(sysSequenceConvertor.toDO(updateRequest));
+        sysSequenceDao.updateRequest(updateRequest);
     }
 
 

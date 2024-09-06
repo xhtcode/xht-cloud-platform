@@ -53,7 +53,7 @@ public class GenDatabaseServiceImpl implements IGenDatabaseService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(GenDatabaseUpdateRequest updateRequest) {
-        genDatabaseDao.updateById(genDatabaseConvert.toDO(updateRequest));
+        genDatabaseDao.updateRequest(updateRequest);
     }
 
     /**

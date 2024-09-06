@@ -17,14 +17,7 @@ import java.util.List;
  **/
 @Data
 @Schema(name = "SysRoleRequest(系统角色表-修改请求信息)")
-public class SysRoleUpdateRequest extends UpdateRequest {
-
-    /**
-     * id
-     */
-    @Schema(description = "id")
-    @NotBlank(message = "id `id` 校验不通过")
-    private String id;
+public class SysRoleUpdateRequest extends UpdateRequest<String> {
 
     /**
      * 角色名称

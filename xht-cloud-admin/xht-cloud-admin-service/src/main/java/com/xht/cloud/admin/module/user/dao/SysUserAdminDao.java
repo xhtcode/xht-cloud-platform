@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xht.cloud.admin.module.user.domain.dataobject.SysUserAdminDO;
 import com.xht.cloud.admin.module.user.domain.request.SysUserAdminQueryRequest;
+import com.xht.cloud.admin.module.user.domain.request.SysUserAdminUpdateRequest;
 import com.xht.cloud.admin.module.user.mapper.SysUserAdminMapper;
 import com.xht.cloud.framework.mybatis.dao.BaseDaoImpl;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
@@ -40,9 +41,12 @@ public class SysUserAdminDao extends BaseDaoImpl<SysUserAdminMapper, SysUserAdmi
      * @return {@link Boolean} true 成功
      */
     public Boolean updatePassWord(Integer userId, String passWord) {
+        // @formatter:off
         LambdaUpdateWrapper<SysUserAdminDO> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
-        lambdaUpdateWrapper.set(SysUserAdminDO::getPassWord, passWord)
+        lambdaUpdateWrapper
+                .set(SysUserAdminDO::getPassWord, passWord)
                 .eq(SysUserAdminDO::getId, userId);
+        // @formatter:on
         return update(lambdaUpdateWrapper);
     }
 
@@ -53,10 +57,30 @@ public class SysUserAdminDao extends BaseDaoImpl<SysUserAdminMapper, SysUserAdmi
      * @return 分页数据
      */
     public Page<SysUserAdminDO> findPage(SysUserAdminQueryRequest queryRequest) {
+        // @formatter:off
         Page<SysUserAdminDO> page = PageTool.getPage(queryRequest);
         LambdaQueryWrapper<SysUserAdminDO> wrapper = new LambdaQueryWrapper<SysUserAdminDO>()
                 .like(StringUtils.hasText(queryRequest.getUserName()), SysUserAdminDO::getUserName, queryRequest.getUserName())
                 .like(StringUtils.hasText(queryRequest.getContactPhone()), SysUserAdminDO::getContactPhone, queryRequest.getContactPhone());
+        // @formatter:on
         return page(page, wrapper);
+    }
+
+    /**
+     * 扩展的修改的接口
+     *
+     * @param updateRequest 修改参数
+     * @return 修改成功true
+     */
+    public boolean updateRequest(SysUserAdminUpdateRequest updateRequest) {
+        updateRequest.checkId();
+        // @formatter:off
+        LambdaUpdateWrapper<SysUserAdminDO> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.set(SysUserAdminDO::getUserName, updateRequest.getUserName())
+                .set(SysUserAdminDO::getUserAvatar, updateRequest.getUserAvatar())
+                .set(SysUserAdminDO::getContactPhone, updateRequest.getContactPhone())
+                .eq(SysUserAdminDO::getId, updateRequest.getId());
+        // @formatter:on
+        return update(wrapper);
     }
 }

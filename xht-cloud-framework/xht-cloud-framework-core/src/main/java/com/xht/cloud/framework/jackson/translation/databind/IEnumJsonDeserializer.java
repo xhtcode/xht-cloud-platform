@@ -1,4 +1,4 @@
-package com.xht.cloud.framework.jackson.enums;
+package com.xht.cloud.framework.jackson.translation.databind;
 
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;

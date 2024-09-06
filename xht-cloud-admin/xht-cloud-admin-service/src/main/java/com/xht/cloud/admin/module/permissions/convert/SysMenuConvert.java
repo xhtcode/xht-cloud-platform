@@ -2,7 +2,6 @@ package com.xht.cloud.admin.module.permissions.convert;
 
 import com.xht.cloud.admin.module.permissions.domain.dataobject.SysMenuDO;
 import com.xht.cloud.admin.module.permissions.domain.request.SysMenuCreateRequest;
-import com.xht.cloud.admin.module.permissions.domain.request.SysMenuUpdateRequest;
 import com.xht.cloud.admin.module.permissions.domain.response.SysMenuResponse;
 import com.xht.cloud.framework.mybatis.convert.IBaseConvert;
 import org.mapstruct.Mapper;
@@ -13,7 +12,7 @@ import org.mapstruct.Mapper;
  * @author 小糊涂
  **/
 @Mapper(componentModel = "spring")
-public interface SysMenuConvert extends IBaseConvert<SysMenuCreateRequest, SysMenuUpdateRequest, SysMenuResponse, SysMenuDO> {
+public interface SysMenuConvert extends IBaseConvert<SysMenuCreateRequest, SysMenuResponse, SysMenuDO> {
 
     /**
      * {@link SysMenuDO} to {@link SysMenuCreateRequest}

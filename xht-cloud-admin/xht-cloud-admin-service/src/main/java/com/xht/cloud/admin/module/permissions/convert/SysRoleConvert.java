@@ -3,7 +3,6 @@ package com.xht.cloud.admin.module.permissions.convert;
 import com.xht.cloud.admin.module.permissions.domain.dataobject.SysRoleDO;
 import com.xht.cloud.admin.module.permissions.domain.request.SysRoleCreateRequest;
 import com.xht.cloud.admin.module.permissions.domain.request.SysRoleQueryRequest;
-import com.xht.cloud.admin.module.permissions.domain.request.SysRoleUpdateRequest;
 import com.xht.cloud.admin.module.permissions.domain.response.SysRoleResponse;
 import com.xht.cloud.framework.mybatis.convert.IBaseConvert;
 import org.mapstruct.Mapper;
@@ -15,7 +14,7 @@ import org.mapstruct.Named;
  * @author 小糊涂
  **/
 @Mapper(componentModel = "spring")
-public interface SysRoleConvert extends IBaseConvert<SysRoleCreateRequest, SysRoleUpdateRequest, SysRoleResponse, SysRoleDO> {
+public interface SysRoleConvert extends IBaseConvert<SysRoleCreateRequest, SysRoleResponse, SysRoleDO> {
 
     /**
      * {@link SysRoleCreateRequest} to {@link SysRoleDO}
@@ -23,13 +22,6 @@ public interface SysRoleConvert extends IBaseConvert<SysRoleCreateRequest, SysRo
     @Override
     @Named(value = "addRequestToDo")
     SysRoleDO toDO(SysRoleCreateRequest createRequest);
-
-    /**
-     * {@link SysRoleUpdateRequest} to {@link SysRoleDO}
-     */
-    @Override
-    @Named(value = "updateRequestToDo")
-    SysRoleDO toDO(SysRoleUpdateRequest updateRequest);
 
     /**
      * {@link SysRoleQueryRequest} to {@link SysRoleDO}

@@ -76,7 +76,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
         if (existByDictType(updateRequest.getDictType(), updateRequest.getId())) {
             throw new DictException(String.format("字典类型`%s`已存在，添加失败",updateRequest.getDictType()));
         }
-        sysDictTypeDao.updateById(sysDictTypeConvert.toDO(updateRequest));
+        sysDictTypeDao.updateRequest(updateRequest);
         // @formatter:on
     }
 

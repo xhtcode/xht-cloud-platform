@@ -4,6 +4,7 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.xht.cloud.framework.constant.StringConstant;
 import com.xht.cloud.framework.jackson.desensitization.constant.SensitiveFieldConstant;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 
@@ -12,6 +13,7 @@ import java.util.Objects;
  *
  * @author : 小糊涂
  **/
+@Slf4j
 public final class SkipSensitiveThreadLocal {
 
     private static final ThreadLocal<String> THREAD_LOCAL = new ThreadLocal<>();
@@ -31,8 +33,8 @@ public final class SkipSensitiveThreadLocal {
     public static void remove() {
         try {
             THREAD_LOCAL.remove();
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            log.error("关闭出现了错误 {}", e.getMessage(), e);
         }
     }
 

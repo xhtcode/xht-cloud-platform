@@ -2,7 +2,6 @@ package com.xht.cloud.admin.module.dict.convert;
 
 import com.xht.cloud.admin.module.dict.domain.dataobject.SysDictTypeDO;
 import com.xht.cloud.admin.module.dict.domain.request.SysDictTypeCreateRequest;
-import com.xht.cloud.admin.module.dict.domain.request.SysDictTypeUpdateRequest;
 import com.xht.cloud.admin.module.dict.domain.response.SysDictTypeResponse;
 import com.xht.cloud.admin.module.dict.domain.response.SysDictTypeVo;
 import com.xht.cloud.framework.mybatis.convert.IBaseConvert;
@@ -16,7 +15,7 @@ import org.mapstruct.Named;
  * @author 小糊涂
  **/
 @Mapper(componentModel = "spring")
-public interface SysDictTypeConvert extends IBaseConvert<SysDictTypeCreateRequest, SysDictTypeUpdateRequest, SysDictTypeResponse, SysDictTypeDO>, EntityWrapper<SysDictTypeDO> {
+public interface SysDictTypeConvert extends IBaseConvert<SysDictTypeCreateRequest, SysDictTypeResponse, SysDictTypeDO>, EntityWrapper<SysDictTypeDO> {
 
     /**
      * {@link SysDictTypeDO} to {@link SysDictTypeVo}

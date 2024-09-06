@@ -1,9 +1,11 @@
 package com.xht.cloud.admin.module.dict.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.admin.module.dict.domain.dataobject.SysDictItemDO;
 import com.xht.cloud.admin.module.dict.domain.request.SysDictItemQueryRequest;
+import com.xht.cloud.admin.module.dict.domain.request.SysDictItemUpdateRequest;
 import com.xht.cloud.admin.module.dict.mapper.SysDictItemMapper;
 import com.xht.cloud.framework.mybatis.dao.BaseDaoImpl;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
@@ -28,8 +30,8 @@ public class SysDictItemDao extends BaseDaoImpl<SysDictItemMapper, SysDictItemDO
      *
      * @param dictIds 字典id
      */
-    public boolean removeBatchByDictIds(List<String> dictIds) {
-        return remove(new LambdaQueryWrapper<SysDictItemDO>().in(SysDictItemDO::getDictId, dictIds));
+    public void removeBatchByDictIds(List<String> dictIds) {
+        remove(new LambdaQueryWrapper<SysDictItemDO>().in(SysDictItemDO::getDictId, dictIds));
     }
 
 
@@ -40,9 +42,11 @@ public class SysDictItemDao extends BaseDaoImpl<SysDictItemMapper, SysDictItemDO
      * @return 字典数据
      */
     public List<SysDictItemDO> selectListByDictId(String dictId) {
+        // @formatter:off
         return list(lambdaQuery()
                 .eq(SysDictItemDO::getDictId, dictId)
                 .orderByAsc(SysDictItemDO::getDictSort));
+        // @formatter:on
     }
 
     /**
@@ -53,9 +57,11 @@ public class SysDictItemDao extends BaseDaoImpl<SysDictItemMapper, SysDictItemDO
      * @return {@link Boolean} true 存在 false不存在
      */
     public boolean exists(String dictId, String dictCode) {
+        // @formatter:off
         return exists(lambdaQuery()
                 .eq(SysDictItemDO::getDictId, dictId)
                 .eq(SysDictItemDO::getDictCode, dictCode));
+        // @formatter:on
     }
 
     /**
@@ -66,11 +72,35 @@ public class SysDictItemDao extends BaseDaoImpl<SysDictItemMapper, SysDictItemDO
      */
     public IPage<SysDictItemDO> pageQueryRequest(SysDictItemQueryRequest queryRequest) {
         LambdaQueryWrapper<SysDictItemDO> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        // @formatter:off
         lambdaQueryWrapper
                 .eq(StringUtils.hasText(queryRequest.getDictId()), SysDictItemDO::getDictId, queryRequest.getDictId())
                 .like(StringUtils.hasText(queryRequest.getDictCode()), SysDictItemDO::getDictCode, queryRequest.getDictCode())
                 .like(StringUtils.hasText(queryRequest.getDictValue()), SysDictItemDO::getDictValue, queryRequest.getDictValue())
                 .eq(Objects.nonNull(queryRequest.getDictStatus()), SysDictItemDO::getDictStatus, queryRequest.getDictStatus());
+        // @formatter:on
         return page(PageTool.getPage(queryRequest), lambdaQueryWrapper);
+    }
+
+    /**
+     * 扩展的修改的接口
+     *
+     * @param updateRequest 修改参数
+     * @return 修改成功true
+     */
+    public boolean updateRequest(SysDictItemUpdateRequest updateRequest) {
+        updateRequest.checkId();
+        LambdaUpdateWrapper<SysDictItemDO> wrapper = new LambdaUpdateWrapper<>();
+        // @formatter:off
+        wrapper
+                .set(SysDictItemDO::getDictId, updateRequest.getDictId())
+                .set(SysDictItemDO::getDictCode, updateRequest.getDictCode())
+                .set(SysDictItemDO::getDictValue, updateRequest.getDictValue())
+                .set(SysDictItemDO::getDictSort, updateRequest.getDictSort())
+                .set(SysDictItemDO::getDictStatus, updateRequest.getDictStatus())
+                .set(SysDictItemDO::getDictDesc, updateRequest.getDictDesc())
+                .eq(SysDictItemDO::getId, updateRequest.getId());
+        // @formatter:on
+        return update(wrapper);
     }
 }

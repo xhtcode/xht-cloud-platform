@@ -1,9 +1,11 @@
 package com.xht.cloud.admin.module.sequence.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.admin.module.sequence.domain.dataobject.SysSequenceDO;
 import com.xht.cloud.admin.module.sequence.domain.request.SysSequenceQueryRequest;
+import com.xht.cloud.admin.module.sequence.domain.request.SysSequenceUpdateRequest;
 import com.xht.cloud.admin.module.sequence.mapper.SysSequenceMapper;
 import com.xht.cloud.framework.mybatis.dao.BaseDaoImpl;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
@@ -51,11 +53,38 @@ public class SysSequenceDao extends BaseDaoImpl<SysSequenceMapper, SysSequenceDO
      */
     public IPage<SysSequenceDO> pageQueryRequest(SysSequenceQueryRequest queryRequest) {
         LambdaQueryWrapper<SysSequenceDO> wrapper = new LambdaQueryWrapper<>();
+        // @formatter:off
          wrapper
                  .like(StringUtils.hasText(queryRequest.getSeqCode()), SysSequenceDO::getSeqCode, queryRequest.getSeqCode())
                  .like(StringUtils.hasText(queryRequest.getSeqName()), SysSequenceDO::getSeqName, queryRequest.getSeqName())
                  .eq(Objects.nonNull(queryRequest.getSeqLoop()), SysSequenceDO::getSeqLoop, queryRequest.getSeqLoop())
                  .eq(Objects.nonNull(queryRequest.getResetFlag()), SysSequenceDO::getResetFlag, queryRequest.getResetFlag());
-        return page(PageTool.getPage(queryRequest),wrapper);
+        // @formatter:on
+        return page(PageTool.getPage(queryRequest), wrapper);
+    }
+
+    /**
+     * 扩展的修改的接口
+     *
+     * @param updateRequest 修改参数
+     * @return 修改成功true
+     */
+    public boolean updateRequest(SysSequenceUpdateRequest updateRequest) {
+        updateRequest.checkId();
+        LambdaUpdateWrapper<SysSequenceDO> wrapper = new LambdaUpdateWrapper<>();
+        // @formatter:off
+        wrapper.set(SysSequenceDO::getSeqCode, updateRequest.getSeqCode())
+                .set(SysSequenceDO::getSeqName, updateRequest.getSeqName())
+                .set(SysSequenceDO::getCurrentValue, updateRequest.getCurrentValue())
+                .set(SysSequenceDO::getStepValue, updateRequest.getStepValue())
+                .set(SysSequenceDO::getMaxValue, updateRequest.getMaxValue())
+                .set(SysSequenceDO::getMinValue, updateRequest.getMinValue())
+                .set(SysSequenceDO::getSeqLoop, updateRequest.getSeqLoop())
+                .set(SysSequenceDO::getResetFlag, updateRequest.getResetFlag())
+                .set(SysSequenceDO::getSeqFormat, updateRequest.getSeqFormat())
+                .set(SysSequenceDO::getSeqDesc, updateRequest.getSeqDesc())
+                .eq(SysSequenceDO::getId, updateRequest.getId());
+        // @formatter:on
+        return update(wrapper);
     }
 }

@@ -52,7 +52,7 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(GenTableColumnUpdateRequest updateRequest) {
-        genTableColumnDao.updateById(genTableColumnConvert.toDO(updateRequest));
+        genTableColumnDao.updateRequest(updateRequest);
     }
 
     /**

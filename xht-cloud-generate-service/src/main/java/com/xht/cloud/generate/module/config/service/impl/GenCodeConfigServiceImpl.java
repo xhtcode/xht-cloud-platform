@@ -82,7 +82,7 @@ public class GenCodeConfigServiceImpl implements IGenCodeConfigService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(GenCodeConfigUpdateRequest updateRequest) {
-        genCodeConfigDao.updateById(genCodeConfigConvert.toDO(updateRequest));
+        genCodeConfigDao.updateRequest(updateRequest);
     }
 
     /**

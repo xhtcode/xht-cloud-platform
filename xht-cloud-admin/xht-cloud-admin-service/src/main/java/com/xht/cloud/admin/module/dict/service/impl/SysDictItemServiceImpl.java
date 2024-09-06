@@ -84,9 +84,8 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
         if (sysDictItemDao.exists(wrapper)) {
             throw new DictException(String.format("字典编码`%s`已存在，添加失败", updateRequest.getDictCode()));
         }
-        SysDictItemDO itemDO = sysDictItemConvert.toDO(updateRequest);
-        itemDO.setDictType(dictTypeByDictId.getDictType());
-        sysDictItemDao.updateById(itemDO);
+        updateRequest.setDictType(dictTypeByDictId.getDictType());
+        sysDictItemDao.updateRequest(updateRequest);
         // @formatter:on
     }
 
@@ -165,6 +164,36 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
                 .eq(!Objects.equals(DictStatusEnums.ALL, dictStatus), SysDictItemDO::getDictStatus, dictStatus);
         List<SysDictItemDO> sysDictItemDOS = sysDictItemDao.list(wrapper);
         return sysDictItemConvert.toDTO(sysDictItemDOS);
+    }
+
+    /**
+     * 通过字典ID查找字典
+     *
+     * @param dictId 字典id
+     * @return 同类型字典
+     */
+    @Override
+    public SysDictItemDTO findDTOById(String dictId) {
+        LambdaQueryWrapper<SysDictItemDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysDictItemDO::getId, dictId);
+        wrapper.eq(SysDictItemDO::getDictStatus, DictStatusEnums.NORMAL);
+        return sysDictItemConvert.toDTO(sysDictItemDao.getOne(wrapper));
+    }
+
+    /**
+     * 通过字典ID查找字典
+     *
+     * @param dictType 字典类型
+     * @param dictCode 字典编码
+     * @return 同类型字典
+     */
+    @Override
+    public SysDictItemDTO findSysDictDTO(String dictType, String dictCode) {
+        LambdaQueryWrapper<SysDictItemDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysDictItemDO::getDictType, dictType);
+        wrapper.eq(SysDictItemDO::getDictCode, dictCode);
+        wrapper.eq(SysDictItemDO::getDictStatus, DictStatusEnums.NORMAL);
+        return sysDictItemConvert.toDTO(sysDictItemDao.getOne(wrapper));
     }
 
 }

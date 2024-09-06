@@ -1,12 +1,14 @@
 package com.xht.cloud.generate.module.column.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.framework.mybatis.dao.BaseDaoImpl;
 import com.xht.cloud.framework.mybatis.tool.PageTool;
 import com.xht.cloud.framework.utils.StringUtils;
 import com.xht.cloud.generate.module.column.domain.dataobject.GenTableColumnDO;
 import com.xht.cloud.generate.module.column.domain.request.GenTableColumnQueryRequest;
+import com.xht.cloud.generate.module.column.domain.request.GenTableColumnUpdateRequest;
 import com.xht.cloud.generate.module.column.mapper.GenTableColumnMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -31,6 +33,7 @@ public class GenTableColumnDao extends BaseDaoImpl<GenTableColumnMapper, GenTabl
      */
     public IPage<GenTableColumnDO> pageQueryRequest(GenTableColumnQueryRequest queryRequest) {
         LambdaQueryWrapper<GenTableColumnDO> wrapper = new LambdaQueryWrapper<>();
+        // @formatter:off
         wrapper
                 .eq(Objects.nonNull(queryRequest.getTableId()), GenTableColumnDO::getTableId, queryRequest.getTableId())
                 .eq(StringUtils.hasText(queryRequest.getColumnName()), GenTableColumnDO::getColumnName, queryRequest.getColumnName())
@@ -45,6 +48,34 @@ public class GenTableColumnDao extends BaseDaoImpl<GenTableColumnMapper, GenTabl
                 .eq(StringUtils.hasText(queryRequest.getColumnRequired()), GenTableColumnDO::getColumnRequired, queryRequest.getColumnRequired())
                 .eq(!ObjectUtils.isEmpty(queryRequest.getColumnSort()), GenTableColumnDO::getColumnSort, queryRequest.getColumnSort())
         ;
+        // @formatter:on
         return page(PageTool.getPage(queryRequest),wrapper);
+    }
+
+    /**
+     * 扩展的修改的接口
+     *
+     * @param updateRequest 修改参数
+     */
+    public void updateRequest(GenTableColumnUpdateRequest updateRequest) {
+        updateRequest.checkId();
+        LambdaUpdateWrapper<GenTableColumnDO> wrapper = new LambdaUpdateWrapper<>();
+        // @formatter:off
+        wrapper
+                .set(GenTableColumnDO::getTableId, updateRequest.getTableId())
+                .set(GenTableColumnDO::getColumnName, updateRequest.getColumnName())
+                .set(GenTableColumnDO::getColumnLength, updateRequest.getColumnLength())
+                .set(GenTableColumnDO::getColumnCodeName, updateRequest.getColumnCodeName())
+                .set(GenTableColumnDO::getColumnComment, updateRequest.getColumnComment())
+                .set(GenTableColumnDO::getColumnDbType, updateRequest.getColumnDbType())
+                .set(GenTableColumnDO::getColumnPk, updateRequest.getColumnPk())
+                .set(GenTableColumnDO::getColumnList, updateRequest.getColumnList())
+                .set(GenTableColumnDO::getColumnOperation, updateRequest.getColumnOperation())
+                .set(GenTableColumnDO::getColumnQuery, updateRequest.getColumnQuery())
+                .set(GenTableColumnDO::getColumnRequired, updateRequest.getColumnRequired())
+                .set(GenTableColumnDO::getColumnSort, updateRequest.getColumnSort())
+                .eq(GenTableColumnDO::getId, updateRequest.getId());
+        // @formatter:on
+        update(wrapper);
     }
 }

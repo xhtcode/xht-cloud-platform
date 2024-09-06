@@ -61,7 +61,7 @@ public class SysAreaInfoServiceImpl implements ISysAreaInfoService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(SysAreaInfoUpdateRequest updateRequest) {
-        sysAreaInfoDao.updateById(sysAreaInfoConvert.toDO(updateRequest));
+        sysAreaInfoDao.updateRequest(updateRequest);
     }
 
     /**

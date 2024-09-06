@@ -12,15 +12,7 @@ import lombok.Data;
  **/
 @Data
 @Schema(name = "SysAreaInfoRequest(地区信息-修改请求信息)")
-public class SysAreaInfoUpdateRequest extends UpdateRequest {
-
-    /**
-     * 主键
-     */
-    @Schema(description = "主键")
-    @NotBlank(message = "主键 `id` 校验不通过")
-    private String id;
-
+public class SysAreaInfoUpdateRequest extends UpdateRequest<String> {
 
     /**
      * 父级区划代码

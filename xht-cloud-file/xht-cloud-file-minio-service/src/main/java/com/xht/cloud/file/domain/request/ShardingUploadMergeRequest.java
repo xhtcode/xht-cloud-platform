@@ -10,6 +10,7 @@ import lombok.Data;
  **/
 @Data
 public class ShardingUploadMergeRequest extends Request {
+
     /**
      * 对象名
      */

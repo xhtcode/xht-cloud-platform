@@ -53,7 +53,7 @@ public class SysPositionServiceImpl implements ISysPositionService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(SysPositionUpdateRequest updateRequest) {
-        sysPositionDao.updateById(sysPositionConvert.toDO(updateRequest));
+        sysPositionDao.updateRequest(updateRequest);
     }
 
     /**

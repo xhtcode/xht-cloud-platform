@@ -5,8 +5,8 @@ import com.xht.cloud.admin.module.permissions.domain.request.SysMenuQueryRequest
 import com.xht.cloud.admin.module.permissions.domain.request.SysMenuUpdateRequest;
 import com.xht.cloud.admin.module.permissions.domain.response.SysMenuResponse;
 import com.xht.cloud.admin.module.permissions.service.ISysMenuService;
-import com.xht.cloud.framework.redis.idempotent.annotation.Idempotent;
 import com.xht.cloud.framework.domain.R;
+import com.xht.cloud.framework.redis.idempotent.annotation.Idempotent;
 import com.xht.cloud.framework.utils.treenode.INode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

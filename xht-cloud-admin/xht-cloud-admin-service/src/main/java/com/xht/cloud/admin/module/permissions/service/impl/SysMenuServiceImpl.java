@@ -76,7 +76,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         if (Objects.equals(MenuConstant.STATUS_ERROR, updateRequest.getMenuStatus()) && sysMenuDao.existsMenuChild(updateRequest.getId())) {
             throw new MenuException("存在下级菜单禁止变更变态!");
         }
-        sysMenuDao.updateById(sysMenuConvert.toDO(updateRequest));
+        sysMenuDao.updateRequest(updateRequest);
     }
 
 
@@ -136,10 +136,6 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Override
     public SysMenuCreateRequest validationAndFormat(SysMenuCreateRequest menuRequest) {
         // @formatter:off
-        String id = null;
-        if (menuRequest instanceof SysMenuUpdateRequest) {
-            id = ((SysMenuUpdateRequest) menuRequest).getId();
-        }
         Assert.notNull(menuRequest, "菜单参数校验参数失败");
         SysMenuDO parentMenu;
         if (Objects.equals(MenuConstant.TREE_DEFAULT, menuRequest.getParentId())) {
@@ -157,7 +153,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
                 throw new MenuException("菜单路由地址重复!");
             }
         }
-        if (sysMenuDao.existsMenuViewName(menuRequest.getMenuViewName(),id)){
+        if (sysMenuDao.existsMenuViewName(menuRequest.getMenuViewName(), null)) {
             throw new MenuException("组件视图名称重复!");
         }
         SysMenuDO result = new SysMenuDO();

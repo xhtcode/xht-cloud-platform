@@ -85,10 +85,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
         if (sysRoleDao.existsRoleCode(updateRequest.getId(),updateRequest.getRoleCode())) {
             throw new BizException("角色编码`{}`不能重复", updateRequest.getRoleCode());
         }
-        SysRoleDO entity = sysRoleConvert.toDO(updateRequest);
-        sysRoleDeptDao.remove(sysRoleDeptDao.lambdaQuery().eq(SysRoleDeptDO::getRoleId, entity.getId()));
+        sysRoleDeptDao.remove(sysRoleDeptDao.lambdaQuery().eq(SysRoleDeptDO::getRoleId, updateRequest.getId()));
         saveRoleDept(updateRequest.getId(), DeptUserDataScopeEnum.DATA_SCOPE_CUSTOM, updateRequest.getDeptIds());
-        sysRoleDao.updateById(entity);
+        sysRoleDao.updateRequest(updateRequest);
         // @formatter:on
     }
 

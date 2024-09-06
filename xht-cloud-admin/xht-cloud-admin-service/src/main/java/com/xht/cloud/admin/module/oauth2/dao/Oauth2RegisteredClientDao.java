@@ -28,6 +28,7 @@ public class Oauth2RegisteredClientDao extends BaseDaoImpl<Oauth2RegisteredClien
      */
     public IPage<Oauth2RegisteredClientDO> pageQueryRequest(Oauth2RegisteredClientQueryRequest queryRequest) {
         LambdaQueryWrapper<Oauth2RegisteredClientDO> wrapper = new LambdaQueryWrapper<>();
+        // @formatter:off
         wrapper
                 .eq(StringUtils.hasText(queryRequest.getClientId()), Oauth2RegisteredClientDO::getClientId, queryRequest.getClientId())
                 .eq(StringUtils.hasText(queryRequest.getClientSecret()), Oauth2RegisteredClientDO::getClientSecret, queryRequest.getClientSecret())
@@ -35,6 +36,8 @@ public class Oauth2RegisteredClientDao extends BaseDaoImpl<Oauth2RegisteredClien
                 .eq(StringUtils.hasText(queryRequest.getClientName()), Oauth2RegisteredClientDO::getClientName, queryRequest.getClientName())
                 .eq(StringUtils.hasText(queryRequest.getAuthorizationGrantTypes()), Oauth2RegisteredClientDO::getAuthorizationGrantTypes, queryRequest.getAuthorizationGrantTypes())
                 .eq(StringUtils.hasText(queryRequest.getScopes()), Oauth2RegisteredClientDO::getScopes, queryRequest.getScopes());
+        // @formatter:on
         return page(PageTool.getPage(queryRequest), wrapper);
     }
+
 }

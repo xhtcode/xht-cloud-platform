@@ -2,7 +2,6 @@ package com.xht.cloud.admin.module.area.convert;
 
 import com.xht.cloud.admin.module.area.domain.dataobject.SysAreaInfoDO;
 import com.xht.cloud.admin.module.area.domain.request.SysAreaInfoCreateRequest;
-import com.xht.cloud.admin.module.area.domain.request.SysAreaInfoUpdateRequest;
 import com.xht.cloud.admin.module.area.domain.response.SysAreaInfoResponse;
 import com.xht.cloud.framework.mybatis.convert.IBaseConvert;
 import org.mapstruct.Mapper;
@@ -15,7 +14,7 @@ import org.mapstruct.Named;
  * @author 小糊涂
  **/
 @Mapper(componentModel = "spring")
-public interface SysAreaInfoConvert extends IBaseConvert<SysAreaInfoCreateRequest, SysAreaInfoUpdateRequest, SysAreaInfoResponse, SysAreaInfoDO> {
+public interface SysAreaInfoConvert extends IBaseConvert<SysAreaInfoCreateRequest, SysAreaInfoResponse, SysAreaInfoDO> {
 
     /**
      * {@link SysAreaInfoDO} to {@link SysAreaInfoResponse}

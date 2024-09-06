@@ -26,8 +26,8 @@ public class SysUserRoleDao extends BaseDaoImpl<SysUserRoleMapper, SysUserRoleDO
      * @param userId 用户id
      * @return 删除成功true
      */
-    public boolean removeByUserId(String userId) {
-        return remove(lambdaQuery().eq(SysUserRoleDO::getUserId, userId));
+    public void removeByUserId(String userId) {
+        remove(lambdaQuery().eq(SysUserRoleDO::getUserId, userId));
     }
 
     /**
@@ -37,10 +37,16 @@ public class SysUserRoleDao extends BaseDaoImpl<SysUserRoleMapper, SysUserRoleDO
      * @return 角色id
      */
     public List<String> selectRoleIdList(String userId) {
-        List<SysUserRoleDO> userRoleDOS = list(lambdaQuery().select(SysUserRoleDO::getRoleId).eq(SysUserRoleDO::getUserId, userId));
+        // @formatter:off
+        List<SysUserRoleDO> userRoleDOS = list(
+                lambdaQuery()
+                        .select(SysUserRoleDO::getRoleId)
+                        .eq(SysUserRoleDO::getUserId, userId)
+        );
         if (CollectionUtils.isEmpty(userRoleDOS)) {
             return Collections.emptyList();
         }
+        // @formatter:on
         return userRoleDOS.stream().map(SysUserRoleDO::getRoleId).collect(Collectors.toList());
     }
 

@@ -14,4 +14,5 @@ import org.springframework.stereotype.Repository;
 @Slf4j
 @Repository
 public class SysOperationLogDao extends BaseDaoImpl<SysOperationLogMapper, SysOperationLogDO> {
+
 }

@@ -3,7 +3,6 @@ package com.xht.cloud.admin.module.dict.convert;
 import com.xht.cloud.admin.api.dict.dto.SysDictItemDTO;
 import com.xht.cloud.admin.module.dict.domain.dataobject.SysDictItemDO;
 import com.xht.cloud.admin.module.dict.domain.request.SysDictItemCreateRequest;
-import com.xht.cloud.admin.module.dict.domain.request.SysDictItemUpdateRequest;
 import com.xht.cloud.admin.module.dict.domain.response.SysDictItemResponse;
 import com.xht.cloud.framework.mybatis.convert.IBaseConvert;
 import org.mapstruct.Mapper;
@@ -20,7 +19,7 @@ import java.util.List;
  * @author 小糊涂
  **/
 @Mapper(componentModel = "spring")
-public interface SysDictItemConvert extends IBaseConvert<SysDictItemCreateRequest, SysDictItemUpdateRequest, SysDictItemResponse, SysDictItemDO> {
+public interface SysDictItemConvert extends IBaseConvert<SysDictItemCreateRequest, SysDictItemResponse, SysDictItemDO> {
 
     @Named(value = "DoToDTO")
     SysDictItemDTO toDTO(SysDictItemDO dictItemDO);

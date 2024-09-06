@@ -1,4 +1,4 @@
-package com.xht.cloud.framework.jackson.enums.constant;
+package com.xht.cloud.framework.jackson.translation.constant;
 
 /**
  * 描述 ：翻译常量
@@ -11,4 +11,5 @@ public interface TransConstant {
      * 字段后缀
      */
     String FIELD_SUFFIX = "Desc";
+
 }

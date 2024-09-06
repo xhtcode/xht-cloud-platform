@@ -1,20 +1,16 @@
-package com.xht.cloud.framework.jackson.enums;
+package com.xht.cloud.framework.jackson.translation.databind;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.xht.cloud.framework.core.enums.IEnum;
 import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.jackson.JsonGeneratorTool;
-import com.xht.cloud.framework.jackson.enums.annotation.TransEnum;
-import com.xht.cloud.framework.jackson.enums.constant.TransConstant;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.xht.cloud.framework.jackson.translation.annotation.TransEnum;
+import com.xht.cloud.framework.jackson.translation.constant.TransConstant;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -57,18 +53,4 @@ public class IEnumJsonSerializer extends JsonSerializer<IEnum<?>> implements Con
         throw new BizException("使用@TransEnum注解时，请检查字段是不是枚举并且实现了：{}", IEnum.class);
     }
 
-    /**
-     * 更新时间(yyyy-MM-dd HH:mm:SS)
-     */
-    @DateTimeFormat(
-            pattern = "yyyy-MM-dd HH:mm:ss"
-    )
-    @JsonFormat(
-            pattern = "yyyy-MM-dd HH:mm:ss",
-            timezone = "GMT+8"
-    )
-    @JsonSerialize(
-            using = LocalDateTimeSerializer.class
-    )
-    private String id;
 }

@@ -85,8 +85,8 @@ public class GenTableServiceImpl implements IGenTableService {
         updateRequest.setPathUrl(StrUtil.addPrefixIfNot(updateRequest.getPathUrl(), "/"));
         List<GenTableColumnUpdateRequest> columns = updateRequest.getColumns();
         Assert.notEmpty(columns, "字段信息查询不到!");
-        genTableDao.updateById(genTableConvert.toDO(updateRequest));
-        columns.forEach(item -> genTableColumnDao.updateById(genTableColumnConvert.toDO(item)));
+        genTableDao.updateRequest(updateRequest);
+        columns.forEach(genTableColumnDao::updateRequest);
     }
 
     /**

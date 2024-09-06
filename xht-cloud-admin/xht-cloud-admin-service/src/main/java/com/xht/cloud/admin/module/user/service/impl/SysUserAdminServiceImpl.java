@@ -64,10 +64,7 @@ public class SysUserAdminServiceImpl implements ISysUserAdminService {
     @Transactional(rollbackFor = Exception.class)
     public Boolean update(SysUserAdminUpdateRequest updateRequest) {
         Assert.notNull(updateRequest, "管理员修改信息不能为空");
-        Assert.notNull(updateRequest.getId(), "管理员修改信息id不能为空");
-        SysUserAdminDO userAdminDO = sysUserAdminConvert.toDO(updateRequest);
-        userAdminDO.setId(updateRequest.getId());
-        return sysUserAdminDao.updateById(userAdminDO);
+        return sysUserAdminDao.updateRequest(updateRequest);
     }
 
 

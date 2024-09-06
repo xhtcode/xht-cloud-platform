@@ -3,7 +3,6 @@ package com.xht.cloud.admin.module.oauth2.convert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.admin.module.oauth2.domain.dataobject.Oauth2RegisteredClientDO;
 import com.xht.cloud.admin.module.oauth2.domain.request.Oauth2RegisteredClientCreateRequest;
-import com.xht.cloud.admin.module.oauth2.domain.request.Oauth2RegisteredClientUpdateRequest;
 import com.xht.cloud.admin.module.oauth2.domain.response.Oauth2RegisteredClientResponse;
 import com.xht.cloud.framework.constant.StringConstant;
 import com.xht.cloud.framework.domain.response.PageResponse;
@@ -28,7 +27,7 @@ import java.util.stream.Collectors;
  **/
 @Mapper(componentModel = "spring")
 public interface Oauth2RegisteredClientConvert extends
-        IBaseConvert<Oauth2RegisteredClientCreateRequest, Oauth2RegisteredClientUpdateRequest, Oauth2RegisteredClientResponse, Oauth2RegisteredClientDO> {
+        IBaseConvert<Oauth2RegisteredClientCreateRequest, Oauth2RegisteredClientResponse, Oauth2RegisteredClientDO> {
 
     /**
      * {@link Oauth2RegisteredClientCreateRequest} to {@link Oauth2RegisteredClientDO}
@@ -38,15 +37,6 @@ public interface Oauth2RegisteredClientConvert extends
     @Mapping(target = "scopes", expression = "java(convert(createRequest.getScopes()))")
     @Mapping(target = "authorizationGrantTypes", expression = "java(convert(createRequest.getAuthorizationGrantTypes()))")
     Oauth2RegisteredClientDO toDO(Oauth2RegisteredClientCreateRequest createRequest);
-
-    /**
-     * {@link Oauth2RegisteredClientUpdateRequest} to {@link Oauth2RegisteredClientDO}
-     */
-    @Override
-    @Named(value = "updateRequestToDo")
-    @Mapping(target = "scopes", expression = "java(convert(updateRequest.getScopes()))")
-    @Mapping(target = "authorizationGrantTypes", expression = "java(convert(updateRequest.getAuthorizationGrantTypes()))")
-    Oauth2RegisteredClientDO toDO(Oauth2RegisteredClientUpdateRequest updateRequest);
 
     /**
      * {@link Oauth2RegisteredClientDO} to {@link Oauth2RegisteredClientResponse}

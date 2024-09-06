@@ -2,16 +2,16 @@ package com.xht.cloud.framework.jackson.desensitization.jackson;
 
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonStreamContext;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.xht.cloud.framework.exception.BizException;
-import com.xht.cloud.framework.jackson.desensitization.convert.ISensitiveFieldConvert;
+import com.xht.cloud.framework.jackson.JsonGeneratorTool;
 import com.xht.cloud.framework.jackson.desensitization.SkipSensitiveThreadLocal;
 import com.xht.cloud.framework.jackson.desensitization.annotation.SensitiveField;
+import com.xht.cloud.framework.jackson.desensitization.convert.ISensitiveFieldConvert;
 import com.xht.cloud.framework.jackson.desensitization.factory.SensitiveFieldConvertFactory;
 
 import java.io.IOException;
@@ -34,11 +34,7 @@ public class SensitiveFieldJsonSerializable extends JsonSerializer<String> imple
         if (Objects.isNull(iSensitiveFieldConvert)) {
             throw new BizException("You used the annotation `@SensitiveField` but did not inject `ISensitiveFieldConvert`");
         }
-        String currentName = null;
-        JsonStreamContext jsc = jsonGenerator.getOutputContext();
-        if (null != jsc) {
-            currentName = jsc.getCurrentName();
-        }
+        String currentName = JsonGeneratorTool.getFieldName(jsonGenerator);
         if (SkipSensitiveThreadLocal.isSkip(currentName)) {
             jsonGenerator.writeString(source);
             return;

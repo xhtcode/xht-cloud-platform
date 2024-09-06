@@ -1,9 +1,11 @@
 package com.xht.cloud.admin.module.permissions.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.xht.cloud.admin.constant.MenuConstant;
 import com.xht.cloud.admin.enums.MenuTypeEnums;
 import com.xht.cloud.admin.module.permissions.domain.dataobject.SysMenuDO;
+import com.xht.cloud.admin.module.permissions.domain.request.SysMenuUpdateRequest;
 import com.xht.cloud.admin.module.permissions.domain.response.SysMenuResponse;
 import com.xht.cloud.admin.module.permissions.mapper.SysMenuMapper;
 import com.xht.cloud.framework.mybatis.dao.BaseDaoImpl;
@@ -58,8 +60,13 @@ public class SysMenuDao extends BaseDaoImpl<SysMenuMapper, SysMenuDO> {
      * @return 菜单路由数据
      */
     public Set<String> selectMenuAuthority(Serializable userId) {
-        Set<String> list = getBaseMapper().selectMenuAuthorityByUserId(userId);
-        return Objects.isNull(list) ? Collections.emptySet() : list.stream().filter(StringUtils::hasText).collect(Collectors.toSet());
+        // @formatter:off
+        Set<String> list = getBaseMapper()
+                .selectMenuAuthorityByUserId(userId);
+        return Objects.isNull(list) ?
+                Collections.emptySet() :
+                list.stream().filter(StringUtils::hasText).collect(Collectors.toSet());
+        // @formatter:on
     }
 
     /**
@@ -68,16 +75,24 @@ public class SysMenuDao extends BaseDaoImpl<SysMenuMapper, SysMenuDO> {
      * @return 所有角色code
      */
     public Set<String> selectAllMenuAuthority() {
+        // @formatter:off
         LambdaQueryWrapper<SysMenuDO> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.select(SysMenuDO::getMenuAuthority).isNotNull(SysMenuDO::getMenuAuthority);
-        return list(lambdaQueryWrapper).stream().map(SysMenuDO::getMenuAuthority).filter(StringUtils::hasText).collect(Collectors.toSet());
+        lambdaQueryWrapper
+                .select(SysMenuDO::getMenuAuthority)
+                .isNotNull(SysMenuDO::getMenuAuthority);
+        return list(lambdaQueryWrapper)
+                .stream()
+                .map(SysMenuDO::getMenuAuthority)
+                .filter(StringUtils::hasText)
+                .collect(Collectors.toSet());
+        // @formatter:on
     }
 
     /**
      * 根据用户名还有菜单类型查询菜单
      *
-     * @param userId        用户id
-     * @param list 菜单类型
+     * @param userId 用户id
+     * @param list   菜单类型
      * @return {@link SysMenuResponse} 菜单数据
      */
     public List<SysMenuDO> selectByUserIdAndMenuType(String userId, List<String> list) {
@@ -91,10 +106,12 @@ public class SysMenuDao extends BaseDaoImpl<SysMenuMapper, SysMenuDO> {
      * @param menuId       菜单id
      */
     public boolean existsMenuViewName(String menuViewName, String menuId) {
+        // @formatter:off
         return exists(lambdaQuery()
                 .eq(SysMenuDO::getMenuViewName, menuViewName)
                 .eq(SysMenuDO::getMenuLink, MenuConstant.STATUS_ERROR)
                 .ne(StringUtils.hasText(menuId), SysMenuDO::getId, menuId));
+        // @formatter:on
     }
 
     /**
@@ -103,8 +120,10 @@ public class SysMenuDao extends BaseDaoImpl<SysMenuMapper, SysMenuDO> {
      * @param menuPath 菜单路由地址
      */
     public boolean existsMenuPath(String menuPath) {
+        // @formatter:off
         return exists(lambdaQuery()
                 .eq(SysMenuDO::getMenuViewName, menuPath));
+        // @formatter:on
     }
 
     /**
@@ -127,5 +146,36 @@ public class SysMenuDao extends BaseDaoImpl<SysMenuMapper, SysMenuDO> {
     public boolean existsMenuChild(List<String> menuIds) {
         return exists(lambdaQuery()
                 .in(SysMenuDO::getParentId, menuIds));
+    }
+
+    /**
+     * 扩展的修改的接口
+     *
+     * @param updateRequest 修改参数
+     * @return 修改成功true
+     */
+    public boolean updateRequest(SysMenuUpdateRequest updateRequest) {
+        LambdaUpdateWrapper<SysMenuDO> wrapper = new LambdaUpdateWrapper<>();
+        // @formatter:off
+        wrapper
+                .set(SysMenuDO::getParentId, updateRequest.getParentId())
+                .set(SysMenuDO::getMenuType, updateRequest.getMenuType())
+                .set(SysMenuDO::getMenuName, updateRequest.getMenuName())
+                .set(SysMenuDO::getMenuPath, updateRequest.getMenuPath())
+                .set(SysMenuDO::getMenuViewName, updateRequest.getMenuViewName())
+                .set(SysMenuDO::getMenuViewPath, updateRequest.getMenuViewPath())
+                .set(SysMenuDO::getMenuIcon, updateRequest.getMenuIcon())
+                .set(SysMenuDO::getMenuRedirect, updateRequest.getMenuRedirect())
+                .set(SysMenuDO::getMenuActive, updateRequest.getMenuActive())
+                .set(SysMenuDO::getMenuAuthority, updateRequest.getMenuAuthority())
+                .set(SysMenuDO::getMenuHidden, updateRequest.getMenuHidden())
+                .set(SysMenuDO::getMenuStatus, updateRequest.getMenuStatus())
+                .set(SysMenuDO::getMenuLink, updateRequest.getMenuLink())
+                .set(SysMenuDO::getMenuCache, updateRequest.getMenuCache())
+                .set(SysMenuDO::getMenuAffix, updateRequest.getMenuAffix())
+                .set(SysMenuDO::getMenuSort, updateRequest.getMenuSort())
+                .eq(SysMenuDO::getId, updateRequest.getId());
+        // @formatter:on
+        return update(wrapper);
     }
 }

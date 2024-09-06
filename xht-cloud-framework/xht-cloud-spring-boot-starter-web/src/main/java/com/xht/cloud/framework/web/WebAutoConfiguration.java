@@ -3,7 +3,7 @@ package com.xht.cloud.framework.web;
 import com.xht.cloud.framework.web.convert.IEnumsIntegerConverterFactory;
 import com.xht.cloud.framework.web.convert.IEnumsStringConverterFactory;
 import com.xht.cloud.framework.web.handler.DefaultGlobalExceptionHandler;
-import com.xht.cloud.framework.web.interceptor.SensitiveFieldHandlerInterceptor;
+import com.xht.cloud.framework.web.interceptor.GlobalHandlerInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -46,7 +46,7 @@ public class WebAutoConfiguration  implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new SensitiveFieldHandlerInterceptor())
+        registry.addInterceptor(new GlobalHandlerInterceptor())
                 .addPathPatterns("/**");
     }
 }

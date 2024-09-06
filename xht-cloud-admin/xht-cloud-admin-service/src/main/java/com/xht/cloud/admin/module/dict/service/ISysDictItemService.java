@@ -71,4 +71,21 @@ public interface ISysDictItemService {
      * @return 同类型字典
      */
     List<SysDictItemDTO> findByDictType(String dictType, DictStatusEnums dictStatus);
+
+    /**
+     * 通过字典ID查找字典
+     *
+     * @param dictId 字典id
+     * @return 同类型字典
+     */
+    SysDictItemDTO findDTOById(String dictId);
+
+    /**
+     * 通过字典ID查找字典
+     *
+     * @param dictType 字典类型
+     * @param dictCode 字典编码
+     * @return 同类型字典
+     */
+    SysDictItemDTO findSysDictDTO(String dictType, String dictCode);
 }

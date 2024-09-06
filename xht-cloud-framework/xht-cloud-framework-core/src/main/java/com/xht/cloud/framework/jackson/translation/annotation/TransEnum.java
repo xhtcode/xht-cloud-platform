@@ -1,11 +1,11 @@
-package com.xht.cloud.framework.jackson.enums.annotation;
+package com.xht.cloud.framework.jackson.translation.annotation;
 
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.xht.cloud.framework.jackson.enums.IEnumJsonDeserializer;
-import com.xht.cloud.framework.jackson.enums.IEnumJsonSerializer;
-import com.xht.cloud.framework.jackson.enums.constant.TransConstant;
+import com.xht.cloud.framework.jackson.translation.databind.IEnumJsonDeserializer;
+import com.xht.cloud.framework.jackson.translation.databind.IEnumJsonSerializer;
+import com.xht.cloud.framework.jackson.translation.constant.TransConstant;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -30,4 +30,5 @@ public @interface TransEnum {
      * @return 后缀
      */
     String suffix() default TransConstant.FIELD_SUFFIX;
+
 }

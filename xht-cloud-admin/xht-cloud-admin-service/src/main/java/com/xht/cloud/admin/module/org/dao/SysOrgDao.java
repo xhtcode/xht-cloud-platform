@@ -1,6 +1,8 @@
 package com.xht.cloud.admin.module.org.dao;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.xht.cloud.admin.module.org.domain.dataobject.SysOrgDO;
+import com.xht.cloud.admin.module.org.domain.request.SysOrgUpdateRequest;
 import com.xht.cloud.admin.module.org.mapper.SysOrgMapper;
 import com.xht.cloud.framework.mybatis.dao.BaseDaoImpl;
 import com.xht.cloud.framework.mybatis.tool.SqlHelper;
@@ -39,5 +41,33 @@ public class SysOrgDao extends BaseDaoImpl<SysOrgMapper, SysOrgDO> {
     public boolean existsOrgCod(String orgCode) {
         if (StringUtils.isEmpty(orgCode)) return true;
         return SqlHelper.exist(selectCount(SysOrgDO::getOrgCode, orgCode));
+    }
+
+    /**
+     * 扩展的修改的接口
+     *
+     * @param updateRequest 修改参数
+     * @return 修改成功true
+     */
+    public boolean updateRequest(SysOrgUpdateRequest updateRequest) {
+        updateRequest.checkId();
+        LambdaUpdateWrapper<SysOrgDO> wrapper = new LambdaUpdateWrapper<>();
+        // @formatter:off
+        wrapper
+                .set(Objects.nonNull(updateRequest.getDirectorId()), SysOrgDO::getDirectorId, updateRequest.getDirectorId())
+                .set(Objects.nonNull(updateRequest.getParentId()), SysOrgDO::getParentId, updateRequest.getParentId())
+                .set(Objects.nonNull(updateRequest.getParentName()), SysOrgDO::getParentName, updateRequest.getParentName())
+                .set(Objects.nonNull(updateRequest.getOrgName()), SysOrgDO::getOrgName, updateRequest.getOrgName())
+                .set(Objects.nonNull(updateRequest.getOrgCode()), SysOrgDO::getOrgCode, updateRequest.getOrgCode())
+                .set(Objects.nonNull(updateRequest.getOrgType()), SysOrgDO::getOrgType, updateRequest.getOrgType())
+                .set(Objects.nonNull(updateRequest.getOrgStatus()), SysOrgDO::getOrgStatus, updateRequest.getOrgStatus())
+                .set(Objects.nonNull(updateRequest.getOrgSort()), SysOrgDO::getOrgSort, updateRequest.getOrgSort())
+                .set(Objects.nonNull(updateRequest.getOrgPath()), SysOrgDO::getOrgPath, updateRequest.getOrgPath())
+                .set(Objects.nonNull(updateRequest.getOrgDesc()), SysOrgDO::getOrgDesc, updateRequest.getOrgDesc())
+                .set(Objects.nonNull(updateRequest.getOrgPhone()), SysOrgDO::getOrgPhone, updateRequest.getOrgPhone())
+                .set(Objects.nonNull(updateRequest.getOrgEmail()), SysOrgDO::getOrgEmail, updateRequest.getOrgEmail())
+                .eq(SysOrgDO::getId, updateRequest.getId());
+        // @formatter:on
+        return update(wrapper);
     }
 }

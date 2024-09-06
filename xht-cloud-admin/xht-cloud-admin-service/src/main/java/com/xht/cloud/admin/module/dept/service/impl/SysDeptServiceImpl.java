@@ -75,7 +75,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(SysDeptUpdateRequest updateRequest) {
-        sysDeptDao.updateById(sysDeptConvert.toDO(updateRequest));
+        sysDeptDao.updateRequest(updateRequest);
     }
 
     /**

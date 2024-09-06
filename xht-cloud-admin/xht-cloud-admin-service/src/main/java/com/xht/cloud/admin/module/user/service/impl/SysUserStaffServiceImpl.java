@@ -16,6 +16,7 @@ import com.xht.cloud.admin.module.user.domain.response.SysUserStaffResponse;
 import com.xht.cloud.admin.module.user.service.ISysUserStaffService;
 import com.xht.cloud.framework.domain.response.PageResponse;
 import com.xht.cloud.framework.exception.Assert;
+import com.xht.cloud.framework.exception.BizException;
 import com.xht.cloud.framework.security.utils.SecurityContextUtil;
 import com.xht.cloud.framework.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
@@ -74,24 +75,24 @@ public class SysUserStaffServiceImpl implements ISysUserStaffService {
     /**
      * 根据id修改用户
      *
-     * @param request {@link SysUserStaffUpdateRequest}
+     * @param updateRequest {@link SysUserStaffUpdateRequest}
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean update(SysUserStaffUpdateRequest request) {
-        Assert.notNull(request, "修改的用户信息不能为空");
-        SysUserStaffDO sysUserStaffDO = sysUserStaffConvert.toDO(request);
-        if (StringUtils.hasText(request.getAddressId())) {
-            SysAreaInfoDO sysAreaInfoDO = sysAreaInfoDao.getOptById(request.getAddressId()).orElseGet(SysAreaInfoDO::new);
-            sysUserStaffDO.setAddressName(sysAreaInfoDO.getName());
+    public Boolean update(SysUserStaffUpdateRequest updateRequest) {
+        Assert.notNull(updateRequest, "修改的用户信息不能为空");
+        String addressName = "";
+        if (StringUtils.hasText(updateRequest.getAddressId())) {
+            SysAreaInfoDO sysAreaInfoDO = sysAreaInfoDao.getOptById(updateRequest.getAddressId()).orElseThrow(() -> new BizException("地区信息查询不到!"));
+            addressName = sysAreaInfoDO.getName();
         }
-        if (SecurityContextUtil.hasAnyAuthority(UPDATE_USER_STATUS)) {
-            sysUserStaffDO.setUserStatus(null);
+        if (!SecurityContextUtil.hasAnyAuthority(UPDATE_USER_STATUS)) {
+            updateRequest.setUserStatus(null);
         }
-        if (SecurityContextUtil.hasAnyAuthority(UPDATE_USER_DEPT_ID)) {
-            sysUserStaffDO.setDeptId(null);
+        if (!SecurityContextUtil.hasAnyAuthority(UPDATE_USER_DEPT_ID)) {
+            updateRequest.setDeptId(null);
         }
-        return sysUserStaffDao.updateById(sysUserStaffDO);
+        return sysUserStaffDao.updateRequest(updateRequest, addressName);
     }
 
     /**

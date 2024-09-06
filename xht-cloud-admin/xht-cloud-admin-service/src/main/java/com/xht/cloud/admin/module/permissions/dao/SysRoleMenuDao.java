@@ -22,8 +22,13 @@ public class SysRoleMenuDao extends BaseDaoImpl<SysRoleMenuMapper, SysRoleMenuDO
      *
      * @param roleId 角色id
      */
-    public boolean deleteByRoleId(String roleId) {
-        return remove(lambdaQuery().eq(SysRoleMenuDO::getRoleId, roleId));
+    public void deleteByRoleId(String roleId) {
+        // @formatter:off
+        remove(
+                lambdaQuery()
+                        .eq(SysRoleMenuDO::getRoleId, roleId)
+        );
+        // @formatter:on
     }
 
     /**

@@ -19,7 +19,7 @@ import java.util.Objects;
  *
  * @author 小糊涂
  **/
-public interface IBaseConvert<CreateReq extends Request, UpdateReq extends Object, Res extends AbstractResponse, DO extends AbstractDO> {
+public interface IBaseConvert<CreateReq extends Request, Res extends AbstractResponse, DO extends AbstractDO> {
 
     /**
      * {@link CreateReq} to {@link DO}
@@ -28,17 +28,10 @@ public interface IBaseConvert<CreateReq extends Request, UpdateReq extends Objec
     DO toDO(CreateReq createRequest);
 
     /**
-     * {@link UpdateReq} to {@link DO}
-     */
-    @Named(value = "updateRequestToDo")
-    DO toDO(UpdateReq updateRequest);
-
-    /**
      * {@link DO} to {@link Res}
      */
     @Named(value = "DoToResponse")
     Res toResponse(DO dataBaseDO);
-
 
     /**
      * list转换 {@link DO} to {@link Res}
